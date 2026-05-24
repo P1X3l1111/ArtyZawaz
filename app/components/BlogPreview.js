@@ -27,7 +27,7 @@ export default function BlogPreview() {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,0,0,0.12)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.07)"; }}
             >
-              <div style={{ width: "100%", height: 200, overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "1/1", overflow: "hidden" }}>
                 <img src={a.img} alt={a.titlu} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s" }}
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
