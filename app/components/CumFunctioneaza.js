@@ -21,7 +21,7 @@ export default function CumFunctioneaza() {
   };
 
   return (
-    <section style={{ background: "#f9f8f6", padding: "120px 0 100px", width: "100vw", position: "relative", left: "50%", transform: "translateX(-50%)", overflow: "visible" }}>
+    <section style={{ background: "#f9f8f6", padding: "80px 0 100px", overflow: "hidden" }}>
       {/* Single row: left panel + scrollable cards */}
       <div style={{
         display: "flex",
