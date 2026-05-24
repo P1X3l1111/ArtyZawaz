@@ -10,6 +10,7 @@ const looped = [...produse, ...produse, ...produse];
 export default function SliderPopulare() {
   const scrollRef = useRef(null);
   const pausedRef = useRef(false);
+  const dragRef = useRef({ dragging: false, startX: 0, startScroll: 0 });
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -56,10 +57,11 @@ export default function SliderPopulare() {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             ref={scrollRef}
-            style={{ display: "flex", gap: "clamp(14px, 1.5vw, 24px)", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab" }}
-            onMouseDown={() => { pausedRef.current = true; }}
-            onMouseUp={() => { pausedRef.current = false; }}
-            onMouseLeave={() => { pausedRef.current = false; }}
+            style={{ display: "flex", gap: "clamp(14px, 1.5vw, 24px)", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", userSelect: "none" }}
+            onMouseDown={e => { dragRef.current = { dragging: true, startX: e.pageX, startScroll: scrollRef.current.scrollLeft }; pausedRef.current = true; e.currentTarget.style.cursor = "grabbing"; }}
+            onMouseMove={e => { if (!dragRef.current.dragging) return; const dx = e.pageX - dragRef.current.startX; scrollRef.current.scrollLeft = dragRef.current.startScroll - dx; }}
+            onMouseUp={e => { dragRef.current.dragging = false; pausedRef.current = false; e.currentTarget.style.cursor = "grab"; }}
+            onMouseLeave={e => { dragRef.current.dragging = false; pausedRef.current = false; e.currentTarget.style.cursor = "grab"; }}
           >
             {looped.map((p, i) => (
               <div key={`${p.id}-${i}`} style={{ flexShrink: 0, width: "clamp(220px, 18vw, 300px)" }}>
