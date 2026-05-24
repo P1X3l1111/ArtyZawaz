@@ -39,7 +39,7 @@ export default function Reduceri() {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             ref={scrollRef}
-            style={{ display: "flex", gap: "clamp(14px, 1.5vw, 24px)", overflowX: "visible", scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab" }}
+            style={{ display: "flex", gap: "clamp(14px, 1.5vw, 24px)", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab" }}
             onMouseDown={() => { pausedRef.current = true; }}
             onMouseUp={() => { pausedRef.current = false; }}
             onMouseLeave={() => { pausedRef.current = false; }}
