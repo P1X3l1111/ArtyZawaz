@@ -27,7 +27,11 @@ export default function SliderPopulare() {
   }, []);
 
   const scroll = (dir) => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: dir * 320, behavior: "smooth" });
+    if (scrollRef.current) {
+      pausedRef.current = true;
+      scrollRef.current.scrollBy({ left: dir * 320, behavior: "smooth" });
+      setTimeout(() => { pausedRef.current = false; }, 500);
+    }
   };
 
   return (
