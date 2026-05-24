@@ -1,7 +1,7 @@
 export default function Harta() {
   return (
-    <section style={{ padding: "64px 24px" }}>
-      <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
+    <section style={{ padding: "64px 0 0" }}>
+      <div style={{ width: "100%" }}>
         <h2 style={{ fontSize: 22, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 12, textAlign: "center" }}>
           Găsește-ne
         </h2>
