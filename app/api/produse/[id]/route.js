@@ -1,0 +1,21 @@
+import { NextResponse } from "next/server";
+import { readDb, writeDb } from "../../../lib/db";
+
+export async function PUT(req, { params }) {
+  const { id } = await params;
+  const body = await req.json();
+  const produse = await readDb("produse");
+  const idx = produse.findIndex(p => p.id === id);
+  if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  produse[idx] = { ...produse[idx], ...body, id };
+  await writeDb("produse", produse);
+  return NextResponse.json(produse[idx]);
+}
+
+export async function DELETE(req, { params }) {
+  const { id } = await params;
+  const produse = await readDb("produse");
+  const filtered = produse.filter(p => p.id !== id);
+  await writeDb("produse", filtered);
+  return NextResponse.json({ ok: true });
+}

@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --container: 1280px;
+  --section-padding: 80px 24px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-padding: 48px 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --section-padding: 60px 24px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --container: 1600px;
+    --section-padding: 100px 48px;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --container: 2000px;
+    --section-padding: 120px 80px;
+  }
+}
+
+/* ── Responsive grids ── */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+@media (max-width: 1023px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (max-width: 600px) {
+  .grid-3 { grid-template-columns: 1fr; gap: 20px; }
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 1023px) {
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .grid-4 { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+@media (max-width: 767px) {
+  .grid-2col { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ── Navbar ── */
+.nav-links { display: flex; }
+.nav-hamburger { display: none; }
+.nav-icon-desktop { display: flex; }
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex !important; }
+  .nav-icon-desktop { display: none !important; }
+  .nav-height { height: 70px !important; }
+  .nav-logo-img { width: 52px !important; height: 52px !important; }
+  .nav-logo-arty { display: none !important; }
+  .nav-logo-zawaz { font-size: 20px !important; }
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #f0eeeb;
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+}
+.mobile-menu.open { display: flex; }
+
+/* ── Sliders ── */
+.slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  gap: 16px;
+}
+.slider-arrows { display: flex; gap: 10px; flex-shrink: 0; }
+.slider-outer { overflow: hidden; }
+
+/* Mobile: slider → grid 2 coloane (481-767px) sau swipe (≤480px) */
+@media (max-width: 767px) {
+  .slider-header { margin-bottom: 20px; }
+  .slider-header h2 { font-size: 17px !important; letter-spacing: 0.08em !important; }
+  /* Ascunde "vezi toate" din header, il afisam jos */
+  .slider-header a { display: none !important; }
+}
+
+/* Buton "vezi toate" sub produse - doar pe mobil */
+.slider-vezi-toate-mobile { display: none; }
+@media (max-width: 767px) {
+  .slider-vezi-toate-mobile {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  .slider-vezi-toate-mobile a {
+    display: inline-block !important;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 2px solid #111;
+    padding-bottom: 2px;
+  }
+}
+
+/* Telefoane medii 481-767px: 1 produs centrat */
+@media (min-width: 481px) and (max-width: 767px) {
+  .slider-outer {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -24px;
+    padding: 0 0 12px;
+  }
+  .slider-outer::-webkit-scrollbar { display: none; }
+  .slider-inner {
+    display: flex !important;
+    transform: none !important;
+    transition: none !important;
+    gap: 20px !important;
+    width: max-content !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .slider-item {
+    width: calc(100vw - 48px) !important;
+    min-width: calc(100vw - 48px) !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: center;
+  }
+  .slider-item .pcard-name { font-size: 15px !important; text-align: left; }
+  .slider-item .pcard-price { font-size: 15px !important; }
+  .slider-item .pcard-info { align-items: flex-start; }
+  .slider-item .pcard-price-row { justify-content: flex-start; }
+  .slider-item .pcard-cart-btn { font-size: 12px !important; padding: 10px 0 !important; }
+  .slider-item .pcard-fav { width: 34px !important; height: 34px !important; }
+  .slider-item .pcard-badge { font-size: 12px !important; }
+}
+
+/* Telefoane mici ≤480px: 1 produs centrat */
+@media (max-width: 480px) {
+  .slider-outer {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 0 0 12px;
+    scroll-padding-left: 16px;
+  }
+  .slider-outer::-webkit-scrollbar { display: none; }
+  .slider-inner {
+    display: flex !important;
+    transform: none !important;
+    transition: none !important;
+    gap: 16px !important;
+    width: max-content !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .slider-item {
+    width: calc(100vw - 32px) !important;
+    min-width: calc(100vw - 32px) !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: center;
+  }
+  .slider-item .pcard-name { font-size: 15px !important; text-align: left; }
+  .slider-item .pcard-price { font-size: 15px !important; }
+  .slider-item .pcard-info { align-items: flex-start; }
+  .slider-item .pcard-price-row { justify-content: flex-start; }
+  .slider-item .pcard-cart-btn { font-size: 12px !important; padding: 10px 0 !important; }
+  .slider-item .pcard-fav { width: 34px !important; height: 34px !important; }
+  .slider-item .pcard-badge { font-size: 12px !important; }
+  .slider-item .pcard-cart-wrap { padding: 0 10px 10px !important; }
+}
+
+/* ── ImageAnimata ── */
+.image-animata-row {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+.image-animata-img { width: 50%; }
+.image-animata-text { width: 50%; }
+@media (max-width: 767px) {
+  .image-animata-row { flex-direction: column; gap: 32px; }
+  .image-animata-img { width: 100%; aspect-ratio: 4/3 !important; }
+  .image-animata-text { width: 100%; }
+  .image-animata-text h2 { font-size: 28px !important; }
+}
+
+/* ── CategoriiMari ── */
+.categorii-mari-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+@media (max-width: 767px) {
+  .categorii-mari-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Categorii (home) ── */
+.categorii-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 480px) {
+  .categorii-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ── Page paddingTop (navbar height aware) ── */
+.page-content-top { padding-top: calc(100px + 40px); }
+@media (max-width: 900px) {
+  .page-content-top { padding-top: calc(70px + 32px); }
+}
+
+/* ── Product page ── */
+.produse-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .produse-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Valori despre noi ── */
+.valori-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+@media (max-width: 1023px) {
+  .valori-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .valori-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Footer newsletter ── */
+.footer-newsletter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+@media (max-width: 767px) {
+  .footer-newsletter { flex-direction: column; align-items: flex-start; }
+  .footer-newsletter form { max-width: 100% !important; width: 100%; }
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+/* ── Cos page ── */
+.cos-layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+@media (max-width: 900px) {
+  .cos-layout { flex-direction: column; }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #ffffff;
+  color: #171717;
+  font-family: Arial, Helvetica, sans-serif;
+}
