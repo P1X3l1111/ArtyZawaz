@@ -82,7 +82,7 @@ export default function CumFunctioneaza() {
               </div>
             </div>
             <p style={{ fontSize: 15, color: "#aaa", margin: 0, fontWeight: 600, letterSpacing: "0.02em" }}>
-              Maria, Cluj-Napoca
+              Maria, Chisinau
             </p>
           </div>
 
