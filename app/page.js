@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div style={{ background: "#ffffff", minHeight: "100vh" }}>
       <NavBar />
-      <div style={{ marginBottom: 160 }}><HeroSection /></div>
+      <HeroSection />
       <CumFunctioneaza />
       <div style={{ marginBottom: 160 }}><ProduseNoi /></div>
       <div style={{ marginBottom: 160 }}><Reduceri /></div>
