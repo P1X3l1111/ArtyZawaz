@@ -11,7 +11,7 @@ export default function ImageAnimata() {
         {/* Animated image side */}
         <div
           className="image-animata-img"
-          style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden" }}
+          style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden" }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
