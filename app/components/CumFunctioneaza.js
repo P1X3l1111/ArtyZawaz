@@ -70,7 +70,7 @@ export default function CumFunctioneaza() {
                 boxShadow: "0 2px 16px rgba(0,0,0,0.14)",
               }}>
                 <img
-                  src="/649228640_18071305481541593_2569940497841099335_n.jpg"
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face"
                   alt="Maria"
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
