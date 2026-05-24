@@ -17,12 +17,12 @@ export default function Home() {
       <NavBar />
       <HeroSection />
       <CumFunctioneaza />
-      <div style={{ marginBottom: 160 }}><ProduseNoi /></div>
-      <div style={{ marginBottom: 160 }}><Reduceri /></div>
-      <div style={{ marginBottom: 160 }}><SliderPopulare /></div>
-      <div style={{ marginBottom: 160 }}><ImageAnimata /></div>
-      <div style={{ marginBottom: 160 }}><Recenzii /></div>
-      <div style={{ marginBottom: 160 }}><BlogPreview /></div>
+      <ProduseNoi />
+      <Reduceri />
+      <SliderPopulare />
+      <ImageAnimata />
+      <Recenzii />
+      <BlogPreview />
       <Harta />
       <Footer />
     </div>
