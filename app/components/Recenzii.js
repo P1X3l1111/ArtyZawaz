@@ -124,28 +124,27 @@ export default function Recenzii() {
           </div>
 
           {/* WHITE BOTTOM ~35% */}
-          <div style={{ flex: "0 0 35%", background: "#fff", position: "relative", display: "flex", alignItems: "flex-end", padding: "12px 20px 28px", overflow: "hidden" }}>
-            {/* Big faded 12 */}
+          <div style={{ flex: "0 0 35%", background: "#fff", position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "12px 16px 20px", overflow: "hidden" }}>
+            {/* Big centered 12 */}
             <div style={{
-              position: "absolute",
-              right: -8,
-              bottom: -8,
-              fontSize: "clamp(110px, 18vw, 180px)",
+              fontSize: "clamp(100px, 16vw, 160px)",
               fontWeight: 900,
-              color: "#d6c9b8",
-              lineHeight: 1,
+              color: "#c8b49a",
+              lineHeight: 0.9,
               letterSpacing: "-0.05em",
               userSelect: "none",
               pointerEvents: "none",
-              opacity: 0.55,
+              textAlign: "center",
+              width: "100%",
             }}>12</div>
             <p style={{
               color: "#111",
-              fontSize: "clamp(22px, 3vw, 36px)",
+              fontSize: "clamp(18px, 2.2vw, 28px)",
               fontWeight: 900,
-              margin: 0,
+              margin: "10px 0 0",
               lineHeight: 1.15,
               letterSpacing: "-0.02em",
+              textAlign: "center",
               position: "relative",
               zIndex: 1,
             }}>Milioane<br />vizualizari</p>
