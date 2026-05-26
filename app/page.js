@@ -11,6 +11,7 @@ import Recenzii from "./components/Recenzii";
 import BlogPreview from "./components/BlogPreview";
 import Footer from "./components/Footer";
 import GasestePerfect from "./components/GasestePerfect";
+import Livrare from "./components/Livrare";
 
 export default function Home() {
   return (
@@ -24,8 +25,9 @@ export default function Home() {
       <ImageAnimata />
       <Recenzii />
       <BlogPreview />
-      <Harta />
       <GasestePerfect />
+      <Livrare />
+      <Harta />
       <Footer />
     </div>
   );
