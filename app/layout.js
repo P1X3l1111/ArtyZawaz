@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CosProvider } from "./context/CosContext";
+import FloatingWidgets from "./components/FloatingWidgets";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +25,10 @@ export default function RootLayout({ children }) {
       style={{ margin: 0, padding: 0, height: "100%" }}
     >
       <body style={{ margin: 0, padding: 0, height: "100%" }}>
-        <CosProvider>{children}</CosProvider>
+        <CosProvider>
+          {children}
+          <FloatingWidgets />
+        </CosProvider>
       </body>
     </html>
   );
