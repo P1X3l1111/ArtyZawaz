@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 
 const MENU_LINKS = [
-  { label: "Sprawdz certyfikat", href: "#" },
-  { label: "Kryteria jakosci", href: "#" },
-  { label: "Warunki gwarancji", href: "#" },
-  { label: "Wszystkie opinie", href: "#" },
-  { label: "Dane firmy", href: "#" },
-  { label: "Ochrona danych osobowych", href: "#" },
-  { label: "Autentyczne opinie", href: "#" },
-  { label: "Licencje uslugodawcow zewnetrznych", href: "#" },
+  { label: "Verifica certificatul", href: "#" },
+  { label: "Criterii de calitate", href: "#" },
+  { label: "Conditii de garantie", href: "#" },
+  { label: "Toate opiniile", href: "#" },
+  { label: "Date despre firma", href: "#" },
+  { label: "Protectia datelor personale", href: "#" },
+  { label: "Opinii autentice", href: "#" },
+  { label: "Licente furnizori externi", href: "#" },
 ];
 
 function Star({ filled }) {
@@ -81,7 +81,7 @@ export default function FloatingWidgets() {
               </a>
             ))}
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", margin: "6px 0" }} />
-            <a href="#" style={{ display: "block", padding: "8px 18px", color: "#fff", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>+ Powieksz</a>
+            <a href="#" style={{ display: "block", padding: "8px 18px", color: "#fff", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>+ Mareste</a>
           </div>
         )}
 
@@ -151,7 +151,7 @@ export default function FloatingWidgets() {
           </div>
 
           <p style={{ margin: "8px 0 0", fontSize: 12, fontWeight: 700, color: "#fff", textAlign: "center", lineHeight: 1.3 }}>
-            Ochrona<br />Kupujacego
+            Protectia<br />Cumparatorului
           </p>
 
           <div style={{ display: "flex", gap: 2, marginTop: 2 }}>
@@ -159,7 +159,7 @@ export default function FloatingWidgets() {
           </div>
 
           <p style={{ margin: 0, fontSize: 22, fontWeight: 900, color: "#fff", lineHeight: 1 }}>4,91</p>
-          <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#f5a623" }}>Doskonaly</p>
+          <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#f5a623" }}>Excelent</p>
         </div>
       </div>
 
