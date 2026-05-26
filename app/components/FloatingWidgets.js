@@ -5,7 +5,7 @@ export default function FloatingWidgets() {
   const [showPhone, setShowPhone] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setShowPhone(window.scrollY > 300);
+    const onScroll = () => setShowPhone(window.scrollY > 100);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -71,14 +71,14 @@ export default function FloatingWidgets() {
           display: "flex",
           alignItems: "center",
           gap: 14,
-          background: "#fff",
+          background: "#f5f0e8",
           border: "2.5px solid #111",
           borderRadius: 999,
-          padding: "14px 24px",
+          padding: "12px 22px 12px 12px",
           textDecoration: "none",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.16)",
-          transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, box-shadow 0.2s",
-          transform: showPhone ? "translateY(0) scale(1)" : "translateY(100px) scale(0.8)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+          transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, box-shadow 0.2s",
+          transform: showPhone ? "translateY(0) scale(1)" : "translateY(120px) scale(0.85)",
           opacity: showPhone ? 1 : 0,
           pointerEvents: showPhone ? "auto" : "none",
         }}
