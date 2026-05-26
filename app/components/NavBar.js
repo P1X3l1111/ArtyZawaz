@@ -111,6 +111,8 @@ const navLinks = [
       { label: "Zile speciale", href: "/stative?categorie=zile-speciale" },
     ],
   },
+  { label: "Best Seller", href: "/populare", badge: "🔥" },
+  { label: "Reduceri", href: "/reduceri", badge: "%" },
   { label: "Despre Noi", href: "/despre-noi" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
@@ -196,8 +198,18 @@ export default function NavBar() {
             <li key={link.href} style={{ position: "relative" }}
               onMouseEnter={() => setActiveDropdown(link.subcategorii ? link.href : null)}
             >
-              <Link href={link.href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, color, textTransform: "uppercase", letterSpacing: "0.08em", transition: "color 0.3s", display: "flex", alignItems: "center", gap: 4 }}>
+              <Link href={link.href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, color: link.href === "/reduceri" ? "#e03c2f" : color, textTransform: "uppercase", letterSpacing: "0.08em", transition: "color 0.3s", display: "flex", alignItems: "center", gap: 6 }}>
                 {link.label}
+                {link.badge && (
+                  <span style={{
+                    fontSize: 10, fontWeight: 800, lineHeight: 1,
+                    background: link.href === "/reduceri" ? "#e03c2f" : "#111",
+                    color: "#fff",
+                    borderRadius: 999,
+                    padding: "2px 6px",
+                    letterSpacing: "0.04em",
+                  }}>{link.badge}</span>
+                )}
                 {link.subcategorii && (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}
                     style={{ transition: "transform 0.25s", transform: activeDropdown === link.href ? "rotate(180deg)" : "rotate(0deg)" }}
