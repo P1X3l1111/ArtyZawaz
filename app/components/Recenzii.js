@@ -124,27 +124,27 @@ export default function Recenzii() {
           </div>
 
           {/* WHITE BOTTOM ~35% */}
-          <div style={{ flex: "0 0 35%", background: "#fff", position: "relative", display: "flex", alignItems: "flex-end", padding: "12px 20px 24px", overflow: "hidden" }}>
+          <div style={{ flex: "0 0 35%", background: "#fff", position: "relative", display: "flex", alignItems: "flex-end", padding: "12px 20px 28px", overflow: "hidden" }}>
             {/* Big faded 12 */}
             <div style={{
               position: "absolute",
-              right: -10,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontSize: "clamp(100px, 14vw, 160px)",
+              right: -8,
+              bottom: -8,
+              fontSize: "clamp(110px, 18vw, 180px)",
               fontWeight: 900,
-              color: "rgba(0,0,0,0.06)",
+              color: "#d6c9b8",
               lineHeight: 1,
               letterSpacing: "-0.05em",
               userSelect: "none",
               pointerEvents: "none",
+              opacity: 0.55,
             }}>12</div>
             <p style={{
               color: "#111",
-              fontSize: "clamp(26px, 3.5vw, 42px)",
+              fontSize: "clamp(22px, 3vw, 36px)",
               fontWeight: 900,
               margin: 0,
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               letterSpacing: "-0.02em",
               position: "relative",
               zIndex: 1,
