@@ -111,8 +111,8 @@ const navLinks = [
       { label: "Zile speciale", href: "/stative?categorie=zile-speciale" },
     ],
   },
-  { label: "Best Seller", href: "/populare", badge: "🔥" },
-  { label: "Reduceri", href: "/reduceri", badge: "%" },
+  { label: "Best Seller", href: "/populare" },
+  { label: "Reduceri", href: "/reduceri", badge: "SALE" },
   { label: "Despre Noi", href: "/despre-noi" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
@@ -193,12 +193,12 @@ export default function NavBar() {
         </Link>
 
         {/* Desktop nav links */}
-        <ul className="nav-links" style={{ alignItems: "center", gap: 32, listStyle: "none", margin: 0, padding: 0 }}>
+        <ul className="nav-links" style={{ alignItems: "center", gap: 18, listStyle: "none", margin: 0, padding: 0 }}>
           {navLinks.map((link) => (
             <li key={link.href} style={{ position: "relative" }}
               onMouseEnter={() => setActiveDropdown(link.subcategorii ? link.href : null)}
             >
-              <Link href={link.href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, color: link.href === "/reduceri" ? "#e03c2f" : color, textTransform: "uppercase", letterSpacing: "0.08em", transition: "color 0.3s", display: "flex", alignItems: "center", gap: 6 }}>
+              <Link href={link.href} style={{ textDecoration: "none", fontSize: 12, fontWeight: 600, color: link.href === "/reduceri" ? "#e03c2f" : color, textTransform: "uppercase", letterSpacing: "0.04em", transition: "color 0.3s", display: "flex", alignItems: "center", gap: 5 }}>
                 {link.label}
                 {link.badge && (
                   <span style={{
