@@ -79,77 +79,78 @@ export default function Recenzii() {
           overflow: "hidden",
           position: "relative",
           aspectRatio: "9/16",
-          background: "#f5f2ec",
+          background: "#fff",
           maxWidth: 420,
           width: "100%",
           display: "flex",
           flexDirection: "column",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
         }}>
-          {/* WHITE TOP: text */}
-          <div style={{ background: "#fff", padding: "22px 20px 18px", borderRadius: "20px 20px 0 0", zIndex: 2, position: "relative" }}>
-            <p style={{
-              color: "#111",
-              fontSize: "clamp(17px, 1.9vw, 24px)",
-              fontWeight: 800,
-              lineHeight: 1.3,
-              margin: 0,
-            }}>
-              Da! Acesta este hit-ul care stii din{" "}
-              <span style={{ color: "#c850c0" }}>TikTok</span>
-            </p>
-          </div>
-
-          {/* IMAGE BOTTOM: fills rest */}
-          <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+          {/* IMAGE TOP ~65% */}
+          <div style={{ flex: "0 0 65%", position: "relative", overflow: "hidden" }}>
             <img
               src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&h=900&fit=crop"
               alt="viral tiktok"
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
-            {/* gradient only at bottom */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.82) 100%)" }} />
+            {/* subtle gradient only at bottom of image */}
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, transparent 40%)" }} />
 
-          {/* TikTok branding */}
-          <div style={{ position: "absolute", top: 16, left: 16, zIndex: 2, display: "flex", alignItems: "center", gap: 8 }}>
-            <svg width={26} height={26} viewBox="0 0 24 24" fill="#fff">
-              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.18 8.18 0 004.78 1.52V6.82a4.85 4.85 0 01-1.01-.13z"/>
-            </svg>
-            <div>
-              <p style={{ margin: 0, color: "#fff", fontSize: 14, fontWeight: 700, lineHeight: 1 }}>TikTok</p>
-              <p style={{ margin: 0, color: "rgba(255,255,255,0.7)", fontSize: 11 }}>@krzysztof.sobi</p>
+            {/* Top text overlay */}
+            <div style={{ position: "absolute", top: 18, left: 16, right: 16, zIndex: 2 }}>
+              <p style={{
+                color: "#fff",
+                fontSize: "clamp(16px, 1.8vw, 22px)",
+                fontWeight: 800,
+                lineHeight: 1.3,
+                margin: 0,
+                textShadow: "0 1px 6px rgba(0,0,0,0.5)",
+              }}>
+                Da! Acesta este hit-ul care stii din{" "}
+                <span style={{ color: "#c850c0" }}>TikTok</span>
+              </p>
+            </div>
+
+            {/* TikTok branding */}
+            <div style={{ position: "absolute", bottom: 14, left: 16, zIndex: 2, display: "flex", alignItems: "center", gap: 7 }}>
+              <svg width={22} height={22} viewBox="0 0 24 24" fill="#fff">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.18 8.18 0 004.78 1.52V6.82a4.85 4.85 0 01-1.01-.13z"/>
+              </svg>
+              <div>
+                <p style={{ margin: 0, color: "#fff", fontSize: 13, fontWeight: 700, lineHeight: 1 }}>TikTok</p>
+                <p style={{ margin: 0, color: "rgba(255,255,255,0.75)", fontSize: 10 }}>@krzysztof.sobi</p>
+              </div>
             </div>
           </div>
 
-          {/* Big 12 */}
-          <div style={{
-            position: "absolute",
-            bottom: "10%",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zIndex: 1,
-            fontSize: "clamp(90px, 16vw, 160px)",
-            fontWeight: 900,
-            color: "rgba(255,255,255,0.13)",
-            lineHeight: 1,
-            letterSpacing: "-0.05em",
-            userSelect: "none",
-          }}>12</div>
-
-          {/* Milioane vizualizari */}
-          <div style={{ position: "absolute", bottom: 24, left: 20, right: 20, zIndex: 2 }}>
+          {/* WHITE BOTTOM ~35% */}
+          <div style={{ flex: "0 0 35%", background: "#fff", position: "relative", display: "flex", alignItems: "flex-end", padding: "12px 20px 24px", overflow: "hidden" }}>
+            {/* Big faded 12 */}
+            <div style={{
+              position: "absolute",
+              right: -10,
+              top: "50%",
+              transform: "translateY(-50%)",
+              fontSize: "clamp(100px, 14vw, 160px)",
+              fontWeight: 900,
+              color: "rgba(0,0,0,0.06)",
+              lineHeight: 1,
+              letterSpacing: "-0.05em",
+              userSelect: "none",
+              pointerEvents: "none",
+            }}>12</div>
             <p style={{
-              color: "#fff",
-              fontSize: "clamp(28px, 4vw, 44px)",
+              color: "#111",
+              fontSize: "clamp(26px, 3.5vw, 42px)",
               fontWeight: 900,
               margin: 0,
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
-              textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+              position: "relative",
+              zIndex: 1,
             }}>Milioane<br />vizualizari</p>
           </div>
-          </div>{/* end image div */}
-        </div>{/* end card */}
+        </div>
 
         {/* ── CENTRU: titlu + reviews ── */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", minHeight: 520 }}>
