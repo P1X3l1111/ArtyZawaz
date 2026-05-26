@@ -3,7 +3,7 @@ export default function Livrare() {
   return (
     <section style={{
       background: "linear-gradient(135deg, #f5ede0 0%, #f0e6d3 60%, #e8d8c0 100%)",
-      padding: "80px 0 0",
+      paddingTop: 60,
       overflow: "hidden",
       position: "relative",
     }}>
@@ -15,7 +15,7 @@ export default function Livrare() {
         gridTemplateColumns: "1fr 1fr",
         alignItems: "flex-end",
         gap: "clamp(32px, 5vw, 80px)",
-        minHeight: 420,
+        minHeight: 360,
       }}>
 
         {/* LEFT — mascot illustration */}
@@ -24,6 +24,7 @@ export default function Livrare() {
           justifyContent: "center",
           alignItems: "flex-end",
           position: "relative",
+          marginBottom: 0,
         }}>
           {/* City silhouette background */}
           <div style={{
@@ -42,8 +43,8 @@ export default function Livrare() {
           {/* Delivery mascot — SVG cartoon coin character */}
           <svg
             viewBox="0 0 320 420"
-            width="320"
-            style={{ maxWidth: "100%", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.12))" }}
+            width="300"
+            style={{ maxWidth: "100%", display: "block", position: "relative", zIndex: 1, filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.12))", marginBottom: -4 }}
           >
             {/* Shadow */}
             <ellipse cx="160" cy="415" rx="70" ry="8" fill="rgba(0,0,0,0.12)" />
@@ -111,7 +112,7 @@ export default function Livrare() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          paddingBottom: 60,
+          paddingBottom: 48,
         }}>
           <h2 style={{
             fontSize: "clamp(40px, 6vw, 80px)",
