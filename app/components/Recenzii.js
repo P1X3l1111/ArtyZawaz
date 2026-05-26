@@ -62,7 +62,7 @@ export default function Recenzii() {
   const next = () => setSlide(s => (s + 1) % TOTAL_SLIDES);
 
   return (
-    <section style={{ background: "#f0ece6", padding: "80px 0" }}>
+    <section style={{ background: "#f5f2ec", padding: "80px 0" }}>
       <div style={{
         maxWidth: 1280,
         margin: "0 auto",
@@ -86,10 +86,10 @@ export default function Recenzii() {
           <img
             src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&h=900&fit=crop"
             alt="viral tiktok"
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.75 }}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.92 }}
           />
           {/* Dark gradient bottom */}
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 35%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.85) 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0.75) 100%)" }} />
 
           {/* Top text */}
           <div style={{ position: "absolute", top: 24, left: 20, right: 20, zIndex: 2 }}>
