@@ -153,7 +153,7 @@ export default function GasestePerfect() {
           Găsiți modelul perfect
         </h2>
 
-        <div style={{
+        <div className="gaseste-grid" style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: 16,

@@ -37,9 +37,9 @@ export default function SliderPopulare() {
 
   return (
     <section style={{ background: "#f5f3f0", padding: "72px 0", overflow: "hidden" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 48, flexWrap: "nowrap" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 48, flexWrap: "nowrap" }} className="ps-row">
         {/* Left: text + controls */}
-        <div style={{ flexShrink: 0, paddingLeft: "clamp(24px, 5vw, 80px)" }}>
+        <div style={{ flexShrink: 0, paddingLeft: "clamp(24px, 5vw, 80px)" }} className="ps-panel">
           <h2 style={{ fontSize: "clamp(28px, 3.5vw, 56px)", fontWeight: 900, lineHeight: 1.1, margin: "0 0 6px", color: "#111", whiteSpace: "nowrap" }}>Produse Populare</h2>
           <p style={{ fontSize: "clamp(13px, 1.1vw, 17px)", color: "#666", margin: "0 0 20px", lineHeight: 1.4, whiteSpace: "nowrap" }}>Cele mai apreciate produse din colecția noastră</p>
           <div style={{ display: "flex", gap: 10 }}>
@@ -54,9 +54,10 @@ export default function SliderPopulare() {
           </div>
         </div>
         {/* Right: scrolling cards - overflows out of page */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0 }} className="ps-cards-wrap">
           <div
             ref={scrollRef}
+            className="ps-cards"
             style={{ display: "flex", gap: "clamp(14px, 1.5vw, 24px)", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", userSelect: "none" }}
             onMouseDown={e => { dragRef.current = { dragging: true, startX: e.pageX, startScroll: scrollRef.current.scrollLeft }; pausedRef.current = true; e.currentTarget.style.cursor = "grabbing"; }}
             onMouseMove={e => { if (!dragRef.current.dragging) return; const dx = e.pageX - dragRef.current.startX; scrollRef.current.scrollLeft = dragRef.current.startScroll - dx; }}

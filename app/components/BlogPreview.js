@@ -12,7 +12,7 @@ export default function BlogPreview() {
   return (
     <section style={{ padding: "var(--section-padding)", background: "#fff" }}>
       <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
+        <div className="blog-header" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
           <div>
             <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c8a96e", marginBottom: 10 }}>Blog</p>
             <h2 style={{ fontSize: 36, fontWeight: 800, color: "#111", margin: 0 }}>Din atelierul nostru</h2>
