@@ -77,11 +77,11 @@ export default function HeroSection() {
           />
           {/* Text overlay */}
           {isMobile ? (
-            /* Mobile: gradient + title + button at bottom */
+            /* Mobile: gradient + title + button at TOP */
             <div style={{
-              position: "absolute", bottom: 0, left: 0, right: 0,
-              padding: "clamp(32px, 10vw, 60px) clamp(20px, 6vw, 36px) clamp(36px, 12vw, 56px)",
-              background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 55%, transparent 100%)",
+              position: "absolute", top: 0, left: 0, right: 0,
+              padding: "clamp(28px, 9vw, 52px) clamp(20px, 6vw, 36px) clamp(36px, 12vw, 56px)",
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 55%, transparent 100%)",
               display: "flex", flexDirection: "column", alignItems: "flex-start",
             }}>
               {slide.titlu && (
