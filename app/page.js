@@ -6,7 +6,6 @@ import ProduseNoi from "./components/ProduseNoi";
 import Reduceri from "./components/Reduceri";
 import SliderPopulare from "./components/SliderPopulare";
 import Harta from "./components/Harta";
-import ImageAnimata from "./components/ImageAnimata";
 import Recenzii from "./components/Recenzii";
 import BlogPreview from "./components/BlogPreview";
 import Footer from "./components/Footer";
@@ -24,10 +23,9 @@ export default function Home() {
       <Reduceri />
       <SliderPopulare />
       <AutoVidare />
-      <ImageAnimata />
+      <GasestePerfect />
       <Recenzii />
       <BlogPreview />
-      <GasestePerfect />
       <Livrare />
       <Harta />
       <Footer />
