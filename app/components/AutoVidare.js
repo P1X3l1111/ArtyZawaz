@@ -65,10 +65,8 @@ export default function AutoVidare() {
             {/* Highlighted text lines */}
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               {[
-                "Depui 10 lei zilnic",
-                "Umpli toată pușculița",
-                "După un an iese 1830 lei",
-                "Pușculița Anului cu auto-golire.",
+                "Depui 10 lei zilnic și umpli toată pușculița.",
+                "După un an iese 3650 lei — Pușculița Anului cu auto-golire.",
               ].map((line, i) => (
                 <span key={i} style={{
                   display: "inline-block",
