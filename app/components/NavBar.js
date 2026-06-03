@@ -137,9 +137,14 @@ export default function NavBar() {
   }, []);
 
   useEffect(() => {
+    let lastY = window.scrollY;
     const handleScroll = () => {
-      setAtTop(window.scrollY === 0);
-      setMenuOpen(false);
+      const y = window.scrollY;
+      setAtTop(y === 0);
+      if (y !== lastY) {
+        setMenuOpen(false);
+        lastY = y;
+      }
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -157,7 +162,8 @@ export default function NavBar() {
 
     {/* Mobile menu dropdown — appears below navbar */}
     {menuOpen && (
-      <div onClick={() => setMenuOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
+      <div onClick={() => setMenuOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 98, pointerEvents: "auto" }} />
+      {/* transparent click-outside layer — sits behind dropdown */}
     )}
 
     {!atTop && <div style={{ height: navHeight }} aria-hidden="true" />}
