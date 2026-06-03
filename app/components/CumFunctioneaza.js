@@ -23,15 +23,22 @@ export default function CumFunctioneaza() {
     setActive(index);
     if (scrollRef.current) {
       const el = scrollRef.current;
-      const cardWidth = isMobile ? el.offsetWidth + 16 : 524;
-      el.scrollTo({ left: index * cardWidth, behavior: "smooth" });
+      if (isMobile) {
+        const card = el.querySelector('[data-card]');
+        const cardWidth = card ? card.offsetWidth + 16 : el.offsetWidth;
+        el.scrollTo({ left: index * cardWidth, behavior: "smooth" });
+      } else {
+        el.scrollTo({ left: index * 524, behavior: "smooth" });
+      }
     }
   };
 
   const handleScroll = () => {
     if (!scrollRef.current || !isMobile) return;
     const el = scrollRef.current;
-    const idx = Math.round(el.scrollLeft / (el.offsetWidth + 16));
+    const card = el.querySelector('[data-card]');
+    const cardWidth = card ? card.offsetWidth + 16 : el.offsetWidth;
+    const idx = Math.round(el.scrollLeft / cardWidth);
     setActive(Math.max(0, Math.min(idx, PASI.length - 1)));
   };
 
@@ -57,7 +64,7 @@ export default function CumFunctioneaza() {
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Maria" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               </div>
               <div style={{ display: "flex", gap: 2 }}>
-                {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#d4a843", fontSize: 16 }}>?</span>)}
+                {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#d4a843", fontSize: 16 }}>★</span>)}
               </div>
               <p style={{ fontSize: 13, color: "#aaa", margin: 0, fontWeight: 600 }}>Maria, Chisinau</p>
             </div>
@@ -76,7 +83,7 @@ export default function CumFunctioneaza() {
             }}
           >
             {PASI.map((pas, i) => (
-              <div key={pas.titlu} style={{ flexShrink: 0, width: "calc(100vw - clamp(40px, 10vw, 80px))", scrollSnapAlign: "start", display: "flex", flexDirection: "column", gap: 10 }}>
+              <div data-card key={pas.titlu} style={{ flexShrink: 0, width: "calc(100vw - clamp(56px, 12vw, 96px))", scrollSnapAlign: "start", display: "flex", flexDirection: "column", gap: 10 }}>
                 <h3 style={{ fontSize: 20, fontWeight: 900, color: active === i ? "#111" : "#bbb", margin: 0, letterSpacing: "-0.02em", transition: "color 0.3s", fontFamily: "'Montserrat', 'Poppins', sans-serif" }}>{pas.titlu}</h3>
                 <div style={{ borderRadius: 20, overflow: "hidden", width: "100%", aspectRatio: "1 / 1", background: "#e8e4de", boxShadow: "0 6px 24px rgba(0,0,0,0.10)" }}>
                   <video src={pas.video} autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
@@ -106,7 +113,7 @@ export default function CumFunctioneaza() {
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Maria" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
                   <div style={{ display: "flex", gap: 3 }}>
-                    {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#d4a843", fontSize: 22, lineHeight: 1 }}>?</span>)}
+                    {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#d4a843", fontSize: 22, lineHeight: 1 }}>★</span>)}
                   </div>
                 </div>
                 <p style={{ fontSize: 15, color: "#aaa", margin: 0, fontWeight: 600, letterSpacing: "0.02em" }}>Maria, Chisinau</p>
