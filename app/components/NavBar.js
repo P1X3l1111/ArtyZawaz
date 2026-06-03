@@ -230,9 +230,12 @@ export default function NavBar() {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path strokeLinecap="round" d="M3 6h18"/><path strokeLinecap="round" d="M16 10a4 4 0 01-8 0"/></svg>
             <span style={{ position: "absolute", top: -4, right: -4, background: "#000", color: "#fff", fontSize: 10, width: 16, height: 16, borderRadius: "50%", display: numarArticole > 0 ? "flex" : "none", alignItems: "center", justifyContent: "center" }}>{numarArticole}</span>
           </button>
-          {/* Hamburger */}
-          <button className="nav-hamburger" onClick={() => setMenuOpen(true)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, alignItems: "center", justifyContent: "center" }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2}><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          {/* Hamburger / Close */}
+          <button className="nav-hamburger" onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, alignItems: "center", justifyContent: "center" }}>
+            {menuOpen
+              ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2.2} strokeLinecap="round"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+              : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2}><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            }
           </button>
         </div>
       </div>
