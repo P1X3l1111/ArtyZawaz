@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
     >
       <body style={{ margin: 0, padding: 0, height: "100%" }}>
         <CosProvider>
-          {children}
+          <div style={{ overflowX: "hidden" }}>
+            {children}
+          </div>
           <FloatingWidgets />
         </CosProvider>
       </body>
