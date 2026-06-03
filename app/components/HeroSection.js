@@ -80,9 +80,10 @@ export default function HeroSection() {
             /* Mobile: same look as desktop */
             <div style={{
               position: "absolute", inset: 0,
-              display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center",
+              display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start",
               paddingLeft: "clamp(20px, 7vw, 48px)",
               paddingRight: "clamp(20px, 7vw, 48px)",
+              paddingTop: "clamp(24px, 8vw, 48px)",
               background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 60%, transparent 100%)",
             }}>
               {slide.titlu && (
