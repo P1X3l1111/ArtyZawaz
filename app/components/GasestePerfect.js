@@ -140,13 +140,13 @@ const CARDS = [
 
 export default function GasestePerfect() {
   return (
-    <section style={{ background: "#f0ece6", padding: "80px 0 100px" }}>
+    <section style={{ background: "#f0ece6", padding: "clamp(48px, 8vw, 80px) 0 clamp(48px, 8vw, 100px)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(20px, 4vw, 60px)" }}>
         <h2 style={{
           fontSize: "clamp(32px, 5vw, 64px)",
           fontWeight: 900,
           color: "#111",
-          margin: "0 0 48px",
+          margin: "0 0 clamp(24px, 4vw, 48px)",
           letterSpacing: "-0.03em",
           lineHeight: 1.05,
         }}>

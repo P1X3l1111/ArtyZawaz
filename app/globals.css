@@ -385,6 +385,7 @@ html, body {
     margin-bottom: 14px !important;
   }
   .ps-cards-wrap { min-width: 0 !important; }
+  .ps-cards::-webkit-scrollbar { display: none; }
 
   /* Reduceri — text panel above cards */
   .rs-panel {
