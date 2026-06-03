@@ -73,54 +73,6 @@ export default function HeroSection() {
             sizes="100vw"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
-          {/* Text overlay - left */}
-          <div style={{
-            position: "absolute", inset: 0,
-            display: "flex", alignItems: "center",
-            paddingLeft: "clamp(24px, 6vw, 100px)",
-            background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 50%, transparent 100%)",
-          }}>
-            <div style={{ maxWidth: 480 }}>
-              {slide.titlu && (
-                <h1 style={{
-                  fontSize: "clamp(24px, 3.8vw, 58px)",
-                  fontWeight: 900,
-                  color: "#1a1008",
-                  margin: "0 0 18px",
-                  lineHeight: 1.12,
-                  letterSpacing: "-0.02em",
-                  whiteSpace: "pre-line",
-                }}>{slide.titlu}</h1>
-              )}
-              {slide.subtitlu && (
-                <p style={{
-                  fontSize: "clamp(13px, 1.3vw, 18px)",
-                  color: "#333",
-                  margin: "0 0 32px",
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                  maxWidth: 400,
-                }} dangerouslySetInnerHTML={{
-                  __html: slide.subtitlu.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                }} />
-              )}
-              <a href={slide.butonHref || "/produse"} style={{
-                display: "inline-block",
-                padding: "13px 34px",
-                background: "#1a1008",
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "clamp(13px, 1.1vw, 15px)",
-                borderRadius: 999,
-                textDecoration: "none",
-                letterSpacing: "0.04em",
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#3d2b1f"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#1a1008"; }}
-              >{slide.buton || "Explorează"}</a>
-            </div>
-          </div>
         </div>
       ))}
 
