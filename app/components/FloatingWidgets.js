@@ -52,8 +52,8 @@ export default function FloatingWidgets() {
       {/* -- STANGA JOS: Trusted Shops badge -- */}
       <div id="ts-badge" style={{ position: "fixed", bottom: 24, left: 20, zIndex: 1000 }}>
 
-        {/* Dropdown menu - desktop only */}
-        {!isMobile && menuOpen && (
+        {/* Dropdown menu */}
+        {menuOpen && (
           <div style={{
             position: "absolute",
             bottom: "calc(100% + 8px)",
