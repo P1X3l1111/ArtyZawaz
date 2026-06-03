@@ -61,24 +61,6 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter */}
-        <div className="footer-newsletter" style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 40, paddingBottom: 32 }}>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", margin: 0 }}>Abonează-te pentru oferte exclusive:</p>
-          <form style={{ display: "flex", width: "100%", maxWidth: 360 }} onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="Email-ul tău"
-              style={{ flex: 1, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: 14, padding: "10px 16px", outline: "none" }}
-            />
-            <button
-              type="submit"
-              style={{ background: "#fff", color: "#000", fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", padding: "10px 20px", border: "none", cursor: "pointer" }}
-            >
-              OK
-            </button>
-          </form>
-        </div>
-
         {/* Bottom */}
         <div className="footer-bottom" style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24 }}>
           <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", margin: 0 }}>© {new Date().getFullYear()} Zawaz Wood. Toate drepturile rezervate.</p>
