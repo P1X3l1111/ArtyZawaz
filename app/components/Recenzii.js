@@ -83,11 +83,11 @@ export default function Recenzii() {
   const nextIdx = (slide + 1) % TOTAL;
 
   return (
-    <section style={{ background: "#f5f2ed", padding: "90px 0" }}>
+    <section style={{ background: "#f5f2ed", padding: "60px 0" }}>
       <div style={{
         maxWidth: 1300,
         margin: "0 auto",
-        padding: "0 clamp(24px, 4vw, 64px)",
+        padding: "0 clamp(16px, 4vw, 64px)",
         display: "grid",
         gridTemplateColumns: "minmax(300px, 460px) 1fr",
         gap: "clamp(40px, 5vw, 80px)",
@@ -95,7 +95,7 @@ export default function Recenzii() {
       }} className="recenzii-grid">
 
         {/* ── LEFT: TikTok card ── */}
-        <div style={{
+        <div className="recenzii-card" style={{
           borderRadius: 28,
           overflow: "hidden",
           background: "#fff",
@@ -148,7 +148,7 @@ export default function Recenzii() {
           </div>
 
           {/* WHITE BOTTOM 32% */}
-          <div style={{
+          <div className="recenzii-card-bottom" style={{
             flex: "0 0 32%",
             background: "#fff",
             position: "relative",
