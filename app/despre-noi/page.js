@@ -1,5 +1,6 @@
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import FAQ from "../components/FAQ";
 
 export default function DespreNoi() {
   return (
@@ -32,6 +33,8 @@ export default function DespreNoi() {
             ))}
           </div>
         </div>
+
+        <FAQ />
 
         {/* CTA */}
         <div className="despre-cta" style={{ background: "#111", padding: "80px 24px", textAlign: "center" }}>
