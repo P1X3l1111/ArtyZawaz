@@ -231,35 +231,15 @@ export default function NavBar() {
             <span style={{ position: "absolute", top: -4, right: -4, background: "#000", color: "#fff", fontSize: 10, width: 16, height: 16, borderRadius: "50%", display: numarArticole > 0 ? "flex" : "none", alignItems: "center", justifyContent: "center" }}>{numarArticole}</span>
           </button>
           {/* Hamburger / Close */}
-          <button className="nav-hamburger" onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, alignItems: "center", justifyContent: "center" }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2.2} strokeLinecap="round">
-              {/* Top line */}
-              <line
-                x1="3" y1="6" x2="21" y2="6"
-                style={{
-                  transformOrigin: "12px 6px",
-                  transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.2s",
-                  transform: menuOpen ? "rotate(45deg) translate(0px, 6px)" : "none",
-                }}
-              />
-              {/* Middle line */}
-              <line
-                x1="3" y1="12" x2="21" y2="12"
-                style={{
-                  transformOrigin: "12px 12px",
-                  transition: "opacity 0.2s",
-                  opacity: menuOpen ? 0 : 1,
-                }}
-              />
-              {/* Bottom line */}
-              <line
-                x1="3" y1="18" x2="21" y2="18"
-                style={{
-                  transformOrigin: "12px 18px",
-                  transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.2s",
-                  transform: menuOpen ? "rotate(-45deg) translate(0px, -6px)" : "none",
-                }}
-              />
+          <button className="nav-hamburger" onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, position: "relative" }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2.2} strokeLinecap="round" style={{ position: "absolute", transition: "opacity 0.25s, transform 0.25s", opacity: menuOpen ? 0 : 1, transform: menuOpen ? "rotate(90deg) scale(0.7)" : "rotate(0deg) scale(1)" }}>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2.2} strokeLinecap="round" style={{ position: "absolute", transition: "opacity 0.25s, transform 0.25s", opacity: menuOpen ? 1 : 0, transform: menuOpen ? "rotate(0deg) scale(1)" : "rotate(-90deg) scale(0.7)" }}>
+              <line x1="4" y1="4" x2="20" y2="20"/>
+              <line x1="20" y1="4" x2="4" y2="20"/>
             </svg>
           </button>
         </div>
