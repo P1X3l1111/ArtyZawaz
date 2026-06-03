@@ -77,12 +77,11 @@ export default function HeroSection() {
           />
           {/* Text overlay */}
           {isMobile ? (
-            /* Mobile: gradient + title + button at TOP */
+            /* Mobile: no overlay, text centered */
             <div style={{
-              position: "absolute", top: 0, left: 0, right: 0,
-              padding: "clamp(28px, 9vw, 52px) clamp(20px, 6vw, 36px) clamp(36px, 12vw, 56px)",
-              background: "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 55%, transparent 100%)",
-              display: "flex", flexDirection: "column", alignItems: "flex-start",
+              position: "absolute", inset: 0,
+              padding: "clamp(20px, 6vw, 36px)",
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
             }}>
               {slide.titlu && (
                 <h1 style={{
@@ -93,7 +92,8 @@ export default function HeroSection() {
                   lineHeight: 1.15,
                   letterSpacing: "-0.025em",
                   whiteSpace: "pre-line",
-                  textShadow: "0 2px 12px rgba(0,0,0,0.4)",
+                  textAlign: "center",
+                  textShadow: "0 2px 16px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.4)",
                 }}>{slide.titlu.split("\n").slice(0, 2).join("\n")}</h1>
               )}
               <a href={slide.butonHref || "/produse"} style={{
