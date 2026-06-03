@@ -9,7 +9,6 @@ const MENU_LINKS = [
   { label: "Date despre firma", href: "#" },
   { label: "Protectia datelor personale", href: "#" },
   { label: "Opinii autentice", href: "#" },
-  { label: "Licente furnizori externi", href: "#" },
 ];
 
 function Star({ filled }) {
@@ -25,6 +24,7 @@ export default function FloatingWidgets() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLicenses, setShowLicenses] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768);
@@ -81,6 +81,18 @@ export default function FloatingWidgets() {
                 </svg>
               </a>
             ))}
+            {/* Licente furnizori externi */}
+            <button onClick={() => { setMenuOpen(false); setShowLicenses(true); }} style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              width: "100%", padding: "9px 18px", color: "#fff", fontSize: 13, fontWeight: 500,
+              background: "none", border: "none", cursor: "pointer", textAlign: "left",
+            }}
+              onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.06)"}
+              onMouseLeave={e => e.currentTarget.style.background="transparent"}
+            >
+              Licențe furnizori externi
+              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth={2} style={{ flexShrink: 0, marginLeft: 8 }}><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </button>
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", margin: "6px 0" }} />
             <button onClick={() => { setMenuOpen(false); setShowModal(true); }} style={{ display: "block", width: "100%", textAlign: "left", padding: "8px 18px", color: "#fff", fontSize: 13, fontWeight: 600, background: "none", border: "none", cursor: "pointer" }}>+ Mărește</button>
           </div>
@@ -252,6 +264,75 @@ export default function FloatingWidgets() {
 
             {/* Footer */}
             <div style={{ padding: "10px 18px 14px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>•••</span>
+              <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 11 }}>Date firmă & Protecția datelor personale</span>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* -- MODAL Licente furnizori externi -- */}
+      {showLicenses && (
+        <div onClick={() => setShowLicenses(false)} style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 2000,
+          display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: "#1e2235", borderRadius: 16, width: "100%", maxWidth: 380,
+            overflow: "hidden", boxShadow: "0 16px 64px rgba(0,0,0,0.5)", display: "flex", flexDirection: "column", maxHeight: "80vh",
+          }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }}>
+              <button onClick={() => setShowLicenses(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.6)", fontSize: 18, lineHeight: 1, padding: "2px 6px 2px 0" }}>‹</button>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: 0, color: "#f5a623", fontWeight: 700, fontSize: 14 }}>Licențe furnizori externi</p>
+              </div>
+              <button onClick={() => setShowLicenses(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", fontSize: 20, lineHeight: 1 }}>×</button>
+            </div>
+
+            {/* Scrollable content */}
+            <div style={{ overflowY: "auto", padding: "20px 18px", flex: 1 }}>
+              <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 800, margin: "0 0 20px" }}>Licențe terțe</h2>
+
+              {[
+                {
+                  name: "Next.js",
+                  url: "https://nextjs.org/",
+                  license: "Licența MIT",
+                  copyright: "Copyright (c) 2016-prezent Vercel, Inc.",
+                },
+                {
+                  name: "React",
+                  url: "https://react.dev/",
+                  license: "Licența MIT",
+                  copyright: "Copyright (c) Meta Platforms, Inc. și asociații",
+                },
+                {
+                  name: "Tailwind CSS",
+                  url: "https://tailwindcss.com/",
+                  license: "Licența MIT",
+                  copyright: "Copyright (c) Tailwind Labs, Inc.",
+                },
+                {
+                  name: "Vercel",
+                  url: "https://vercel.com/",
+                  license: "Licența MIT",
+                  copyright: "Copyright (c) 2024 Vercel, Inc.",
+                },
+              ].map((lib, i) => (
+                <div key={i} style={{ marginBottom: 24, paddingBottom: 24, borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
+                  <h3 style={{ margin: "0 0 4px", color: "#fff", fontSize: 16, fontWeight: 700 }}>{lib.name}</h3>
+                  <a href={lib.url} target="_blank" rel="noopener noreferrer" style={{ color: "#f5a623", fontSize: 12, display: "block", marginBottom: 6 }}>{lib.url}</a>
+                  <p style={{ margin: "0 0 4px", color: "rgba(255,255,255,0.7)", fontSize: 13 }}>{lib.license}</p>
+                  <p style={{ margin: "0 0 10px", color: "rgba(255,255,255,0.5)", fontSize: 12 }}>{lib.copyright}</p>
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.45)", fontSize: 12, lineHeight: 1.6 }}>
+                    Prin prezenta se acordă gratuit oricărei persoane care obține o copie a acestui software și a fișierelor de documentație asociate dreptul de a utiliza, copia, modifica, îmbina, publica, distribui, sublicenția și/sau vinde copii ale software-ului, fără restricții, cu condiția includerii notificării de copyright în toate copiile.
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer */}
+            <div style={{ padding: "10px 18px 14px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
               <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>•••</span>
               <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 11 }}>Date firmă & Protecția datelor personale</span>
             </div>
