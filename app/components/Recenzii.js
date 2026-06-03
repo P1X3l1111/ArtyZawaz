@@ -201,7 +201,7 @@ export default function Recenzii() {
             margin: "0 0 32px",
             letterSpacing: "-0.03em",
             fontFamily: "Inter, system-ui, sans-serif",
-            maxWidth: 280,
+            maxWidth: 400,
           }}>
             Sute de opinii<br />pozitive online
           </h2>
