@@ -33,7 +33,22 @@ export default function CumFunctioneaza() {
     }
   };
 
-  const handleScroll = () => {
+  useEffect(() => {
+    if (!isMobile) return;
+    const interval = setInterval(() => {
+      setActive(prev => {
+        const next = (prev + 1) % PASI.length;
+        if (scrollRef.current) {
+          const el = scrollRef.current;
+          const card = el.querySelector('[data-card]');
+          const cardWidth = card ? card.offsetWidth + 16 : el.offsetWidth;
+          el.scrollTo({ left: next * cardWidth, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isMobile]);
     if (!scrollRef.current || !isMobile) return;
     const el = scrollRef.current;
     const card = el.querySelector('[data-card]');
