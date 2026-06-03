@@ -3,9 +3,24 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 
 const SLIDES = [
-  { src: "/hero-1.png", alt: "Hero 1" },
-  { src: "/hero-2.png", alt: "Hero 2" },
-  { src: "/hero-3.png", alt: "Hero 3" },
+  {
+    src: "/hero-1.png", alt: "Hero 1",
+    titlu: "Oferă un cadou\nde nota 10!\nProdusul anului\npentru toți.",
+    subtitlu: "Există 1830 de motive pentru care merită să alegi produsul anului. Calitate **premium**, design **elegant** și confort **garantat**.",
+    buton: "Bestsellers", butonHref: "/populare",
+  },
+  {
+    src: "/hero-2.png", alt: "Hero 2",
+    titlu: "Stil & Calitate\nPentru Fiecare\nOcazie Specială.",
+    subtitlu: "Descoperă colecția noastră **exclusivă**. Produse atent alese pentru un **stil desăvârșit** la prețuri accesibile.",
+    buton: "Explorează", butonHref: "/produse",
+  },
+  {
+    src: "/hero-3.png", alt: "Hero 3",
+    titlu: "Colecție Nouă\nPrimăvara-Vara\n2026 — Acum\nDisponibilă.",
+    subtitlu: "Cele mai noi tendințe au sosit! Reduceri de până la **50%** la **produse selectate** din noua colecție.",
+    buton: "Vezi Reducerile", butonHref: "/reduceri",
+  },
 ];
 const IMG_W = 1924;
 const IMG_H = 725;
@@ -52,6 +67,54 @@ export default function HeroSection() {
             sizes="100vw"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
+          {/* Text overlay */}
+          <div style={{
+            position: "absolute", inset: 0,
+            display: "flex", alignItems: "center",
+            paddingLeft: "clamp(24px, 6vw, 100px)",
+            background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 50%, transparent 100%)",
+          }}>
+            <div style={{ maxWidth: 480 }}>
+              {slide.titlu && (
+                <h1 style={{
+                  fontSize: "clamp(24px, 3.8vw, 58px)",
+                  fontWeight: 900,
+                  color: "#1a1008",
+                  margin: "0 0 18px",
+                  lineHeight: 1.12,
+                  letterSpacing: "-0.02em",
+                  whiteSpace: "pre-line",
+                }}>{slide.titlu}</h1>
+              )}
+              {slide.subtitlu && (
+                <p style={{
+                  fontSize: "clamp(13px, 1.3vw, 18px)",
+                  color: "#333",
+                  margin: "0 0 32px",
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  maxWidth: 400,
+                }} dangerouslySetInnerHTML={{
+                  __html: slide.subtitlu.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                }} />
+              )}
+              <a href={slide.butonHref || "/produse"} style={{
+                display: "inline-block",
+                padding: "13px 34px",
+                background: "#1a1008",
+                color: "#fff",
+                fontWeight: 700,
+                fontSize: "clamp(13px, 1.1vw, 15px)",
+                borderRadius: 999,
+                textDecoration: "none",
+                letterSpacing: "0.04em",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#3d2b1f"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#1a1008"; }}
+              >{slide.buton || "Explorează"}</a>
+            </div>
+          </div>
         </div>
       ))}
 
