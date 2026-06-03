@@ -490,8 +490,15 @@ html, body {
 @media (max-width: 900px) {
   .recenzii-grid {
     grid-template-columns: 1fr !important;
-    padding: 0 16px !important;
-    gap: 28px !important;
+    padding: 0 20px !important;
+    gap: 32px !important;
+  }
+  .recenzii-right {
+    padding: 0 !important;
+  }
+  .recenzii-review-item {
+    grid-template-columns: 52px 1fr !important;
+    gap: 0 16px !important;
   }
   .recenzii-card {
     height: 460px !important;

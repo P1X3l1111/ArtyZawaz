@@ -185,15 +185,16 @@ export default function Recenzii() {
         </div>
 
         {/* ── RIGHT ── */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className="recenzii-right" style={{ display: "flex", flexDirection: "column" }}>
 
           {/* Title */}
           <h2 style={{
-            fontSize: "clamp(26px, 3.2vw, 44px)",
+            fontSize: "clamp(28px, 3.2vw, 44px)",
             fontWeight: 900,
             lineHeight: 1.1,
             color: "#111",
-            margin: "0 0 32px",
+            margin: "0 0 24px",
+            letterSpacing: "-0.03em",
             letterSpacing: "-0.03em",
             fontFamily: "Inter, system-ui, sans-serif",
             maxWidth: 400,
@@ -218,7 +219,7 @@ export default function Recenzii() {
               const r = TESTIMONIALE[idx];
               const isActive = pos === 0;
               return (
-                <div key={idx} style={{
+                <div key={idx} className="recenzii-review-item" style={{
                   display: "grid",
                   gridTemplateColumns: "48px 1fr",
                   gap: "0 14px",
@@ -230,23 +231,23 @@ export default function Recenzii() {
                       src={r.avatar}
                       alt={r.nume}
                       style={{
-                        width: 46,
-                        height: 46,
+                        width: "clamp(46px, 12vw, 54px)",
+                        height: "clamp(46px, 12vw, 54px)",
                         borderRadius: "50%",
                         objectFit: "cover",
                         filter: isActive ? "none" : "grayscale(60%)",
                       }}
                     />
                     <Stars active={isActive} />
-                    <p style={{ margin: 0, fontSize: 10, fontWeight: 700, color: isActive ? "#444" : "#aaa", textAlign: "center", lineHeight: 1.2, fontFamily: "Inter, system-ui, sans-serif" }}>{r.nume}</p>
+                    <p style={{ margin: 0, fontSize: "clamp(11px, 2.8vw, 12px)", fontWeight: 700, color: isActive ? "#444" : "#aaa", textAlign: "center", lineHeight: 1.2, fontFamily: "Inter, system-ui, sans-serif" }}>{r.nume}</p>
                   </div>
                   <p style={{
                     margin: 0,
                     paddingTop: 4,
-                    fontSize: "clamp(13px, 1.3vw, 16px)",
+                    fontSize: "clamp(15px, 1.3vw, 16px)",
                     fontStyle: "italic",
                     color: isActive ? "#777" : "#bbb",
-                    lineHeight: 1.65,
+                    lineHeight: 1.7,
                     fontFamily: "Georgia, 'Times New Roman', serif",
                   }}>
                     {r.text}
