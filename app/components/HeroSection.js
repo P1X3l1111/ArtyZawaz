@@ -77,11 +77,12 @@ export default function HeroSection() {
           />
           {/* Text overlay */}
           {isMobile ? (
-            /* Mobile: no overlay, text centered */
+            /* Mobile: no overlay, text upper-center */
             <div style={{
               position: "absolute", inset: 0,
               padding: "clamp(20px, 6vw, 36px)",
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start",
+              paddingTop: "18%",
             }}>
               {slide.titlu && (
                 <h1 style={{
