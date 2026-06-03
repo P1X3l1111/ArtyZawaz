@@ -16,7 +16,7 @@ export default function AutoVidare() {
         gridTemplateColumns: "1fr 1fr",
         alignItems: "center",
         gap: "clamp(32px, 5vw, 80px)",
-      }}>
+      }} className="autovidare-grid">
 
         {/* LEFT — coins image */}
         <div style={{

@@ -27,7 +27,7 @@ export default function CumFunctioneaza() {
         display: "flex",
         alignItems: "flex-start",
         gap: 48,
-      }}>
+      }} className="cumfunc-layout">
         {/* LEFT PANEL - fixed, doesn't scroll */}
         <div style={{
           flexShrink: 0,
@@ -37,7 +37,7 @@ export default function CumFunctioneaza() {
           gap: 44,
           paddingTop: 8,
           paddingLeft: "clamp(32px, 6vw, 96px)",
-        }}>
+        }} className="cumfunc-left">
           <h2 style={{
             fontSize: "clamp(52px, 6vw, 96px)",
             fontWeight: 900,
@@ -123,7 +123,7 @@ export default function CumFunctioneaza() {
           minWidth: 0,
           overflowX: "hidden",
           scrollBehavior: "smooth",
-        }}>
+        }} className="cumfunc-cards">
           {PASI.map((pas, i) => (
             <div
               key={pas.titlu}

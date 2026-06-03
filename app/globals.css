@@ -312,6 +312,116 @@ html, body {
   .cos-layout { flex-direction: column; }
 }
 
+/* ── AutoVidare ── */
+@media (max-width: 767px) {
+  .autovidare-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+  .autovidare-grid > div:first-child {
+    order: 2;
+  }
+  .autovidare-grid > div:last-child {
+    order: 1;
+    align-items: center !important;
+  }
+}
+
+/* ── Recenzii ── */
+@media (max-width: 900px) {
+  .recenzii-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .recenzii-grid > div:first-child {
+    max-width: 460px;
+    width: 100%;
+    margin: 0 auto;
+    height: 480px !important;
+  }
+}
+@media (max-width: 480px) {
+  .recenzii-grid > div:first-child {
+    height: 400px !important;
+  }
+}
+
+/* ── Livrare ── */
+@media (max-width: 767px) {
+  .livrare-grid {
+    grid-template-columns: 1fr !important;
+    min-height: unset !important;
+    padding-top: 40px !important;
+  }
+  .livrare-grid > div:first-child {
+    order: 2;
+    padding-bottom: 0 !important;
+  }
+  .livrare-grid > div:last-child {
+    order: 1;
+    padding-bottom: 24px !important;
+    align-items: center !important;
+    text-align: center;
+  }
+  .livrare-grid svg {
+    width: 180px !important;
+  }
+}
+
+/* ── CumFunctioneaza ── */
+@media (max-width: 900px) {
+  .cumfunc-layout {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .cumfunc-left {
+    width: 100% !important;
+    padding-left: clamp(24px, 5vw, 48px) !important;
+    padding-right: clamp(24px, 5vw, 48px) !important;
+  }
+  .cumfunc-cards {
+    width: 100% !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 clamp(24px, 5vw, 48px) 16px !important;
+  }
+  .cumfunc-cards::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 480px) {
+  .cumfunc-left {
+    gap: 24px !important;
+  }
+  .cumfunc-left h2 {
+    font-size: clamp(36px, 10vw, 56px) !important;
+  }
+  .cumfunc-left > p {
+    font-size: clamp(20px, 6vw, 32px) !important;
+  }
+}
+
+/* ── HeroSection mobile ── */
+@media (max-width: 600px) {
+  .hero-text-overlay {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.6) 70%, transparent 100%) !important;
+  }
+}
+
+/* ── GasestePerfect responsive ── */
+@media (max-width: 1024px) {
+  .gaseste-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 560px) {
+  .gaseste-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── NavBar mobile menu ── */
+@media (max-width: 900px) {
+  .nav-cos-text { display: none !important; }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

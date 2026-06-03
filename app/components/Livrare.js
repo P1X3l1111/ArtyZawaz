@@ -16,7 +16,7 @@ export default function Livrare() {
         alignItems: "flex-end",
         gap: "clamp(32px, 5vw, 80px)",
         minHeight: 360,
-      }}>
+      }} className="livrare-grid">
 
         {/* LEFT — mascot illustration */}
         <div style={{

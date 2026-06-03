@@ -92,7 +92,7 @@ export default function Recenzii() {
         gridTemplateColumns: "minmax(300px, 460px) 1fr",
         gap: "clamp(40px, 5vw, 80px)",
         alignItems: "center",
-      }}>
+      }} className="recenzii-grid">
 
         {/* ── LEFT: TikTok card ── */}
         <div style={{

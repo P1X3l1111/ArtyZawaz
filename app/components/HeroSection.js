@@ -68,7 +68,7 @@ export default function HeroSection() {
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
           {/* Text overlay */}
-          <div style={{
+          <div className="hero-text-overlay" style={{
             position: "absolute", inset: 0,
             display: "flex", alignItems: "center",
             paddingLeft: "clamp(24px, 6vw, 100px)",
