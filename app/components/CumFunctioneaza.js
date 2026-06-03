@@ -46,7 +46,7 @@ export default function CumFunctioneaza() {
         }
         return next;
       });
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [isMobile]);
 

@@ -84,7 +84,6 @@ export default function HeroSection() {
               paddingLeft: "clamp(20px, 7vw, 48px)",
               paddingRight: "clamp(20px, 7vw, 48px)",
               paddingTop: "clamp(24px, 8vw, 48px)",
-              background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 60%, transparent 100%)",
             }}>
               {slide.titlu && (
                 <h1 style={{
@@ -129,7 +128,6 @@ export default function HeroSection() {
               position: "absolute", inset: 0,
               display: "flex", alignItems: "center",
               paddingLeft: "clamp(24px, 6vw, 100px)",
-              background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 50%, transparent 100%)",
             }}>
               <div style={{ maxWidth: 480 }}>
                 {slide.titlu && (
