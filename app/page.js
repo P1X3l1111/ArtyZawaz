@@ -28,8 +28,8 @@ export default function Home() {
       <Recenzii />
       <BlogPreview />
       <GasestePerfect />
-      <Harta />
       <Livrare />
+      <Harta />
       <Footer />
     </div>
   );

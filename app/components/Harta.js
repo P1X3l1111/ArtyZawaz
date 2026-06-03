@@ -1,14 +1,8 @@
 export default function Harta() {
   return (
-    <section style={{ padding: "64px 0 0" }}>
+    <section style={{ padding: 0 }}>
       <div style={{ width: "100%" }}>
-        <h2 style={{ fontSize: 22, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 12, textAlign: "center" }}>
-          Găsește-ne
-        </h2>
-        <p style={{ textAlign: "center", color: "#888", marginBottom: 40, fontSize: 14 }}>
-          Vizitează cel mai apropiat magazin Zawaz Wood
-        </p>
-        <div style={{ width: "100%", height: 450, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
+        <div style={{ width: "100%", height: 450, overflow: "hidden" }}>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90929.0153543756!2d28.7775781!3d47.0245117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x37d1d6305749dd3c!2sECCO%20Shoes!5e0!3m2!1sro!2smd!4v1714000000000"
             width="100%"
