@@ -3,30 +3,9 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 
 const SLIDES = [
-  {
-    src: "/imageeee.avif",
-    alt: "Hero 1",
-    titlu: "Oferă un cadou\nde nota 10!\nProdusul anului\npentru toți.",
-    subtitlu: "Există 1830 de motive pentru care merită să alegi produsul anului. Calitate **premium**, design **elegant** și confort **garantat**.",
-    buton: "Bestsellers",
-    butonHref: "/populare",
-  },
-  {
-    src: "/imagee.avif",
-    alt: "Hero 2",
-    titlu: "Stil & Calitate\nPentru Fiecare\nOcazie Specială.",
-    subtitlu: "Descoperă colecția noastră **exclusivă**. Produse atent alese pentru un **stil desăvârșit** la prețuri accesibile.",
-    buton: "Explorează",
-    butonHref: "/produse",
-  },
-  {
-    src: "/imageeeeee.avif",
-    alt: "Hero 3",
-    titlu: "Colecție Nouă\nPrimăvara-Vara\n2026 — Acum\nDisponibilă.",
-    subtitlu: "Cele mai noi tendințe au sosit! Reduceri de până la **50%** la **produse selectate** din noua colecție.",
-    buton: "Vezi Reducerile",
-    butonHref: "/reduceri",
-  },
+  { src: "/hero-1.png", alt: "Hero 1" },
+  { src: "/hero-2.png", alt: "Hero 2" },
+  { src: "/hero-3.png", alt: "Hero 3" },
 ];
 const IMG_W = 1924;
 const IMG_H = 725;
