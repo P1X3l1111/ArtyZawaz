@@ -153,7 +153,7 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -8px;
+    margin: 0;
     padding: 0 0 12px;
   }
   .slider-outer::-webkit-scrollbar { display: none; }
@@ -163,12 +163,12 @@ html, body {
     transition: none !important;
     gap: 20px !important;
     width: max-content !important;
-    padding-left: 24px !important;
-    padding-right: 24px !important;
+    padding-left: 0 !important;
+    padding-right: 16px !important;
   }
   .slider-item {
-    width: calc(100vw - 48px) !important;
-    min-width: calc(100vw - 48px) !important;
+    width: calc(100vw - 64px) !important;
+    min-width: calc(100vw - 64px) !important;
     flex-shrink: 0 !important;
     scroll-snap-align: center;
   }
@@ -188,9 +188,9 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -8px;
+    margin: 0;
     padding: 0 0 12px;
-    scroll-padding-left: 8px;
+    scroll-padding-left: 0;
   }
   .slider-outer::-webkit-scrollbar { display: none; }
   .slider-inner {
@@ -199,12 +199,12 @@ html, body {
     transition: none !important;
     gap: 16px !important;
     width: max-content !important;
-    padding-left: 16px !important;
+    padding-left: 0 !important;
     padding-right: 16px !important;
   }
   .slider-item {
-    width: calc(100vw - 32px) !important;
-    min-width: calc(100vw - 32px) !important;
+    width: calc(100vw - 48px) !important;
+    min-width: calc(100vw - 48px) !important;
     flex-shrink: 0 !important;
     scroll-snap-align: center;
   }
@@ -361,8 +361,8 @@ html, body {
   }
   .cumfunc-left {
     width: 100% !important;
-    padding-left: clamp(24px, 5vw, 48px) !important;
-    padding-right: clamp(24px, 5vw, 48px) !important;
+    padding-left: clamp(16px, 5vw, 48px) !important;
+    padding-right: clamp(16px, 5vw, 48px) !important;
   }
   .cumfunc-cards {
     width: 100% !important;
@@ -370,7 +370,7 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0 clamp(24px, 5vw, 48px) 16px !important;
+    padding: 0 clamp(16px, 5vw, 48px) 16px !important;
   }
   .cumfunc-cards::-webkit-scrollbar { display: none; }
 }
@@ -416,6 +416,8 @@ html, body {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 20px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
   .ps-panel {
     padding-left: clamp(16px, 5vw, 40px) !important;
