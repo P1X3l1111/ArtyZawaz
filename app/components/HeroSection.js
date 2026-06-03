@@ -77,25 +77,39 @@ export default function HeroSection() {
           />
           {/* Text overlay */}
           {isMobile ? (
-            /* Mobile: no overlay, text upper-center */
+            /* Mobile: same content as desktop, centered */
             <div style={{
               position: "absolute", inset: 0,
               padding: "clamp(20px, 6vw, 36px)",
               display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start",
-              paddingTop: "18%",
+              paddingTop: "14%",
             }}>
               {slide.titlu && (
                 <h1 style={{
-                  fontSize: "clamp(24px, 7.5vw, 38px)",
+                  fontSize: "clamp(22px, 7vw, 36px)",
                   fontWeight: 900,
                   color: "#fff",
-                  margin: "0 0 18px",
+                  margin: "0 0 12px",
                   lineHeight: 1.15,
                   letterSpacing: "-0.025em",
                   whiteSpace: "pre-line",
                   textAlign: "center",
                   textShadow: "0 2px 16px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.4)",
-                }}>{slide.titlu.split("\n").slice(0, 2).join("\n")}</h1>
+                }}>{slide.titlu}</h1>
+              )}
+              {slide.subtitlu && (
+                <p style={{
+                  fontSize: "clamp(12px, 3.5vw, 15px)",
+                  color: "#fff",
+                  margin: "0 0 20px",
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  textAlign: "center",
+                  textShadow: "0 1px 8px rgba(0,0,0,0.5)",
+                  maxWidth: 300,
+                }} dangerouslySetInnerHTML={{
+                  __html: slide.subtitlu.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                }} />
               )}
               <a href={slide.butonHref || "/produse"} style={{
                 display: "inline-block",
