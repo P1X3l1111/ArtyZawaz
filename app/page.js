@@ -12,6 +12,7 @@ import BlogPreview from "./components/BlogPreview";
 import Footer from "./components/Footer";
 import GasestePerfect from "./components/GasestePerfect";
 import Livrare from "./components/Livrare";
+import AutoVidare from "./components/AutoVidare";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <ProduseNoi />
       <Reduceri />
       <SliderPopulare />
+      <AutoVidare />
       <ImageAnimata />
       <Recenzii />
       <BlogPreview />
