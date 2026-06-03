@@ -160,9 +160,9 @@ export default function Recenzii() {
             {/* Faded 12 in background */}
             <div style={{
               position: "absolute",
-              right: -10,
-              bottom: -24,
-              fontSize: "clamp(100px, 14vw, 170px)",
+              right: -4,
+              bottom: -16,
+              fontSize: "clamp(64px, 10vw, 170px)",
               fontWeight: 900,
               color: "#ddd0bf",
               lineHeight: 0.85,

@@ -494,39 +494,26 @@ html, body {
     gap: 28px !important;
   }
   .recenzii-card {
-    height: auto !important;
-    flex-direction: row !important;
+    height: 380px !important;
+    flex-direction: column !important;
     border-radius: 20px !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
   }
-  /* video takes left 45%, info right 55% */
   .recenzii-card > div:first-child {
-    flex: 0 0 45% !important;
-    height: 200px !important;
+    flex: 0 0 65% !important;
+    height: auto !important;
   }
-  .recenzii-card > div:last-child {
+  .recenzii-card-bottom {
     flex: 1 !important;
-    padding: 16px !important;
+    padding: 12px 18px !important;
   }
 }
 @media (max-width: 560px) {
-  .recenzii-card > div:first-child { height: 170px !important; }
+  .recenzii-card { height: 340px !important; }
 }
 @media (max-width: 380px) {
-  .recenzii-card > div:first-child { height: 140px !important; }
-}
-@media (max-width: 900px) {
-  .recenzii-card-bottom {
-    flex: 1 !important;
-    padding: 14px 16px !important;
-  }
-  .recenzii-card-bottom > div:first-child {
-    /* big "12" number */
-    font-size: 80px !important;
-  }
-  .recenzii-card-bottom > p {
-    font-size: 18px !important;
-  }
+  .recenzii-card { height: 300px !important; }
 }
 
 /* ═══════════════════════════════════════════════
