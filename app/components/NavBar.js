@@ -179,16 +179,21 @@ export default function NavBar() {
       </div>
     </div>
 
+    {/* Sticky wrapper — shrinks to pill when at top, expands to full-width on scroll */}
+    <div style={{
+      position: "sticky",
+      top: 0,
+      zIndex: 100,
+      padding: atTop ? "12px 16px" : "0",
+      transition: "padding 0.35s cubic-bezier(0.4,0,0.2,1)",
+    }}>
     <nav
       style={{
-        position: "sticky",
-        top: 0,
-        left: 0,
         width: "100%",
-        zIndex: 100,
         background: navBg,
-        boxShadow: atTop ? "none" : "0 2px 12px rgba(0,0,0,0.08)",
-        transition: "box-shadow 0.3s ease",
+        borderRadius: atTop ? "16px" : "0px",
+        boxShadow: atTop ? "0 4px 24px rgba(0,0,0,0.10)" : "0 2px 12px rgba(0,0,0,0.08)",
+        transition: "border-radius 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease, padding 0.35s ease",
       }}
       onMouseLeave={() => setActiveDropdown(null)}
     >
@@ -299,6 +304,7 @@ export default function NavBar() {
         </div>
       ))}
     </nav>
+    </div>
     </>
   );
 }
