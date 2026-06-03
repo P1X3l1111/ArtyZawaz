@@ -85,12 +85,12 @@ export default function AutoVidare() {
               ].map((line, i) => (
                 <span key={i} style={{
                   display: "inline-block",
-                  background: "#2563eb",
-                  color: "#fff",
-                  fontWeight: 700,
+                  background: "transparent",
+                  color: "#111",
+                  fontWeight: 600,
                   fontSize: "clamp(13px, 1.3vw, 17px)",
-                  padding: "3px 10px",
-                  borderRadius: 4,
+                  padding: "3px 0",
+                  borderRadius: 0,
                   lineHeight: 1.6,
                   fontFamily: "Inter, system-ui, sans-serif",
                   letterSpacing: "0.01em",
