@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCos } from "../context/CosContext";
@@ -124,10 +124,16 @@ export default function NavBar() {
   const [cosOpen, setCosOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [produse, setProduse] = useState([]);
+  const [navHeight, setNavHeight] = useState(68);
+  const navRef = useRef(null);
   const { numarArticole } = useCos();
 
   useEffect(() => {
     fetch("/api/produse").then(r => r.json()).then(setProduse).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (navRef.current) setNavHeight(navRef.current.offsetHeight);
   }, []);
 
   useEffect(() => {
@@ -179,21 +185,19 @@ export default function NavBar() {
       </div>
     </div>
 
-    {/* Sticky wrapper — shrinks to pill when at top, expands to full-width on scroll */}
-    <div style={{
-      position: "sticky",
-      top: 0,
-      zIndex: 100,
-      padding: atTop ? "12px 16px" : "0",
-      transition: "padding 0.35s cubic-bezier(0.4,0,0.2,1)",
-    }}>
+    {!atTop && <div style={{ height: navHeight }} aria-hidden="true" />}
+
     <nav
+      ref={navRef}
       style={{
+        position: atTop ? "relative" : "fixed",
+        top: atTop ? "auto" : 0,
+        left: 0,
         width: "100%",
+        zIndex: 100,
         background: navBg,
-        borderRadius: atTop ? "16px" : "0px",
-        boxShadow: atTop ? "0 4px 24px rgba(0,0,0,0.10)" : "0 2px 12px rgba(0,0,0,0.08)",
-        transition: "border-radius 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease, padding 0.35s ease",
+        boxShadow: atTop ? "none" : "0 2px 12px rgba(0,0,0,0.08)",
+        transition: "box-shadow 0.3s ease",
       }}
       onMouseLeave={() => setActiveDropdown(null)}
     >
@@ -304,7 +308,6 @@ export default function NavBar() {
         </div>
       ))}
     </nav>
-    </div>
     </>
   );
 }
