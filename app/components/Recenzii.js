@@ -161,8 +161,8 @@ export default function Recenzii() {
             <div style={{
               position: "absolute",
               right: -4,
-              bottom: -16,
-              fontSize: "clamp(64px, 10vw, 170px)",
+              bottom: -20,
+              fontSize: "clamp(80px, 22vw, 170px)",
               fontWeight: 900,
               color: "#ddd0bf",
               lineHeight: 0.85,
