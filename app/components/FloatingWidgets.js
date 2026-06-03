@@ -146,7 +146,7 @@ export default function FloatingWidgets() {
 
       {/* -- DREAPTA JOS: buton telefon -- */}
       <a
-        href="tel:+48733150750"
+        href="tel:+37368559911"
         style={{
           position: "fixed",
           bottom: 28,
@@ -180,7 +180,7 @@ export default function FloatingWidgets() {
         {!isMobile && (
           <div>
             <p style={{ margin: 0, fontSize: 11, color: "#888", fontWeight: 500, lineHeight: 1 }}>Ai nevoie de ajutor?</p>
-            <p style={{ margin: "3px 0 0", fontSize: 17, fontWeight: 800, color: "#111", lineHeight: 1, letterSpacing: "-0.02em" }}>+48733150750</p>
+            <p style={{ margin: "3px 0 0", fontSize: 17, fontWeight: 800, color: "#111", lineHeight: 1, letterSpacing: "-0.02em" }}>068 559 911</p>
           </div>
         )}
       </a>
