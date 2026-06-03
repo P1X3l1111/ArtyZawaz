@@ -78,12 +78,12 @@ export default function CumFunctioneaza() {
               display: "flex", gap: 16, overflowX: "auto",
               scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch",
               scrollbarWidth: "none", paddingBottom: 8,
-              paddingLeft: "clamp(20px, 5vw, 40px)",
-              paddingRight: "clamp(20px, 5vw, 40px)",
+              paddingLeft: 28,
+              paddingRight: 28,
             }}
           >
             {PASI.map((pas, i) => (
-              <div data-card key={pas.titlu} style={{ flexShrink: 0, width: "calc(100vw - clamp(56px, 12vw, 96px))", scrollSnapAlign: "start", display: "flex", flexDirection: "column", gap: 10 }}>
+              <div data-card key={pas.titlu} style={{ flexShrink: 0, width: "calc(100vw - 80px)", scrollSnapAlign: "start", display: "flex", flexDirection: "column", gap: 10 }}>
                 <h3 style={{ fontSize: 20, fontWeight: 900, color: active === i ? "#111" : "#bbb", margin: 0, letterSpacing: "-0.02em", transition: "color 0.3s", fontFamily: "'Montserrat', 'Poppins', sans-serif" }}>{pas.titlu}</h3>
                 <div style={{ borderRadius: 20, overflow: "hidden", width: "100%", aspectRatio: "1 / 1", background: "#e8e4de", boxShadow: "0 6px 24px rgba(0,0,0,0.10)" }}>
                   <video src={pas.video} autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
