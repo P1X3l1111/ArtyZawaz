@@ -24,6 +24,7 @@ export default function FloatingWidgets() {
   const [showPhone, setShowPhone] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768);
@@ -81,7 +82,7 @@ export default function FloatingWidgets() {
               </a>
             ))}
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", margin: "6px 0" }} />
-            <a href="#" style={{ display: "block", padding: "8px 18px", color: "#fff", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>+ Mareste</a>
+            <button onClick={() => { setMenuOpen(false); setShowModal(true); }} style={{ display: "block", width: "100%", textAlign: "left", padding: "8px 18px", color: "#fff", fontSize: 13, fontWeight: 600, background: "none", border: "none", cursor: "pointer" }}>+ Mărește</button>
           </div>
         )}
 
@@ -184,6 +185,79 @@ export default function FloatingWidgets() {
           </div>
         )}
       </a>
+      {/* -- MODAL Trusted Shops -- */}
+      {showModal && (
+        <div onClick={() => setShowModal(false)} style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 2000,
+          display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: "#1e2235", borderRadius: 16, width: "100%", maxWidth: 380,
+            overflow: "hidden", boxShadow: "0 16px 64px rgba(0,0,0,0.5)",
+          }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+              <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>ArtyZawaz</span>
+              <button onClick={() => setShowModal(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", fontSize: 20, lineHeight: 1 }}>×</button>
+            </div>
+
+            {/* Row 1 */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)", cursor: "pointer" }}
+              onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
+              onMouseLeave={e => e.currentTarget.style.background="transparent"}>
+              <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 10, background: "rgba(245,166,35,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg viewBox="0 0 64 64" width={32} height={32}>
+                  <circle cx={32} cy={32} r={31} fill="#f5a623"/>
+                  <circle cx={32} cy={32} r={27} fill="#1e2235"/>
+                  <text x="32" y="36" textAnchor="middle" fontSize={16} fontWeight="900" fill="#fff" fontFamily="Georgia, serif" dominantBaseline="middle">e</text>
+                </svg>
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: 0, fontWeight: 700, color: "#fff", fontSize: 14, lineHeight: 1.3 }}>Cumpărături sigure</p>
+                <p style={{ margin: "4px 0 0", color: "rgba(255,255,255,0.55)", fontSize: 12, lineHeight: 1.4 }}>Acest magazin îndeplinește criteriile de calitate Trusted Shops</p>
+              </div>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={2.5}><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+
+            {/* Row 2 */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)", cursor: "pointer" }}
+              onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
+              onMouseLeave={e => e.currentTarget.style.background="transparent"}>
+              <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 10, background: "rgba(100,200,100,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: 0, fontWeight: 700, color: "#fff", fontSize: 14, lineHeight: 1.3 }}>Garanție gratuită independentă</p>
+                <p style={{ margin: "4px 0 0", color: "rgba(255,255,255,0.55)", fontSize: 12, lineHeight: 1.4 }}>Comanda ta este protejată gratuit până la 10.000 lei, indiferent de metoda de plată</p>
+              </div>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={2.5}><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+
+            {/* Row 3 - Rating */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 18px", cursor: "pointer" }}
+              onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
+              onMouseLeave={e => e.currentTarget.style.background="transparent"}>
+              <div style={{ flex: 1 }}>
+                <p style={{ margin: 0, fontWeight: 700, color: "#fff", fontSize: 14 }}>Evaluare: <span style={{ color: "#f5a623" }}>Excelent</span></p>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "6px 0 2px" }}>
+                  {[1,2,3,4,5].map(i => <Star key={i} filled={true} />)}
+                  <span style={{ color: "#fff", fontWeight: 800, fontSize: 15, marginLeft: 4 }}>4,91</span>
+                </div>
+                <p style={{ margin: 0, color: "rgba(255,255,255,0.45)", fontSize: 12 }}>Bazat pe recenziile clienților noștri</p>
+              </div>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={2.5}><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+
+            {/* Footer */}
+            <div style={{ padding: "10px 18px 14px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>•••</span>
+              <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 11 }}>Date firmă & Protecția datelor personale</span>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
