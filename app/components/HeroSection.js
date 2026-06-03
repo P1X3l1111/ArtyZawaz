@@ -4,19 +4,19 @@ import Image from "next/image";
 
 const SLIDES = [
   {
-    src: "/hero-1.png", alt: "Hero 1",
+    src: "/hero-1.png", srcMobile: "/herop.png", alt: "Hero 1",
     titlu: "Oferă un cadou\nde nota 10!\nProdusul anului\npentru toți.",
     subtitlu: "Există 1830 de motive pentru care merită să alegi produsul anului. Calitate **premium**, design **elegant** și confort **garantat**.",
     buton: "Bestsellers", butonHref: "/populare",
   },
   {
-    src: "/hero-2.png", alt: "Hero 2",
+    src: "/hero-2.png", srcMobile: "/hero1+.png", alt: "Hero 2",
     titlu: "Stil & Calitate\nPentru Fiecare\nOcazie Specială.",
     subtitlu: "Descoperă colecția noastră **exclusivă**. Produse atent alese pentru un **stil desăvârșit** la prețuri accesibile.",
     buton: "Explorează", butonHref: "/produse",
   },
   {
-    src: "/hero-3.png", alt: "Hero 3",
+    src: "/hero-3.png", srcMobile: "/herop2.png", alt: "Hero 3",
     titlu: "Colecție Nouă\nPrimăvara-Vara\n2026 — Acum\nDisponibilă.",
     subtitlu: "Cele mai noi tendințe au sosit! Reduceri de până la **50%** la **produse selectate** din noua colecție.",
     buton: "Vezi Reducerile", butonHref: "/reduceri",
@@ -28,6 +28,14 @@ const IMG_H = 725;
 export default function HeroSection() {
   const slides = SLIDES;
   const [current, setCurrent] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 767);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const next = useCallback(() => {
     setCurrent(c => (c + 1) % slides.length);
@@ -47,7 +55,7 @@ export default function HeroSection() {
     <section style={{
       position: "relative",
       width: "100vw",
-      aspectRatio: `${IMG_W} / ${IMG_H}`,
+      aspectRatio: isMobile ? "9 / 16" : `${IMG_W} / ${IMG_H}`,
       overflow: "hidden",
       display: "block",
       marginLeft: "calc(-50vw + 50%)",
@@ -60,15 +68,15 @@ export default function HeroSection() {
           pointerEvents: i === current ? "auto" : "none",
         }}>
           <Image
-            src={slide.src}
+            src={isMobile && slide.srcMobile ? slide.srcMobile : slide.src}
             alt={slide.alt}
             fill
             priority={i === 0}
             sizes="100vw"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
-          {/* Text overlay */}
-          <div className="hero-text-overlay" style={{
+          {/* Text overlay - desktop only */}
+          {!isMobile && <div className="hero-text-overlay" style={{
             position: "absolute", inset: 0,
             display: "flex", alignItems: "center",
             paddingLeft: "clamp(24px, 6vw, 100px)",
@@ -114,7 +122,7 @@ export default function HeroSection() {
               onMouseLeave={e => { e.currentTarget.style.background = "#1a1008"; }}
               >{slide.buton || "Explorează"}</a>
             </div>
-          </div>
+          </div>}
         </div>
       ))}
 
