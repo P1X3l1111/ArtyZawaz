@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCos } from "../context/CosContext";
@@ -124,16 +124,10 @@ export default function NavBar() {
   const [cosOpen, setCosOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [produse, setProduse] = useState([]);
-  const [navHeight, setNavHeight] = useState(68);
-  const navRef = useRef(null);
   const { numarArticole } = useCos();
 
   useEffect(() => {
     fetch("/api/produse").then(r => r.json()).then(setProduse).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    if (navRef.current) setNavHeight(navRef.current.offsetHeight);
   }, []);
 
   useEffect(() => {
@@ -185,14 +179,10 @@ export default function NavBar() {
       </div>
     </div>
 
-    {/* Spacer: appears only when navbar is fixed to prevent layout jump */}
-    {!atTop && <div style={{ height: navHeight }} aria-hidden="true" />}
-
     <nav
-      ref={navRef}
       style={{
-        position: atTop ? "relative" : "fixed",
-        top: atTop ? "auto" : 0,
+        position: "sticky",
+        top: 0,
         left: 0,
         width: "100%",
         zIndex: 100,
