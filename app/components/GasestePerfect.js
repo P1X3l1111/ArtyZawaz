@@ -1,5 +1,26 @@
 "use client";
 import Link from "next/link";
+import { produse } from "../lib/produse";
+
+// Map color names to CSS colors
+const COLOR_MAP = {
+  "Negru": "#1a1a1a",
+  "Alb": "#f5f5f5",
+  "Gri": "#9e9e9e",
+  "Argintiu": "#c0c0c0",
+  "Roz": "#f48fb1",
+  "Albastru": "#42a5f5",
+  "Verde": "#66bb6a",
+  "Portocaliu": "#ffa726",
+  "Rosu": "#ef5350",
+  "Galben": "#ffee58",
+  "Mov": "#ab47bc",
+  "Maro": "#8d6e63",
+  "Bej": "#d7ccc8",
+};
+
+// Extract unique colors from all products
+const uniqueColors = [...new Set(produse.flatMap(p => p.culori || []))];
 
 const CARDS = [
   {
@@ -10,11 +31,30 @@ const CARDS = [
     bg: "#fff",
     icon: (
       <div style={{
-        width: 110, height: 110, borderRadius: "50%",
-        background: "conic-gradient(from 180deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #c77dff, #ff6b6b)",
-        boxShadow: "0 12px 40px rgba(0,0,0,0.18)",
-        flexShrink: 0,
-      }} />
+        width: 110, height: 110,
+        display: "flex", flexWrap: "wrap",
+        alignItems: "center", justifyContent: "center",
+        gap: 5, flexShrink: 0,
+      }}>
+        {uniqueColors.map(culoare => (
+          <Link
+            key={culoare}
+            href={`/cautare?culoare=${encodeURIComponent(culoare)}`}
+            title={culoare}
+            style={{
+              width: 24, height: 24, borderRadius: "50%",
+              background: COLOR_MAP[culoare] || "#ccc",
+              border: culoare === "Alb" ? "1.5px solid #ddd" : "none",
+              display: "inline-block",
+              flexShrink: 0,
+              boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
+              transition: "transform 0.15s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.25)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+          />
+        ))}
+      </div>
     ),
   },
   {
