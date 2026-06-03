@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const TESTIMONIALE = [
   {
@@ -48,9 +48,37 @@ function Stars({ active = true }) {
 
 export default function Recenzii() {
   const [slide, setSlide] = useState(0);
+  const [progress, setProgress] = useState(0);
   const TOTAL = TESTIMONIALE.length;
-  const prev = () => setSlide(s => (s - 1 + TOTAL) % TOTAL);
-  const next = () => setSlide(s => (s + 1) % TOTAL);
+  const INTERVAL = 4000;
+  const progressRef = useRef(null);
+  const startRef = useRef(null);
+
+  const prev = () => { setSlide(s => (s - 1 + TOTAL) % TOTAL); setProgress(0); };
+  const next = () => { setSlide(s => (s + 1) % TOTAL); setProgress(0); };
+
+  useEffect(() => {
+    setProgress(0);
+    startRef.current = performance.now();
+
+    const animate = (now) => {
+      const elapsed = now - startRef.current;
+      const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+      setProgress(pct);
+      if (pct < 100) {
+        progressRef.current = requestAnimationFrame(animate);
+      } else {
+        setSlide(s => (s + 1) % TOTAL);
+        setProgress(0);
+        startRef.current = performance.now();
+        progressRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    progressRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(progressRef.current);
+  }, [slide, TOTAL]);
+
   const activeIdx = slide;
   const nextIdx = (slide + 1) % TOTAL;
 
@@ -80,9 +108,12 @@ export default function Recenzii() {
         }}>
           {/* VIDEO top 68% */}
           <div style={{ flex: "0 0 68%", position: "relative", overflow: "hidden" }}>
-            <img
-              src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&h=900&fit=crop"
-              alt="viral tiktok"
+            <video
+              src="/Cztery-ezgif.com-resize-video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.32) 0%, transparent 48%)" }} />
@@ -243,17 +274,28 @@ export default function Recenzii() {
               {TESTIMONIALE.map((_, i) => (
                 <div
                   key={i}
-                  onClick={() => setSlide(i)}
+                  onClick={() => { setSlide(i); setProgress(0); }}
                   style={{
                     width: slide === i ? 26 : 6,
                     height: 6,
                     borderRadius: 999,
                     background: slide === i ? "#333" : "#ccc",
                     cursor: "pointer",
-                    transition: "all 0.3s ease",
+                    transition: "width 0.3s ease, background 0.3s ease",
                     opacity: slide === i ? 1 : 0.45,
+                    position: "relative",
+                    overflow: "hidden",
                   }}
-                />
+                >
+                  {slide === i && (
+                    <div style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 999,
+                      background: "linear-gradient(90deg, #888 0%, #888 " + progress + "%, #333 " + progress + "%)",
+                    }} />
+                  )}
+                </div>
               ))}
             </div>
 
