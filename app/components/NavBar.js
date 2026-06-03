@@ -137,17 +137,16 @@ export default function NavBar() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setAtTop(window.scrollY === 0);
+    const handleScroll = () => {
+      setAtTop(window.scrollY === 0);
+      setMenuOpen(false);
+    };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  // Close menu on scroll handled above
 
   const navBg = "#f0eeeb";
   const color = "#111";
@@ -156,34 +155,10 @@ export default function NavBar() {
     <>
     <CosDrawer open={cosOpen} onClose={() => setCosOpen(false)} />
 
-    {/* Mobile menu overlay */}
-    <div className={`mobile-menu ${menuOpen ? "open" : ""}`} style={{ zIndex: 101 }}>
-      <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: 28, right: 24, background: "none", border: "none", cursor: "pointer", padding: 4 }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth={2}><path strokeLinecap="round" d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-      <Link href="/" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-        <Image src="/zawaz.png" alt="Zawaz Wood" width={50} height={50} style={{ objectFit: "contain" }} />
-        <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: "0.2em", color: "#111", textTransform: "uppercase" }}>ZAWAZ</span>
-      </Link>
-      {navLinks.map((link) => (
-        <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
-          style={{ textDecoration: "none", fontSize: 22, fontWeight: 700, color: "#111", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-          {link.label}
-        </Link>
-      ))}
-      <div style={{ display: "flex", gap: 24, marginTop: 16 }}>
-        <Link href="/cautare" onClick={() => setMenuOpen(false)} style={{ color: "#111", display: "flex", alignItems: "center" }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="11" cy="11" r="7"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
-        </Link>
-        <Link href="/favorite" onClick={() => setMenuOpen(false)} style={{ color: "#111", display: "flex", alignItems: "center" }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </Link>
-        <button onClick={() => { setMenuOpen(false); setCosOpen(true); }} style={{ color: "#111", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", position: "relative", padding: 0 }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path strokeLinecap="round" d="M3 6h18"/><path strokeLinecap="round" d="M16 10a4 4 0 01-8 0"/></svg>
-          {numarArticole > 0 && <span style={{ position: "absolute", top: -4, right: -4, background: "#000", color: "#fff", fontSize: 10, width: 16, height: 16, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>{numarArticole}</span>}
-        </button>
-      </div>
-    </div>
+    {/* Mobile menu dropdown — appears below navbar */}
+    {menuOpen && (
+      <div onClick={() => setMenuOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
+    )}
 
     {!atTop && <div style={{ height: navHeight }} aria-hidden="true" />}
 
@@ -307,6 +282,42 @@ export default function NavBar() {
           </div>
         </div>
       ))}
+
+      {/* Mobile dropdown menu */}
+      <div style={{
+        position: "absolute", top: "100%", left: 0, right: 0,
+        background: navBg,
+        boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+        overflow: "hidden",
+        maxHeight: menuOpen ? "80vh" : "0",
+        overflowY: menuOpen ? "auto" : "hidden",
+        transition: "max-height 0.35s cubic-bezier(0.4,0,0.2,1)",
+        zIndex: 99,
+      }}>
+        <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 4 }}>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
+              style={{ textDecoration: "none", fontSize: 17, fontWeight: 700, color: "#111", textTransform: "uppercase", letterSpacing: "0.08em", padding: "12px 0", borderBottom: "1px solid rgba(0,0,0,0.06)", display: "block" }}>
+              {link.label}
+              {link.badge && <span style={{ marginLeft: 8, fontSize: 10, fontWeight: 800, background: link.href === "/reduceri" ? "#e03c2f" : "#111", color: "#fff", padding: "2px 7px", borderRadius: 4, verticalAlign: "middle" }}>{link.badge}</span>}
+            </Link>
+          ))}
+          <div style={{ display: "flex", gap: 20, paddingTop: 16, paddingBottom: 8 }}>
+            <Link href="/cautare" onClick={() => setMenuOpen(false)} style={{ color: "#111", display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="11" cy="11" r="7"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
+              Caută
+            </Link>
+            <Link href="/favorite" onClick={() => setMenuOpen(false)} style={{ color: "#111", display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Favorite
+            </Link>
+            <button onClick={() => { setMenuOpen(false); setCosOpen(true); }} style={{ color: "#111", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, padding: 0, position: "relative" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path strokeLinecap="round" d="M3 6h18"/><path strokeLinecap="round" d="M16 10a4 4 0 01-8 0"/></svg>
+              Coș {numarArticole > 0 && `(${numarArticole})`}
+            </button>
+          </div>
+        </div>
+      </div>
     </nav>
     </>
   );
