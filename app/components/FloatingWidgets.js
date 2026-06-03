@@ -187,8 +187,6 @@ export default function FloatingWidgets() {
     </>
   );
 }
-
-const MENU_LINKS = [
   { label: "Verifica certificatul", href: "#" },
   { label: "Criterii de calitate", href: "#" },
   { label: "Conditii de garantie", href: "#" },
