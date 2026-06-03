@@ -51,28 +51,15 @@ export default function AutoVidare() {
 
           {/* Icon + stats row */}
           <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 20 }}>
-            {/* Heart icon */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, flexShrink: 0 }}>
-              <div style={{
-                width: 64,
-                height: 64,
-                borderRadius: 16,
-                background: "linear-gradient(135deg, #e07820 0%, #f5a623 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 4px 16px rgba(224,120,32,0.35)",
-              }}>
-                <svg width={30} height={30} viewBox="0 0 24 24" fill="white">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-              </div>
-              <span style={{
-                fontSize: "clamp(13px, 1.2vw, 16px)",
-                fontWeight: 700,
-                color: "#888",
-                fontFamily: "Inter, system-ui, sans-serif",
-              }}>294K</span>
+            {/* 294K image */}
+            <div style={{ flexShrink: 0 }}>
+              <Image
+                src="/294k-1.png"
+                alt="294K"
+                width={100}
+                height={100}
+                style={{ objectFit: "contain", width: "auto", height: "auto", maxWidth: 100 }}
+              />
             </div>
 
             {/* Highlighted text lines */}
