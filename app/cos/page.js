@@ -57,7 +57,7 @@ export default function CosPage() {
     return (
       <>
         <NavBar />
-        <main style={{ paddingTop: 120, minHeight: "70vh", maxWidth: 560, margin: "0 auto", padding: "120px 24px 80px", textAlign: "center" }}>
+        <main style={{ minHeight: "70vh", maxWidth: 560, margin: "0 auto", padding: "var(--section-padding)", textAlign: "center" }}>
           <div style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}><svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth={1.5} xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4"/></svg></div>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: "#111", marginBottom: 12 }}>Comandă plasată!</h1>
           <p style={{ color: "#666", fontSize: 16, lineHeight: 1.7, marginBottom: 36 }}>
@@ -76,7 +76,7 @@ export default function CosPage() {
     return (
       <>
         <NavBar />
-        <main style={{ paddingTop: 120, minHeight: "70vh", maxWidth: 600, margin: "0 auto", padding: "120px 24px 80px" }}>
+        <main style={{ minHeight: "70vh", maxWidth: 600, margin: "0 auto", padding: "var(--section-padding)" }}>
           <button onClick={() => setEtapa("cos")} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 14, color: "#888", marginBottom: 32, padding: 0, fontWeight: 600 }}>
             ← Înapoi la coș
           </button>
@@ -84,7 +84,7 @@ export default function CosPage() {
           <p style={{ color: "#888", fontSize: 14, marginBottom: 36 }}>Completează datele pentru a finaliza comanda</p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="form-2col">
               <div>
                 <label style={{ fontSize: 13, fontWeight: 700, color: "#111", display: "block", marginBottom: 6 }}>Nume *</label>
                 <input style={{ ...inputStyle, borderColor: erori.nume ? "#dc2626" : "#e0e0e0" }} value={form.nume} onChange={e => set("nume", e.target.value)} placeholder="Popescu" />
@@ -140,8 +140,8 @@ export default function CosPage() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 120, minHeight: "70vh", maxWidth: "var(--container)", margin: "0 auto", padding: "120px 24px 80px" }}>
-        <h1 style={{ fontSize: 28, fontWeight: 800, color: "#111", marginBottom: 40 }}>Coșul tău ({numarArticole})</h1>
+      <main style={{ minHeight: "70vh", maxWidth: "var(--container)", margin: "0 auto", padding: "var(--section-padding)" }}>
+        <h1 className="cos-title" style={{ fontSize: 28, fontWeight: 800, color: "#111", marginBottom: 40 }}>Coșul tău ({numarArticole})</h1>
 
         {cos.length === 0 ? (
           <div style={{ textAlign: "center", paddingTop: 60, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
@@ -156,7 +156,7 @@ export default function CosPage() {
             </Link>
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 48, alignItems: "start" }}>
+          <div className="cos-main-grid">
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {cos.map(item => (
                 <div key={item.key} style={{ display: "flex", gap: 20, padding: "20px 0", borderBottom: "1px solid #f0f0f0", alignItems: "flex-start" }}>
@@ -183,7 +183,7 @@ export default function CosPage() {
               ))}
             </div>
 
-            <div style={{ background: "#faf9f7", borderRadius: 16, padding: 28, position: "sticky", top: 120 }}>
+            <div className="cos-sticky" style={{ background: "#faf9f7", borderRadius: 16, padding: 28, position: "sticky", top: 80 }}>
               <p style={{ fontWeight: 800, fontSize: 16, color: "#111", marginBottom: 20 }}>Sumar comandă</p>
               {cos.map(i => (
                 <div key={i.key} style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: "#555", marginBottom: 8 }}>

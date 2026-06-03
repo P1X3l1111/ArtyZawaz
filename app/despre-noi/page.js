@@ -5,9 +5,9 @@ export default function DespreNoi() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 100, minHeight: "70vh" }}>
+      <main style={{ minHeight: "70vh" }}>
         {/* Hero */}
-        <div style={{ background: "#faf9f7", padding: "80px 24px", textAlign: "center" }}>
+        <div className="page-hero" style={{ background: "#faf9f7" }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c8a96e", marginBottom: 12 }}>Povestea noastră</p>
           <h1 style={{ fontSize: 48, fontWeight: 800, color: "#111", margin: "0 auto 20px", maxWidth: 700 }}>Creăm cu pasiune din lemn natural</h1>
           <p style={{ fontSize: 18, color: "#666", maxWidth: 600, margin: "0 auto", lineHeight: 1.8 }}>
@@ -16,7 +16,7 @@ export default function DespreNoi() {
         </div>
 
         {/* Valori */}
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "80px 24px" }}>
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "var(--section-padding)" }}>
           <div className="valori-grid">
             {[
               { icon: <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6 8 4 12 4 15a8 8 0 0016 0c0-3-2-7-8-13z"/><path strokeLinecap="round" strokeLinejoin="round" d="M12 12v8"/></svg>, titlu: "Lemn natural", text: "Folosim exclusiv lemn masiv de calitate superioară, selectat cu grijă pentru durabilitate și estetică." },
@@ -34,7 +34,7 @@ export default function DespreNoi() {
         </div>
 
         {/* CTA */}
-        <div style={{ background: "#111", padding: "80px 24px", textAlign: "center" }}>
+        <div className="despre-cta" style={{ background: "#111", padding: "80px 24px", textAlign: "center" }}>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Descoperă colecțiile noastre</h2>
           <p style={{ color: "#aaa", fontSize: 16, marginBottom: 36 }}>Stative și pușculițe create cu dragoste, pentru casa ta.</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>

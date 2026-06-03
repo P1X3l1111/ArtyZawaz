@@ -16,7 +16,7 @@ export default function BlogPage() {
     return (
       <>
         <NavBar />
-        <main style={{ paddingTop: 120, maxWidth: 720, margin: "0 auto", padding: "120px 24px 80px" }}>
+        <main style={{ minHeight: "70vh", maxWidth: 720, margin: "0 auto", padding: "var(--section-padding)" }}>
           <button onClick={() => setActiv(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 14, color: "#888", marginBottom: 32, padding: 0, fontWeight: 600 }}>← Înapoi la blog</button>
           <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c8a96e" }}>{a.categorie}</span>
           <h1 style={{ fontSize: 36, fontWeight: 800, color: "#111", margin: "12px 0 8px", lineHeight: 1.25 }}>{a.titlu}</h1>
@@ -34,8 +34,8 @@ export default function BlogPage() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 100, minHeight: "70vh" }}>
-        <div style={{ background: "#faf9f7", padding: "60px 24px", textAlign: "center" }}>
+      <main style={{ minHeight: "70vh" }}>
+        <div className="page-hero" style={{ background: "#faf9f7" }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c8a96e", marginBottom: 12 }}>Blog</p>
           <h1 style={{ fontSize: 40, fontWeight: 800, color: "#111", margin: 0 }}>Din atelierul nostru</h1>
         </div>

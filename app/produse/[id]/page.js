@@ -49,7 +49,7 @@ export default function ProdusDePage({ params }) {
     <div style={{ background: "#fff", minHeight: "100vh" }}>
       <NavBar />
 
-      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "var(--section-padding)", paddingTop: "calc(64px + 40px)" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "var(--section-padding)" }} className="page-content-top">
         {/* Breadcrumb */}
         <nav style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 40, fontSize: 13, color: "#888" }}>
           <Link href="/" style={{ color: "#888", textDecoration: "none" }}>Acasă</Link>
@@ -167,10 +167,10 @@ export default function ProdusDePage({ params }) {
         {/* Similar products */}
         {similare.length > 0 && (
           <div style={{ marginTop: 96 }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", color: "#111", marginBottom: 40 }}>
+            <h2 className="similare-heading" style={{ fontSize: 22, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", color: "#111", marginBottom: 40 }}>
               Produse Similare
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40 }}>
+            <div className="similare-grid">
               {similare.map(p => <ProdusCard key={p.id} produs={p} />)}
             </div>
           </div>

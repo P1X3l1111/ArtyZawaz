@@ -6,7 +6,7 @@ export default function ContPage() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 100, minHeight: "70vh", maxWidth: 480, margin: "0 auto", padding: "100px 24px 80px" }}>
+      <main style={{ minHeight: "70vh", maxWidth: 480, margin: "0 auto", padding: "var(--section-padding)" }}>
         <h1 style={{ fontSize: 28, fontWeight: 800, color: "#111", marginBottom: 8, textAlign: "center" }}>Contul meu</h1>
         <p style={{ color: "#888", fontSize: 14, textAlign: "center", marginBottom: 40 }}>Autentifică-te pentru a accesa comenzile și setările contului.</p>
 

@@ -34,8 +34,8 @@ export default function ContactPage() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 100, minHeight: "70vh" }}>
-        <div style={{ background: "#faf9f7", padding: "60px 24px", textAlign: "center" }}>
+      <main style={{ minHeight: "70vh" }}>
+        <div className="page-hero" style={{ background: "#faf9f7" }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c8a96e", marginBottom: 12 }}>Contact</p>
           <h1 style={{ fontSize: 40, fontWeight: 800, color: "#111", margin: "0 0 12px" }}>Scrie-ne</h1>
           <p style={{ color: "#666", fontSize: 16, margin: 0 }}>Suntem aici pentru orice întrebare sau comandă specială.</p>

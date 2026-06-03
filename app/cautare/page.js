@@ -20,7 +20,7 @@ export default function CautarePage() {
   return (
     <>
       <NavBar />
-      <main style={{ paddingTop: 100, minHeight: "80vh", maxWidth: "var(--container)", margin: "0 auto", padding: "100px 24px 80px" }}>
+      <main style={{ minHeight: "80vh", maxWidth: "var(--container)", margin: "0 auto", padding: "var(--section-padding)" }}>
         <h1 style={{ fontSize: 28, fontWeight: 800, color: "#111", marginBottom: 32, textAlign: "center" }}>Caută produse</h1>
 
         <div style={{ maxWidth: 560, margin: "0 auto 48px", position: "relative" }}>
