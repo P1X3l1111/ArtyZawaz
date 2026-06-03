@@ -203,7 +203,7 @@ export default function Recenzii() {
             fontFamily: "Inter, system-ui, sans-serif",
             maxWidth: 280,
           }}>
-            Sute de<br />opinii<br />pozitive<br />online
+            Sute de opinii<br />pozitive online
           </h2>
 
           {/* Social logos faded */}
