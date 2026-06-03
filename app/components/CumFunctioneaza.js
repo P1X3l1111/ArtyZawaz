@@ -49,6 +49,8 @@ export default function CumFunctioneaza() {
     }, 3000);
     return () => clearInterval(interval);
   }, [isMobile]);
+
+  const handleScroll = () => {
     if (!scrollRef.current || !isMobile) return;
     const el = scrollRef.current;
     const card = el.querySelector('[data-card]');

@@ -1,4 +1,4 @@
-"use client";
+ï»¿"use client";
 import { useState, useEffect } from "react";
 
 const MENU_LINKS = [
@@ -52,7 +52,7 @@ export default function FloatingWidgets() {
       {/* -- STANGA JOS: Trusted Shops badge -- */}
       <div id="ts-badge" style={{ position: "fixed", bottom: 24, left: 20, zIndex: 1000 }}>
 
-        {/* Dropdown menu — desktop only */}
+        {/* Dropdown menu - desktop only */}
         {!isMobile && menuOpen && (
           <div style={{
             position: "absolute",
@@ -113,7 +113,7 @@ export default function FloatingWidgets() {
             <button onClick={() => setMenuOpen(o => !o)} style={{
               position: "absolute", top: 8, right: 8, background: "none", border: "none",
               cursor: "pointer", color: "rgba(255,255,255,0.45)", fontSize: 16, lineHeight: 1, padding: "2px 4px", letterSpacing: "1px",
-            }}>···</button>
+            }}>...</button>
 
             <div style={{ position: "relative", width: 60, height: 60, marginTop: 4 }}>
               <svg viewBox="0 0 64 64" width={60} height={60}>
