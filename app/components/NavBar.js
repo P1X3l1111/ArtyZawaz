@@ -137,7 +137,7 @@ export default function NavBar() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setAtTop(window.scrollY <= 10);
+    const handleScroll = () => setAtTop(window.scrollY < (navRef.current?.offsetHeight ?? 68));
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
