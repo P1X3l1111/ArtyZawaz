@@ -153,7 +153,7 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -24px;
+    margin: 0 -8px;
     padding: 0 0 12px;
   }
   .slider-outer::-webkit-scrollbar { display: none; }
@@ -188,9 +188,9 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -16px;
+    margin: 0 -8px;
     padding: 0 0 12px;
-    scroll-padding-left: 16px;
+    scroll-padding-left: 8px;
   }
   .slider-outer::-webkit-scrollbar { display: none; }
   .slider-inner {
@@ -486,7 +486,7 @@ html, body {
    RECENZII — card & grid fixes
    ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
-  .recenzii-grid { grid-template-columns: 1fr !important; }
+  .recenzii-grid { grid-template-columns: 1fr !important; padding: 0 16px; }
   .recenzii-grid > div:first-child {
     max-width: 480px !important;
     width: 100% !important;

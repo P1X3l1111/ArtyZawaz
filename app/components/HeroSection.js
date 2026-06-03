@@ -77,36 +77,35 @@ export default function HeroSection() {
           />
           {/* Text overlay */}
           {isMobile ? (
-            /* Mobile: same content as desktop, centered */
+            /* Mobile: same look as desktop */
             <div style={{
               position: "absolute", inset: 0,
-              padding: "clamp(20px, 6vw, 36px)",
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start",
-              paddingTop: "14%",
+              display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center",
+              paddingLeft: "clamp(20px, 7vw, 48px)",
+              paddingRight: "clamp(20px, 7vw, 48px)",
+              background: "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.55) 60%, transparent 100%)",
             }}>
               {slide.titlu && (
                 <h1 style={{
-                  fontSize: "clamp(22px, 7vw, 36px)",
+                  fontSize: "clamp(22px, 6.5vw, 36px)",
                   fontWeight: 900,
-                  color: "#fff",
+                  color: "#1a1008",
                   margin: "0 0 12px",
                   lineHeight: 1.15,
                   letterSpacing: "-0.025em",
                   whiteSpace: "pre-line",
-                  textAlign: "center",
-                  textShadow: "0 2px 16px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.4)",
+                  textAlign: "left",
                 }}>{slide.titlu}</h1>
               )}
               {slide.subtitlu && (
                 <p style={{
                   fontSize: "clamp(12px, 3.5vw, 15px)",
-                  color: "#fff",
+                  color: "#333",
                   margin: "0 0 20px",
                   fontWeight: 400,
                   lineHeight: 1.6,
-                  textAlign: "center",
-                  textShadow: "0 1px 8px rgba(0,0,0,0.5)",
-                  maxWidth: 300,
+                  textAlign: "left",
+                  maxWidth: 280,
                 }} dangerouslySetInnerHTML={{
                   __html: slide.subtitlu.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                 }} />
@@ -114,8 +113,8 @@ export default function HeroSection() {
               <a href={slide.butonHref || "/produse"} style={{
                 display: "inline-block",
                 padding: "11px 28px",
-                background: "#fff",
-                color: "#1a1008",
+                background: "#1a1008",
+                color: "#fff",
                 fontWeight: 700,
                 fontSize: 14,
                 borderRadius: 999,
