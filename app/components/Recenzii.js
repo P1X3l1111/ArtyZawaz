@@ -153,38 +153,33 @@ export default function Recenzii() {
             background: "#fff",
             position: "relative",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            padding: "0 26px",
+            justifyContent: "center",
+            padding: "16px 26px",
             overflow: "hidden",
           }}>
-            {/* Faded 12 in background */}
             <div style={{
-              position: "absolute",
-              right: -4,
-              bottom: -20,
-              fontSize: "clamp(80px, 22vw, 170px)",
+              fontSize: "clamp(60px, 16vw, 120px)",
               fontWeight: 900,
               color: "#ddd0bf",
-              lineHeight: 0.85,
+              lineHeight: 1,
               letterSpacing: "-0.06em",
               userSelect: "none",
-              pointerEvents: "none",
-              opacity: 0.55,
               fontFamily: "Inter, system-ui, sans-serif",
             }}>12</div>
 
             <p style={{
               color: "#111",
-              fontSize: "clamp(22px, 3vw, 38px)",
-              fontWeight: 900,
-              margin: 0,
-              lineHeight: 1.1,
-              letterSpacing: "-0.03em",
-              position: "relative",
-              zIndex: 1,
+              fontSize: "clamp(14px, 2vw, 20px)",
+              fontWeight: 700,
+              margin: "4px 0 0",
+              lineHeight: 1.2,
+              letterSpacing: "-0.01em",
+              textAlign: "center",
               fontFamily: "Inter, system-ui, sans-serif",
             }}>
-              Milioane<br />vizualizări
+              Milioane vizualizări
             </p>
           </div>
         </div>
