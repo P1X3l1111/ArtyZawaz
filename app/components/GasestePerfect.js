@@ -27,67 +27,53 @@ const OCAZIE_ICONS = { "Cadou": "🎁", "Zi de naștere": "🎂", "Crăciun": "�
 
 const TYPE_LABELS = { culoare: "După culoare:", tema: "După motiv:", ocazie: "După circumstanțe:" };
 
-function FilterDropdown({ options, onSelect, onClose, type, anchorRect }) {
-  const ref = useRef(null);
+function FilterDropdown({ options, onSelect, onClose, type }) {
   useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target) && !e.target.closest(".gaseste-btn")) onClose();
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [onClose]);
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
 
-  if (!anchorRect) return null;
-
-  const dropdown = (
-    <div ref={ref} style={{
-      position: "fixed",
-      top: anchorRect.bottom + 8,
-      left: anchorRect.left,
-      background: "#fff", borderRadius: 16, boxShadow: "0 8px 40px rgba(0,0,0,0.22)",
-      zIndex: 9999, minWidth: 200, padding: "20px 24px 16px",
+  return createPortal(
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, zIndex: 9999,
+      background: "rgba(0,0,0,0.45)",
+      display: "flex", alignItems: "center", justifyContent: "center",
     }}>
-      <p style={{ margin: "0 0 12px", fontWeight: 700, fontSize: 16, color: "#111" }}>
-        {TYPE_LABELS[type]}
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {options.map((opt) => (
-          <button key={opt} onClick={() => onSelect(opt)} style={{
-            background: "none", border: "none", cursor: "pointer",
-            textAlign: "left", fontSize: 15, fontWeight: 500,
-            color: "#e6a817", padding: 0, lineHeight: 1.4,
-          }}
-            onMouseEnter={e => e.currentTarget.style.color = "#c8900f"}
-            onMouseLeave={e => e.currentTarget.style.color = "#e6a817"}
-          >
-            {opt}
-          </button>
-        ))}
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "#fff", borderRadius: 20,
+        boxShadow: "0 16px 60px rgba(0,0,0,0.25)",
+        padding: "28px 32px 24px", minWidth: 220,
+      }}>
+        <p style={{ margin: "0 0 16px", fontWeight: 700, fontSize: 18, color: "#111" }}>
+          {TYPE_LABELS[type]}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {options.map((opt) => (
+            <button key={opt} onClick={() => onSelect(opt)} style={{
+              background: "none", border: "none", cursor: "pointer",
+              textAlign: "left", fontSize: 16, fontWeight: 500,
+              color: "#e6a817", padding: 0, lineHeight: 1.4,
+            }}
+              onMouseEnter={e => e.currentTarget.style.color = "#c8900f"}
+              onMouseLeave={e => e.currentTarget.style.color = "#e6a817"}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
-
-  return createPortal(dropdown, document.body);
 }
 
 function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
   const [open, setOpen] = useState(false);
-  const [anchorRect, setAnchorRect] = useState(null);
   const btnRef = useRef(null);
   const router = useRouter();
   const isAccent = !!accentColor;
 
-  const handleToggle = () => {
-    if (open) {
-      setOpen(false);
-      setAnchorRect(null);
-    } else {
-      if (btnRef.current) setAnchorRect(btnRef.current.getBoundingClientRect());
-      setOpen(true);
-    }
-  };
-
-  const handleClose = () => { setOpen(false); setAnchorRect(null); };
+  const handleClose = () => setOpen(false);
   const handleSelect = (val) => { handleClose(); router.push(`/${type}/${slugify(val)}`, { scroll: false }); };
 
   return (
@@ -111,7 +97,7 @@ function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
           <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", padding: "8px 20px", borderRadius: 999, background: "#c0392b", color: "#fff", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>{btn}</Link>
         ) : (
           <>
-            <button ref={btnRef} className="gaseste-btn" onClick={handleToggle} style={{
+            <button ref={btnRef} className="gaseste-btn" onClick={() => setOpen(o => !o)} style={{
               display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 999,
               border: "1.5px solid " + (open ? "#111" : "#ccc"), background: open ? "#111" : "transparent",
               color: open ? "#fff" : "#333", fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s",
@@ -119,7 +105,7 @@ function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
               {btn}
               <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            {open && <FilterDropdown options={options} onSelect={handleSelect} onClose={handleClose} type={type} anchorRect={anchorRect} />}
+            {open && <FilterDropdown options={options} onSelect={handleSelect} onClose={handleClose} type={type} />}
           </>
         )}
       </div>
