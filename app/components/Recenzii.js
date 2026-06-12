@@ -116,7 +116,10 @@ export default function Recenzii() {
               playsInline
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.32) 0%, transparent 48%)" }} />
+            {/* top shadow */}
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.32) 0%, transparent 45%)" }} />
+            {/* bottom fade to white */}
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "45%", background: "linear-gradient(to bottom, transparent 0%, #fff 100%)" }} />
 
             {/* Top-left text */}
             <div style={{ position: "absolute", top: 20, left: 18, right: 52, zIndex: 2 }}>
@@ -156,9 +159,16 @@ export default function Recenzii() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            padding: "16px 26px",
+            padding: "0 26px 20px",
             overflow: "hidden",
           }}>
+            {/* decorative line */}
+            <div style={{
+              width: 48, height: 3, borderRadius: 999,
+              background: "linear-gradient(90deg, #e8ddd0, #c9b99a)",
+              marginBottom: 14,
+            }} />
+
             <div style={{
               fontSize: "clamp(60px, 16vw, 120px)",
               fontWeight: 900,
