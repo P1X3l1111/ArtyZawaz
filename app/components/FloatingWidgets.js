@@ -208,7 +208,7 @@ export default function FloatingWidgets() {
             overflow: "hidden", boxShadow: "0 16px 64px rgba(0,0,0,0.5)",
             display: "flex", flexDirection: "column",
           }}>
-            {/* Header */
+            {/* Header */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
               <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>ArtyZawaz</span>
               <button onClick={() => setShowModal(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", fontSize: 20, lineHeight: 1 }}>×</button>
@@ -271,7 +271,7 @@ export default function FloatingWidgets() {
           </div>
         </div>
       )}
-      {/* -- MODAL Licente furnizori externi -- */
+      {/* -- MODAL Licente furnizori externi -- */}
       {showLicenses && (
         <div onClick={() => setShowLicenses(false)} style={{
           position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 2000,
