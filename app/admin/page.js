@@ -184,6 +184,29 @@ function SectionProduse() {
 }
 
 /* ─── HERO ─── */
+function SlideForm({ initial, onSave, onClose }) {
+  const [s, setS] = useState({ id: "", img: "", alt: "", titlu: "", subtitlu: "", ...initial });
+  const set = k => v => setS(x => ({ ...x, [k]: v }));
+  async function save() {
+    if (!s.id) await fetch("/api/hero", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...s, id: Date.now().toString() }) });
+    else await fetch(`/api/hero/${s.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
+    onSave();
+  }
+  return (
+    <div>
+      <Input label="URL Imagine" value={s.img} onChange={set("img")} placeholder="/imagine.jpg" />
+      {s.img && <img src={s.img} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <Input label="Alt text" value={s.alt} onChange={set("alt")} />
+      <Input label="Titlu" value={s.titlu} onChange={set("titlu")} />
+      <Input label="Subtitlu" value={s.subtitlu} onChange={set("subtitlu")} />
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
 function SectionHero() {
   const [slides, setSlides] = useState([]);
   const [editing, setEditing] = useState(null);
@@ -191,29 +214,6 @@ function SectionHero() {
 
   const load = () => fetch("/api/hero").then(r => r.json()).then(setSlides);
   useEffect(() => { load(); }, []);
-
-  function SlideForm({ initial, onClose }) {
-    const [s, setS] = useState({ id: "", img: "", alt: "", titlu: "", subtitlu: "", ...initial });
-    const set = k => v => setS(x => ({ ...x, [k]: v }));
-    async function save() {
-      if (!s.id) await fetch("/api/hero", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...s, id: Date.now().toString() }) });
-      else await fetch(`/api/hero/${s.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
-      load(); onClose();
-    }
-    return (
-      <div>
-        <Input label="URL Imagine" value={s.img} onChange={set("img")} placeholder="/imagine.jpg" />
-        {s.img && <img src={s.img} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
-        <Input label="Alt text" value={s.alt} onChange={set("alt")} />
-        <Input label="Titlu" value={s.titlu} onChange={set("titlu")} />
-        <Input label="Subtitlu" value={s.subtitlu} onChange={set("subtitlu")} />
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-          <button onClick={onClose} style={btnGhost}>Anulează</button>
-          <button onClick={save} style={btnPrimary}>Salvează</button>
-        </div>
-      </div>
-    );
-  }
 
   async function del(id) { await fetch(`/api/hero/${id}`, { method: "DELETE" }); load(); }
 
@@ -236,7 +236,7 @@ function SectionHero() {
         ))}
       </div>
       {editing !== null && <Modal title={editing.id ? "Editează slide" : "Slide nou"} onClose={() => setEditing(null)}>
-        <SlideForm initial={editing} onClose={() => setEditing(null)} />
+        <SlideForm initial={editing} onSave={() => { load(); setEditing(null); }} onClose={() => setEditing(null)} />
       </Modal>}
       {confirm && <Confirm message="Ștergi acest slide?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />}
     </div>
@@ -246,6 +246,37 @@ function SectionHero() {
 /* ─── BLOG ─── */
 const emptyArticol = { slug: "", titlu: "", rezumat: "", continut: "", categorie: "", data: "", citire: 3, img: "" };
 
+function ArticolForm({ initial, onSave, onClose }) {
+  const [a, setA] = useState({ ...emptyArticol, ...initial });
+  const set = k => v => setA(x => ({ ...x, [k]: v }));
+  async function save() {
+    const isNew = !initial.slug;
+    const url = isNew ? "/api/blog" : `/api/blog/${initial.slug}`;
+    await fetch(url, { method: isNew ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    onSave();
+  }
+  return (
+    <div>
+      <div style={row}>
+        <div style={{ flex: "0 0 68%", minWidth: 0 }}><Input label="Titlu" value={a.titlu} onChange={set("titlu")} /></div>
+        <div style={{ flex: "0 0 28%", minWidth: 0 }}><Input label="Timp citire (min)" value={a.citire} onChange={set("citire")} type="number" /></div>
+      </div>
+      <div style={row}>
+        <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Categorie" value={a.categorie} onChange={set("categorie")} /></div>
+        <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Data (YYYY-MM-DD)" value={a.data} onChange={set("data")} /></div>
+      </div>
+      <Input label="URL Imagine" value={a.img} onChange={set("img")} />
+      {a.img && <img src={a.img} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <Textarea label="Rezumat" value={a.rezumat} onChange={set("rezumat")} rows={3} />
+      <Textarea label="Conținut" value={a.continut} onChange={set("continut")} rows={8} />
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
 function SectionBlog() {
   const [articole, setArticole] = useState([]);
   const [modal, setModal] = useState(null);
@@ -253,37 +284,6 @@ function SectionBlog() {
 
   const load = () => fetch("/api/blog").then(r => r.json()).then(setArticole);
   useEffect(() => { load(); }, []);
-
-  function ArticolForm({ initial, onClose }) {
-    const [a, setA] = useState({ ...emptyArticol, ...initial });
-    const set = k => v => setA(x => ({ ...x, [k]: v }));
-    async function save() {
-      const isNew = !initial.slug;
-      const url = isNew ? "/api/blog" : `/api/blog/${initial.slug}`;
-      await fetch(url, { method: isNew ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
-      load(); onClose();
-    }
-    return (
-      <div>
-        <div style={row}>
-          <div style={{ flex: "0 0 68%", minWidth: 0 }}><Input label="Titlu" value={a.titlu} onChange={set("titlu")} /></div>
-          <div style={{ flex: "0 0 28%", minWidth: 0 }}><Input label="Timp citire (min)" value={a.citire} onChange={set("citire")} type="number" /></div>
-        </div>
-        <div style={row}>
-          <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Categorie" value={a.categorie} onChange={set("categorie")} /></div>
-          <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Data (YYYY-MM-DD)" value={a.data} onChange={set("data")} /></div>
-        </div>
-        <Input label="URL Imagine" value={a.img} onChange={set("img")} />
-        {a.img && <img src={a.img} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
-        <Textarea label="Rezumat" value={a.rezumat} onChange={set("rezumat")} rows={3} />
-        <Textarea label="Conținut" value={a.continut} onChange={set("continut")} rows={8} />
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-          <button onClick={onClose} style={btnGhost}>Anulează</button>
-          <button onClick={save} style={btnPrimary}>Salvează</button>
-        </div>
-      </div>
-    );
-  }
 
   async function del(slug) { await fetch(`/api/blog/${slug}`, { method: "DELETE" }); load(); }
 
@@ -307,7 +307,7 @@ function SectionBlog() {
         ))}
       </div>
       {modal && <Modal title={modal.mode === "new" ? "Articol nou" : `Editează: ${modal.data.titlu}`} onClose={() => setModal(null)}>
-        <ArticolForm initial={modal.data} onClose={() => setModal(null)} />
+        <ArticolForm initial={modal.data} onSave={() => { load(); setModal(null); }} onClose={() => setModal(null)} />
       </Modal>}
       {confirm && <Confirm message="Ștergi acest articol?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />}
     </div>
@@ -315,6 +315,28 @@ function SectionBlog() {
 }
 
 /* ─── RECENZII ─── */
+function RecenzieForm({ initial, onSave, onClose }) {
+  const [r, setR] = useState({ id: "", avatar: "", nume: "", text: "", ...initial });
+  const set = k => v => setR(x => ({ ...x, [k]: v }));
+  async function save() {
+    if (!r.id) await fetch("/api/recenzii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
+    else await fetch(`/api/recenzii/${r.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
+    onSave();
+  }
+  return (
+    <div>
+      <Input label="Nume client" value={r.nume} onChange={set("nume")} />
+      <Input label="URL Avatar" value={r.avatar} onChange={set("avatar")} />
+      {r.avatar && <img src={r.avatar} alt="" style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", marginBottom: 12 }} />}
+      <Textarea label="Recenzie" value={r.text} onChange={set("text")} rows={3} />
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
 function SectionRecenzii() {
   const [recenzii, setRecenzii] = useState([]);
   const [modal, setModal] = useState(null);
@@ -322,28 +344,6 @@ function SectionRecenzii() {
 
   const load = () => fetch("/api/recenzii").then(r => r.json()).then(setRecenzii);
   useEffect(() => { load(); }, []);
-
-  function RecenzieForm({ initial, onClose }) {
-    const [r, setR] = useState({ id: "", avatar: "", nume: "", text: "", ...initial });
-    const set = k => v => setR(x => ({ ...x, [k]: v }));
-    async function save() {
-      if (!r.id) await fetch("/api/recenzii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
-      else await fetch(`/api/recenzii/${r.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
-      load(); onClose();
-    }
-    return (
-      <div>
-        <Input label="Nume client" value={r.nume} onChange={set("nume")} />
-        <Input label="URL Avatar" value={r.avatar} onChange={set("avatar")} />
-        {r.avatar && <img src={r.avatar} alt="" style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", marginBottom: 12 }} />}
-        <Textarea label="Recenzie" value={r.text} onChange={set("text")} rows={3} />
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-          <button onClick={onClose} style={btnGhost}>Anulează</button>
-          <button onClick={save} style={btnPrimary}>Salvează</button>
-        </div>
-      </div>
-    );
-  }
 
   async function del(id) { await fetch(`/api/recenzii/${id}`, { method: "DELETE" }); load(); }
 
@@ -369,7 +369,7 @@ function SectionRecenzii() {
         ))}
       </div>
       {modal !== null && <Modal title="Recenzie" onClose={() => setModal(null)}>
-        <RecenzieForm initial={modal} onClose={() => setModal(null)} />
+        <RecenzieForm initial={modal} onSave={() => { load(); setModal(null); }} onClose={() => setModal(null)} />
       </Modal>}
       {confirm && <Confirm message="Ștergi această recenzie?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />}
     </div>
@@ -377,6 +377,26 @@ function SectionRecenzii() {
 }
 
 /* ─── FAQ ─── */
+function FaqForm({ initial, onSave, onClose }) {
+  const [f, setF] = useState({ id: "", intrebare: "", raspuns: "", ...initial });
+  const set = k => v => setF(x => ({ ...x, [k]: v }));
+  async function save() {
+    if (!f.id) await fetch("/api/faq", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
+    else await fetch(`/api/faq/${f.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
+    onSave();
+  }
+  return (
+    <div>
+      <Input label="Întrebare" value={f.intrebare} onChange={set("intrebare")} />
+      <Textarea label="Răspuns" value={f.raspuns} onChange={set("raspuns")} rows={5} />
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
 function SectionFAQ() {
   const [items, setItems] = useState([]);
   const [modal, setModal] = useState(null);
@@ -384,26 +404,6 @@ function SectionFAQ() {
 
   const load = () => fetch("/api/faq").then(r => r.json()).then(setItems);
   useEffect(() => { load(); }, []);
-
-  function FaqForm({ initial, onClose }) {
-    const [f, setF] = useState({ id: "", intrebare: "", raspuns: "", ...initial });
-    const set = k => v => setF(x => ({ ...x, [k]: v }));
-    async function save() {
-      if (!f.id) await fetch("/api/faq", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
-      else await fetch(`/api/faq/${f.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
-      load(); onClose();
-    }
-    return (
-      <div>
-        <Input label="Întrebare" value={f.intrebare} onChange={set("intrebare")} />
-        <Textarea label="Răspuns" value={f.raspuns} onChange={set("raspuns")} rows={5} />
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-          <button onClick={onClose} style={btnGhost}>Anulează</button>
-          <button onClick={save} style={btnPrimary}>Salvează</button>
-        </div>
-      </div>
-    );
-  }
 
   async function del(id) { await fetch(`/api/faq/${id}`, { method: "DELETE" }); load(); }
 
@@ -423,7 +423,7 @@ function SectionFAQ() {
         </div>
       ))}
       {modal !== null && <Modal title="FAQ" onClose={() => setModal(null)}>
-        <FaqForm initial={modal} onClose={() => setModal(null)} />
+        <FaqForm initial={modal} onSave={() => { load(); setModal(null); }} onClose={() => setModal(null)} />
       </Modal>}
       {confirm && <Confirm message="Ștergi această întrebare?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />}
     </div>
@@ -431,6 +431,32 @@ function SectionFAQ() {
 }
 
 /* ─── CATEGORII ─── */
+function CategForm({ initial, onSave, onClose }) {
+  const [c, setC] = useState({ slug: "", label: "", descriere: "", img: "", ...initial });
+  const set = k => v => setC(x => ({ ...x, [k]: v }));
+  async function save() {
+    if (initial.slug) {
+      await fetch(`/api/categorii/${initial.slug}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
+    } else {
+      await fetch("/api/categorii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
+    }
+    onSave();
+  }
+  return (
+    <div>
+      <Input label="Slug (URL)" value={c.slug} onChange={set("slug")} placeholder="ex: stative" />
+      <Input label="Nume afișat" value={c.label} onChange={set("label")} />
+      <Input label="URL Imagine" value={c.img} onChange={set("img")} />
+      {c.img && <img src={c.img} alt="" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <Textarea label="Descriere" value={c.descriere} onChange={set("descriere")} rows={3} />
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
 function SectionCategorii() {
   const [categorii, setCategorii] = useState([]);
   const [modal, setModal] = useState(null);
@@ -438,28 +464,6 @@ function SectionCategorii() {
 
   const load = () => fetch("/api/categorii").then(r => r.json()).then(setCategorii);
   useEffect(() => { load(); }, []);
-
-  function CategForm({ initial, onClose }) {
-    const [c, setC] = useState({ slug: "", label: "", descriere: "", img: "", ...initial });
-    const set = k => v => setC(x => ({ ...x, [k]: v }));
-    async function save() {
-      await fetch("/api/categorii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
-      load(); onClose();
-    }
-    return (
-      <div>
-        <Input label="Slug (URL)" value={c.slug} onChange={set("slug")} placeholder="ex: stative" />
-        <Input label="Nume afișat" value={c.label} onChange={set("label")} />
-        <Input label="URL Imagine" value={c.img} onChange={set("img")} />
-        {c.img && <img src={c.img} alt="" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
-        <Textarea label="Descriere" value={c.descriere} onChange={set("descriere")} rows={3} />
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-          <button onClick={onClose} style={btnGhost}>Anulează</button>
-          <button onClick={save} style={btnPrimary}>Salvează</button>
-        </div>
-      </div>
-    );
-  }
 
   async function del(slug) { await fetch(`/api/categorii/${slug}`, { method: "DELETE" }); load(); }
 
@@ -483,7 +487,7 @@ function SectionCategorii() {
         ))}
       </div>
       {modal !== null && <Modal title="Categorie" onClose={() => setModal(null)}>
-        <CategForm initial={modal} onClose={() => setModal(null)} />
+        <CategForm initial={modal} onSave={() => { load(); setModal(null); }} onClose={() => setModal(null)} />
       </Modal>}
       {confirm && <Confirm message="Ștergi această categorie?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />}
     </div>

@@ -9,7 +9,7 @@ export async function GET() {
 export async function POST(req) {
   const body = await req.json();
   const data = await readDb("blog");
-  const slug = body.slug || body.titlu
+  const slug = body.slug || (body.titlu || "articol-" + Date.now())
     .toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
