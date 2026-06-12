@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllCulori, getAllTeme, getAllOcazii, slugify } from "../lib/produse";
@@ -26,19 +27,25 @@ const OCAZIE_ICONS = { "Cadou": "🎁", "Zi de naștere": "🎂", "Crăciun": "�
 
 const TYPE_LABELS = { culoare: "După culoare:", tema: "După motiv:", ocazie: "După circumstanțe:" };
 
-function FilterDropdown({ options, onSelect, onClose, type }) {
+function FilterDropdown({ options, onSelect, onClose, type, anchorRect }) {
   const ref = useRef(null);
   useEffect(() => {
-    const handler = (e) => { if (!e.target.closest(".gaseste-card")) onClose(); };
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target) && !e.target.closest(".gaseste-btn")) onClose();
+    };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [onClose]);
 
-  return (
+  if (!anchorRect) return null;
+
+  const dropdown = (
     <div ref={ref} style={{
-      position: "absolute", top: "calc(100% + 8px)", left: 0,
-      background: "#fff", borderRadius: 16, boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
-      zIndex: 200, minWidth: 200, padding: "20px 24px 16px",
+      position: "fixed",
+      top: anchorRect.bottom + 8,
+      left: anchorRect.left,
+      background: "#fff", borderRadius: 16, boxShadow: "0 8px 40px rgba(0,0,0,0.22)",
+      zIndex: 9999, minWidth: 200, padding: "20px 24px 16px",
     }}>
       <p style={{ margin: "0 0 12px", fontWeight: 700, fontSize: 16, color: "#111" }}>
         {TYPE_LABELS[type]}
@@ -59,13 +66,29 @@ function FilterDropdown({ options, onSelect, onClose, type }) {
       </div>
     </div>
   );
+
+  return createPortal(dropdown, document.body);
 }
 
 function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
   const [open, setOpen] = useState(false);
+  const [anchorRect, setAnchorRect] = useState(null);
+  const btnRef = useRef(null);
   const router = useRouter();
   const isAccent = !!accentColor;
-  const handleSelect = (val) => { setOpen(false); router.push(`/${type}/${slugify(val)}`); };
+
+  const handleToggle = () => {
+    if (open) {
+      setOpen(false);
+      setAnchorRect(null);
+    } else {
+      if (btnRef.current) setAnchorRect(btnRef.current.getBoundingClientRect());
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => { setOpen(false); setAnchorRect(null); };
+  const handleSelect = (val) => { handleClose(); router.push(`/${type}/${slugify(val)}`, { scroll: false }); };
 
   return (
     <div className="gaseste-card" style={{
@@ -83,12 +106,12 @@ function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
         <h3 style={{ fontSize: "clamp(18px, 1.8vw, 24px)", fontWeight: 800, color: isAccent ? "#fff" : "#111", margin: "0 0 10px", lineHeight: 1.2, whiteSpace: "pre-line" }}>{title}</h3>
         <p style={{ fontSize: 14, color: isAccent ? "rgba(255,255,255,0.85)" : "#777", margin: 0, lineHeight: 1.5 }}>{desc}</p>
       </div>
-      <div style={{ position: "relative", marginTop: 24 }}>
+      <div style={{ marginTop: 24 }}>
         {isAccent ? (
           <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", padding: "8px 20px", borderRadius: 999, background: "#c0392b", color: "#fff", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>{btn}</Link>
         ) : (
           <>
-            <button onClick={() => setOpen(o => !o)} style={{
+            <button ref={btnRef} className="gaseste-btn" onClick={handleToggle} style={{
               display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 999,
               border: "1.5px solid " + (open ? "#111" : "#ccc"), background: open ? "#111" : "transparent",
               color: open ? "#fff" : "#333", fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s",
@@ -96,7 +119,7 @@ function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
               {btn}
               <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            {open && <FilterDropdown options={options} onSelect={handleSelect} onClose={() => setOpen(false)} type={type} />}
+            {open && <FilterDropdown options={options} onSelect={handleSelect} onClose={handleClose} type={type} anchorRect={anchorRect} />}
           </>
         )}
       </div>
