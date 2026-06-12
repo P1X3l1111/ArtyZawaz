@@ -24,6 +24,8 @@ const COLOR_MAP = {
 const TEMA_ICONS = { "Minimalist": "○", "Premium": "◈", "Industrial": "⬡", "Sport": "◎", "Studio": "◉", "Outdoor": "◬" };
 const OCAZIE_ICONS = { "Cadou": "🎁", "Zi de naștere": "🎂", "Crăciun": "🎄", "Valentine's Day": "❤️", "Birou": "💼" };
 
+const TYPE_LABELS = { culoare: "După culoare:", tema: "După motiv:", ocazie: "După circumstanțe:" };
+
 function FilterDropdown({ options, onSelect, onClose, type }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -34,27 +36,23 @@ function FilterDropdown({ options, onSelect, onClose, type }) {
 
   return (
     <div ref={ref} style={{
-      position: "absolute", top: "calc(100% + 8px)", left: 0, right: 0,
+      position: "absolute", top: "calc(100% + 8px)", left: 0,
       background: "#fff", borderRadius: 16, boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
-      zIndex: 200, overflow: "hidden", border: "1px solid #f0ece6",
+      zIndex: 200, minWidth: 200, padding: "20px 24px 16px",
     }}>
-      <div style={{ padding: "8px 0", maxHeight: 240, overflowY: "auto" }}>
+      <p style={{ margin: "0 0 12px", fontWeight: 700, fontSize: 16, color: "#111" }}>
+        {TYPE_LABELS[type]}
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {options.map((opt) => (
           <button key={opt} onClick={() => onSelect(opt)} style={{
-            display: "flex", alignItems: "center", gap: 12, width: "100%",
-            padding: "10px 16px", background: "none", border: "none", cursor: "pointer",
-            textAlign: "left", fontSize: 14, fontWeight: 600, color: "#111", transition: "background 0.15s",
+            background: "none", border: "none", cursor: "pointer",
+            textAlign: "left", fontSize: 15, fontWeight: 500,
+            color: "#e6a817", padding: 0, lineHeight: 1.4,
           }}
-            onMouseEnter={e => e.currentTarget.style.background = "#f5f2ed"}
-            onMouseLeave={e => e.currentTarget.style.background = "none"}
+            onMouseEnter={e => e.currentTarget.style.color = "#c8900f"}
+            onMouseLeave={e => e.currentTarget.style.color = "#e6a817"}
           >
-            {type === "culoare" && (
-              <span style={{ width: 20, height: 20, borderRadius: "50%", background: COLOR_MAP[opt] || "#ccc",
-                border: opt === "Alb" ? "1.5px solid #ddd" : "none", flexShrink: 0,
-                boxShadow: "0 1px 4px rgba(0,0,0,0.15)", display: "inline-block" }} />
-            )}
-            {type === "tema" && <span style={{ fontSize: 16, width: 20, textAlign: "center" }}>{TEMA_ICONS[opt] || "•"}</span>}
-            {type === "ocazie" && <span style={{ fontSize: 16, width: 20, textAlign: "center" }}>{OCAZIE_ICONS[opt] || "•"}</span>}
             {opt}
           </button>
         ))}
