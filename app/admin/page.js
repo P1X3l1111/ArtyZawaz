@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ── palette ── */
 const C = {
@@ -89,6 +89,44 @@ const TEME_LIST = ["AI","Animale","Automotive","Basme","Călătorii","Creează-�
 const OCAZII_LIST = ["Aniversare","Calendar","Comuniune Sfântă","Nuntă","Pentru copii","Pentru ea","Pentru el","Ziua Băiatului","Ziua Copilului","Ziua de naștere","Ziua Femeii","Ziua Îndrăgostiților","Ziua Mamei","Ziua Profesorului","Ziua Tatălui"];
 const TAGS_LIST = ["populare","reduceri","produse-noi"];
 const emptyProdus = { id: "", name: "", price: "", oldPrice: "", category: "stative", tags: [], img: "", descriere: "", culori: [], imaginiCulori: {}, tema: [], ocazie: [] };
+
+function ImageUpload({ label, value, onChange, height = 120 }) {
+  const [uploading, setUploading] = useState(false);
+  const ref = useRef();
+  async function handleFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.url) onChange(data.url);
+    } finally {
+      setUploading(false);
+      ref.current.value = "";
+    }
+  }
+  return (
+    <div style={{ marginBottom: 12 }}>
+      {label && <label style={lbl}>{label}</label>}
+      <div style={{ display: "flex", gap: 8 }}>
+        <input value={value ?? ""} onChange={e => onChange(e.target.value)} placeholder="URL imagine" style={{ ...inp, flex: 1 }} />
+        <label style={{
+          display: "inline-flex", alignItems: "center", padding: "9px 14px",
+          background: uploading ? C.muted : C.accent, color: "#fff", borderRadius: 8,
+          fontWeight: 700, fontSize: 13, cursor: uploading ? "wait" : "pointer",
+          whiteSpace: "nowrap", flexShrink: 0,
+        }}>
+          <input type="file" accept="image/*" onChange={handleFile} style={{ display: "none" }} ref={ref} disabled={uploading} />
+          {uploading ? "Se încarcă…" : "Alege fișier"}
+        </label>
+      </div>
+      {value && <img src={value} alt="" style={{ width: "100%", height, objectFit: "cover", borderRadius: 8, marginTop: 8 }} />}
+    </div>
+  );
+}
 
 function SectionBlock({ title, children }) {
   return (
@@ -191,8 +229,7 @@ function ProdusForm({ initial, onSave, onClose }) {
 
       {/* Imagine */}
       <SectionBlock title="Imagine">
-        <Input label="" value={p.img} onChange={set("img")} placeholder="/imagine.jpg" />
-        {p.img && <img src={p.img} alt="" style={{ width: "100%", height: 130, objectFit: "cover", borderRadius: 10, marginTop: 4 }} />}
+        <ImageUpload value={p.img} onChange={set("img")} height={130} />
       </SectionBlock>
 
       {/* Descriere */}
@@ -311,8 +348,7 @@ function SlideForm({ initial, onSave, onClose }) {
   }
   return (
     <div>
-      <Input label="URL Imagine" value={s.img} onChange={set("img")} placeholder="/imagine.jpg" />
-      {s.img && <img src={s.img} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <ImageUpload label="Imagine" value={s.img} onChange={set("img")} height={140} />
       <Input label="Alt text" value={s.alt} onChange={set("alt")} />
       <Input label="Titlu" value={s.titlu} onChange={set("titlu")} />
       <Input label="Subtitlu" value={s.subtitlu} onChange={set("subtitlu")} />
@@ -382,8 +418,7 @@ function ArticolForm({ initial, onSave, onClose }) {
         <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Categorie" value={a.categorie} onChange={set("categorie")} /></div>
         <div style={{ flex: "0 0 48%", minWidth: 0 }}><Input label="Data (YYYY-MM-DD)" value={a.data} onChange={set("data")} /></div>
       </div>
-      <Input label="URL Imagine" value={a.img} onChange={set("img")} />
-      {a.img && <img src={a.img} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <ImageUpload label="Imagine" value={a.img} onChange={set("img")} />
       <Textarea label="Rezumat" value={a.rezumat} onChange={set("rezumat")} rows={3} />
       <Textarea label="Conținut" value={a.continut} onChange={set("continut")} rows={8} />
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
@@ -443,8 +478,7 @@ function RecenzieForm({ initial, onSave, onClose }) {
   return (
     <div>
       <Input label="Nume client" value={r.nume} onChange={set("nume")} />
-      <Input label="URL Avatar" value={r.avatar} onChange={set("avatar")} />
-      {r.avatar && <img src={r.avatar} alt="" style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", marginBottom: 12 }} />}
+      <ImageUpload label="Avatar" value={r.avatar} onChange={set("avatar")} height={80} />
       <Textarea label="Recenzie" value={r.text} onChange={set("text")} rows={3} />
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
         <button onClick={onClose} style={btnGhost}>Anulează</button>
@@ -563,8 +597,7 @@ function CategForm({ initial, onSave, onClose }) {
     <div>
       <Input label="Slug (URL)" value={c.slug} onChange={set("slug")} placeholder="ex: stative" />
       <Input label="Nume afișat" value={c.label} onChange={set("label")} />
-      <Input label="URL Imagine" value={c.img} onChange={set("img")} />
-      {c.img && <img src={c.img} alt="" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
+      <ImageUpload label="Imagine" value={c.img} onChange={set("img")} height={110} />
       <Textarea label="Descriere" value={c.descriere} onChange={set("descriere")} rows={3} />
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
         <button onClick={onClose} style={btnGhost}>Anulează</button>
