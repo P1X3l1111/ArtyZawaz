@@ -1,17 +1,21 @@
 ﻿"use client";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import { produse as toateProdusele } from "../lib/produse";
 import ProdusCard from "./ProdusCard";
-
-const produse = toateProdusele.filter(p => p.tags?.includes("produse-noi"));
-const looped = [...produse, ...produse, ...produse];
 
 export default function ProduseNoi() {
   const scrollRef = useRef(null);
   const pausedRef = useRef(false);
   const dragRef = useRef({ dragging: false, startX: 0, startScroll: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [looped, setLooped] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/produse").then(r => r.json()).then(data => {
+      const filtered = data.filter(p => p.tags?.includes("produse-noi"));
+      setLooped([...filtered, ...filtered, ...filtered]);
+    });
+  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 767);

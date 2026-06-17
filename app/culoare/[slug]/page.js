@@ -17,6 +17,6 @@ export async function generateMetadata({ params }) {
 export default async function CuloarePage({ params }) {
   const { slug } = await params;
   const value = deslugify(slug) || slug;
-  const produse = getProduseByculoare(value);
+  const produse = await getProduseByculoare(value);
   return <FilteredPage type="culoare" value={value} produse={produse} />;
 }

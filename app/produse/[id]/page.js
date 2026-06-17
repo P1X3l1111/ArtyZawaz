@@ -1,21 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { use } from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import ProdusCard from "../../components/ProdusCard";
-import { getProdusById, getProduseByCategorie, categorii } from "../../lib/produse";
+import { categorii } from "../../lib/produse";
 import { useCos } from "../../context/CosContext";
 
 export default function ProdusDePage({ params }) {
   const { id } = use(params);
-  const produs = getProdusById(id);
+  const [produs, setProdus] = useState(null);
+  const [similare, setSimilare] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedCuloare, setSelectedCuloare] = useState(null);
   const [selectedMarime, setSelectedMarime] = useState(null);
   const [addedToCart, setAddedToCart] = useState(false);
   const { adaugaInCos } = useCos();
+
+  useEffect(() => {
+    fetch("/api/produse").then(r => r.json()).then(data => {
+      const found = data.find(p => p.id === id);
+      setProdus(found || null);
+      if (found) setSimilare(data.filter(p => p.category === found.category && p.id !== id).slice(0, 3));
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div style={{ background: "#fff", minHeight: "100vh" }}>
+        <NavBar />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}>
+          <p style={{ color: "#aaa", fontSize: 15 }}>Se încarcă…</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!produs) {
     return (
@@ -35,9 +58,6 @@ export default function ProdusDePage({ params }) {
   const hasDiscount = produs.oldPrice;
   const discountPct = hasDiscount ? Math.round((1 - produs.price / produs.oldPrice) * 100) : null;
   const categLabel = categorii.find(c => c.slug === produs.category)?.label || produs.category;
-
-  // Similar products
-  const similare = getProduseByCategorie(produs.category).filter(p => p.id !== produs.id).slice(0, 3);
 
   const handleAddToCart = () => {
     adaugaInCos(produs, selectedCuloare, selectedMarime);

@@ -17,6 +17,6 @@ export async function generateMetadata({ params }) {
 export default async function TemaPage({ params }) {
   const { slug } = await params;
   const value = deslugify(slug) || slug;
-  const produse = getProduseByTema(value);
+  const produse = await getProduseByTema(value);
   return <FilteredPage type="tema" value={value} produse={produse} />;
 }

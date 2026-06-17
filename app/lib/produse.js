@@ -1,59 +1,71 @@
-﻿import produseData from "../../data/produse.json";
+import { readDb } from "./db";
 import categoriiData from "../../data/categorii.json";
 
-export const produse = produseData;
 export const categorii = categoriiData;
 
-export function getProduseByCategorie(slug) {
-  if (slug === "copii") return produse.filter(p => p.tags.includes("fete") || p.tags.includes("baieti"));
-  return produse.filter(p => p.tags.includes(slug));
+const ALL_KNOWN = [
+  "Alb","Albastru","Auriu","Galben","Gri","Maro","Negru","Negru-Alb","Portocaliu","Roz","Roșu","Verde","Violet",
+  "AI","Animale","Automotive","Basme","Călătorii","Creează-ți propriul","Haios","Jocuri","Nuntă",
+  "Ocazii speciale","Orașe","Peisaje","Plante","Sport","Vacanță",
+  "Aniversare","Calendar","Comuniune Sfântă","Nuntă","Pentru copii","Pentru ea","Pentru el",
+  "Ziua Băiatului","Ziua Copilului","Ziua de naștere","Ziua Femeii","Ziua Îndrăgostiților",
+  "Ziua Mamei","Ziua Profesorului","Ziua Tatălui",
+];
+
+export async function getProduse() {
+  return await readDb("produse");
 }
 
-export function getProdusById(id) {
+export async function getProduseByCategorie(slug) {
+  const produse = await getProduse();
+  if (slug === "copii") return produse.filter(p => p.tags?.includes("fete") || p.tags?.includes("baieti"));
+  return produse.filter(p => p.tags?.includes(slug) || p.category === slug);
+}
+
+export async function getProdusById(id) {
+  const produse = await getProduse();
   return produse.find(p => p.id === id);
+}
+
+export async function getProduseByculoare(culoare) {
+  const produse = await getProduse();
+  return produse.filter(p => p.culori?.includes(culoare));
+}
+
+export async function getProduseByTema(tema) {
+  const produse = await getProduse();
+  return produse.filter(p => p.tema?.includes(tema));
+}
+
+export async function getProduseByOcazie(ocazie) {
+  const produse = await getProduse();
+  return produse.filter(p => p.ocazie?.includes(ocazie));
 }
 
 export function getCategorieBySlug(slug) {
   return categorii.find(c => c.slug === slug);
 }
 
-export function getProduseByculoare(culoare) {
-  return produse.filter(p => p.culori?.includes(culoare));
-}
-
-export function getProduseByTema(tema) {
-  return produse.filter(p => p.tema?.includes(tema));
-}
-
-export function getProduseByOcazie(ocazie) {
-  return produse.filter(p => p.ocazie?.includes(ocazie));
-}
-
 export function getAllCulori() {
-  return [...new Set(produse.flatMap(p => p.culori || []))].sort();
+  return ["Alb","Albastru","Auriu","Galben","Gri","Maro","Negru","Negru-Alb","Portocaliu","Roz","Roșu","Verde","Violet"];
 }
 
 export function getAllTeme() {
-  return [...new Set(produse.flatMap(p => p.tema || []))].sort();
+  return ["AI","Animale","Automotive","Basme","Călătorii","Creează-ți propriul","Haios","Jocuri","Nuntă","Ocazii speciale","Orașe","Peisaje","Plante","Sport","Vacanță"];
 }
 
 export function getAllOcazii() {
-  return [...new Set(produse.flatMap(p => p.ocazie || []))].sort();
+  return ["Aniversare","Calendar","Comuniune Sfântă","Nuntă","Pentru copii","Pentru ea","Pentru el","Ziua Băiatului","Ziua Copilului","Ziua de naștere","Ziua Femeii","Ziua Îndrăgostiților","Ziua Mamei","Ziua Profesorului","Ziua Tatălui"];
 }
 
 export function slugify(str) {
   return str
     .toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
 }
 
 export function deslugify(slug) {
-  // Try to find original value from data
-  const allCulori = getAllCulori();
-  const allTeme = getAllTeme();
-  const allOcazii = getAllOcazii();
-  const all = [...allCulori, ...allTeme, ...allOcazii];
-  return all.find(v => slugify(v) === slug) || slug;
+  return ALL_KNOWN.find(v => slugify(v) === slug) || slug;
 }

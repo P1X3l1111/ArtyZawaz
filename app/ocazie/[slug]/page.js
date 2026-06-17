@@ -17,6 +17,6 @@ export async function generateMetadata({ params }) {
 export default async function OcaziePage({ params }) {
   const { slug } = await params;
   const value = deslugify(slug) || slug;
-  const produse = getProduseByOcazie(value);
+  const produse = await getProduseByOcazie(value);
   return <FilteredPage type="ocazie" value={value} produse={produse} />;
 }

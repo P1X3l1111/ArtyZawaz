@@ -1,18 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import ProdusCard from "../components/ProdusCard";
-import { produse } from "../lib/produse";
 import Link from "next/link";
 
 export default function CautarePage() {
   const [query, setQuery] = useState("");
+  const [toateProdusele, setToateProdusele] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/produse").then(r => r.json()).then(setToateProdusele);
+  }, []);
 
   const rezultate = query.trim().length > 1
-    ? produse.filter(p =>
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.category.toLowerCase().includes(query.toLowerCase()) ||
+    ? toateProdusele.filter(p =>
+        p.name?.toLowerCase().includes(query.toLowerCase()) ||
+        p.category?.toLowerCase().includes(query.toLowerCase()) ||
         p.tags?.some(t => t.toLowerCase().includes(query.toLowerCase()))
       )
     : [];
