@@ -69,17 +69,79 @@ function Confirm({ message, onYes, onNo }) {
 }
 
 /* ─── PRODUSE ─── */
-const CATEGORII_LIST = ["stative","pusculate","fete","baieti","sport","reduceri","produse-noi","populare","copii"];
-const CULORI_LIST = ["Negru","Alb","Gri","Argintiu","Roz","Albastru","Verde","Portocaliu","Rosu","Galben","Mov","Maro","Bej"];
-const TEME_LIST = ["Minimalist","Premium","Industrial","Sport","Studio","Outdoor"];
-const OCAZII_LIST = ["Cadou","Zi de naștere","Crăciun","Valentine's Day","Birou"];
+const CATEGORII_TIP = [
+  { value: "stative", label: "Stative", icon: "🎯" },
+  { value: "pusculate", label: "Pușculițe", icon: "🐷" },
+];
+const CATEGORII_NAV = [
+  { value: "fete", label: "Fete" },
+  { value: "baieti", label: "Băieți" },
+  { value: "sport", label: "Sport" },
+  { value: "copii", label: "Copii" },
+];
+const CULORI_LIST = ["Alb","Albastru","Auriu","Galben","Gri","Maro","Negru","Negru-Alb","Portocaliu","Roz","Roșu","Verde","Violet"];
+const COLOR_ADMIN_MAP = {
+  "Alb": "#f0f0f0", "Albastru": "#42a5f5", "Auriu": "#ffd700", "Galben": "#ffee58",
+  "Gri": "#9e9e9e", "Maro": "#8d6e63", "Negru": "#222", "Negru-Alb": null,
+  "Portocaliu": "#ffa726", "Roz": "#f48fb1", "Roșu": "#ef5350", "Verde": "#66bb6a", "Violet": "#9c27b0",
+};
+const TEME_LIST = ["AI","Animale","Automotive","Basme","Călătorii","Creează-ți propriul","Haios","Jocuri","Nuntă","Ocazii speciale","Orașe","Peisaje","Plante","Sport","Vacanță"];
+const OCAZII_LIST = ["Aniversare","Calendar","Comuniune Sfântă","Nuntă","Pentru copii","Pentru ea","Pentru el","Ziua Băiatului","Ziua Copilului","Ziua de naștere","Ziua Femeii","Ziua Îndrăgostiților","Ziua Mamei","Ziua Profesorului","Ziua Tatălui"];
 const TAGS_LIST = ["populare","reduceri","produse-noi"];
 const emptyProdus = { id: "", name: "", price: "", oldPrice: "", category: "stative", tags: [], img: "", descriere: "", culori: [], imaginiCulori: {}, tema: [], ocazie: [] };
+
+function SectionBlock({ title, children }) {
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+        <div style={{ width: 3, height: 16, borderRadius: 2, background: C.accent, flexShrink: 0 }} />
+        <span style={{ fontSize: 11, fontWeight: 800, color: C.muted, textTransform: "uppercase", letterSpacing: ".08em" }}>{title}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Pill({ label, active, onClick }) {
+  return (
+    <button onClick={onClick} style={{
+      padding: "5px 13px", borderRadius: 999, fontSize: 12, fontWeight: 600, cursor: "pointer",
+      border: active ? `1.5px solid ${C.accent}` : `1.5px solid ${C.border}`,
+      background: active ? C.accent + "18" : "#fff",
+      color: active ? C.accentDark : C.muted,
+      transition: "all .12s",
+    }}>{label}</button>
+  );
+}
+
+function ColorSwatch({ name, active, onToggle }) {
+  const hex = COLOR_ADMIN_MAP[name];
+  const isGrad = name === "Negru-Alb";
+  return (
+    <button title={name} onClick={onToggle} style={{
+      display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+      background: "none", border: "none", cursor: "pointer", padding: "4px 6px",
+      borderRadius: 8, outline: active ? `2px solid ${C.accent}` : "2px solid transparent",
+      outlineOffset: 1,
+    }}>
+      <span style={{
+        width: 28, height: 28, borderRadius: "50%", display: "block", flexShrink: 0,
+        background: isGrad ? "linear-gradient(135deg,#222 50%,#f0f0f0 50%)" : hex,
+        border: name === "Alb" ? "1px solid #ddd" : "none",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
+        position: "relative",
+      }}>
+        {active && <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: ["Alb","Galben","Auriu"].includes(name) ? "#555" : "#fff", fontWeight: 900 }}>✓</span>}
+      </span>
+      <span style={{ fontSize: 10, color: active ? C.accentDark : C.muted, fontWeight: active ? 700 : 400, lineHeight: 1.2, textAlign: "center", maxWidth: 42 }}>{name}</span>
+    </button>
+  );
+}
 
 function ProdusForm({ initial, onSave, onClose }) {
   const [p, setP] = useState({ ...emptyProdus, ...initial });
   const set = k => v => setP(x => ({ ...x, [k]: v }));
-  const toggleArr = (k, v) => setP(x => ({ ...x, [k]: x[k].includes(v) ? x[k].filter(i => i !== v) : [...x[k], v] }));
+  const toggleArr = (k, v) => setP(x => ({ ...x, [k]: (x[k] || []).includes(v) ? x[k].filter(i => i !== v) : [...(x[k] || []), v] }));
 
   async function save() {
     const isNew = !p.id;
@@ -89,37 +151,94 @@ function ProdusForm({ initial, onSave, onClose }) {
     onSave();
   }
 
-  const chk = (k, v) => (
-    <label key={v} style={{ display: "flex", alignItems: "center", gap: 5, cursor: "pointer", fontSize: 13 }}>
-      <input type="checkbox" checked={(p[k] || []).includes(v)} onChange={() => toggleArr(k, v)} /> {v}
-    </label>
-  );
-
   return (
     <div>
-      <div style={row}>
-        <div style={{ flex: "0 0 58%", minWidth: 0 }}><Input label="Nume produs" value={p.name} onChange={set("name")} /></div>
-        <div style={{ flex: "0 0 19%", minWidth: 0 }}><Input label="Preț (lei)" value={p.price} onChange={set("price")} type="number" /></div>
-        <div style={{ flex: "0 0 19%", minWidth: 0 }}><Input label="Preț vechi" value={p.oldPrice} onChange={set("oldPrice")} type="number" /></div>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <label style={lbl}>Categorie</label>
-        <select value={p.category} onChange={e => set("category")(e.target.value)} style={inp}>
-          {CATEGORII_LIST.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-      </div>
-      <Input label="URL Imagine principală" value={p.img} onChange={set("img")} placeholder="/imagine.jpg" />
-      {p.img && <img src={p.img} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8, marginBottom: 12 }} />}
-      <Textarea label="Descriere" value={p.descriere} onChange={set("descriere")} rows={3} />
-      <label style={lbl}>Tags</label>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>{TAGS_LIST.map(v => chk("tags", v))}</div>
-      <label style={lbl}>Culori disponibile</label>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>{CULORI_LIST.map(v => chk("culori", v))}</div>
-      <label style={lbl}>Temă</label>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>{TEME_LIST.map(v => chk("tema", v))}</div>
-      <label style={lbl}>Ocazie</label>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 20 }}>{OCAZII_LIST.map(v => chk("ocazie", v))}</div>
-      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+      {/* Informații de bază */}
+      <SectionBlock title="Informații de bază">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 120px", gap: 10 }}>
+          <Input label="Nume produs" value={p.name} onChange={set("name")} />
+          <Input label="Preț (lei)" value={p.price} onChange={set("price")} type="number" />
+          <Input label="Preț vechi" value={p.oldPrice} onChange={set("oldPrice")} type="number" />
+        </div>
+      </SectionBlock>
+
+      {/* Tip produs */}
+      <SectionBlock title="Tip produs">
+        <div style={{ display: "flex", gap: 10 }}>
+          {CATEGORII_TIP.map(t => (
+            <button key={t.value} onClick={() => set("category")(t.value)} style={{
+              flex: 1, padding: "14px 10px", borderRadius: 12, cursor: "pointer",
+              border: p.category === t.value ? `2px solid ${C.accent}` : `2px solid ${C.border}`,
+              background: p.category === t.value ? C.accent + "12" : "#fff",
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+              transition: "all .15s",
+            }}>
+              <span style={{ fontSize: 28 }}>{t.icon}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: p.category === t.value ? C.accentDark : C.text }}>{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </SectionBlock>
+
+      {/* Categorie navigare */}
+      <SectionBlock title="Categorie (navigare site)">
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {CATEGORII_NAV.map(c => (
+            <Pill key={c.value} label={c.label}
+              active={(p.tags || []).includes(c.value)}
+              onClick={() => toggleArr("tags", c.value)} />
+          ))}
+        </div>
+      </SectionBlock>
+
+      {/* Imagine */}
+      <SectionBlock title="Imagine">
+        <Input label="" value={p.img} onChange={set("img")} placeholder="/imagine.jpg" />
+        {p.img && <img src={p.img} alt="" style={{ width: "100%", height: 130, objectFit: "cover", borderRadius: 10, marginTop: 4 }} />}
+      </SectionBlock>
+
+      {/* Descriere */}
+      <SectionBlock title="Descriere">
+        <Textarea label="" value={p.descriere} onChange={set("descriere")} rows={3} />
+      </SectionBlock>
+
+      {/* Vizibilitate */}
+      <SectionBlock title="Vizibilitate">
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {TAGS_LIST.map(v => (
+            <Pill key={v} label={v} active={(p.tags || []).includes(v)} onClick={() => toggleArr("tags", v)} />
+          ))}
+        </div>
+      </SectionBlock>
+
+      {/* Culori */}
+      <SectionBlock title="Culori disponibile">
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {CULORI_LIST.map(v => (
+            <ColorSwatch key={v} name={v} active={(p.culori || []).includes(v)} onToggle={() => toggleArr("culori", v)} />
+          ))}
+        </div>
+      </SectionBlock>
+
+      {/* Temă */}
+      <SectionBlock title="Temă / Motiv">
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {TEME_LIST.map(v => (
+            <Pill key={v} label={v} active={(p.tema || []).includes(v)} onClick={() => toggleArr("tema", v)} />
+          ))}
+        </div>
+      </SectionBlock>
+
+      {/* Ocazie */}
+      <SectionBlock title="Ocazie / Circumstanțe">
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {OCAZII_LIST.map(v => (
+            <Pill key={v} label={v} active={(p.ocazie || []).includes(v)} onClick={() => toggleArr("ocazie", v)} />
+          ))}
+        </div>
+      </SectionBlock>
+
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", paddingTop: 4 }}>
         <button onClick={onClose} style={btnGhost}>Anulează</button>
         <button onClick={save} style={btnPrimary}>Salvează</button>
       </div>

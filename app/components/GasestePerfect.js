@@ -3,27 +3,45 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getAllCulori, getAllTeme, getAllOcazii, slugify } from "../lib/produse";
+import { slugify } from "../lib/produse";
+
+const CULORI_OPTIONS = [
+  "Alb", "Albastru", "Auriu", "Galben", "Gri",
+  "Maro", "Negru", "Negru-Alb", "Portocaliu", "Roz", "Roșu", "Verde", "Violet",
+];
 
 // Map color names to CSS colors
 const COLOR_MAP = {
-  "Negru": "#1a1a1a",
   "Alb": "#f5f5f5",
-  "Gri": "#9e9e9e",
-  "Argintiu": "#c0c0c0",
-  "Roz": "#f48fb1",
   "Albastru": "#42a5f5",
-  "Verde": "#66bb6a",
-  "Portocaliu": "#ffa726",
-  "Rosu": "#ef5350",
+  "Auriu": "#ffd700",
   "Galben": "#ffee58",
-  "Mov": "#ab47bc",
+  "Gri": "#9e9e9e",
   "Maro": "#8d6e63",
-  "Bej": "#d7ccc8",
+  "Negru": "#1a1a1a",
+  "Negru-Alb": "linear-gradient(135deg, #1a1a1a 50%, #f5f5f5 50%)",
+  "Portocaliu": "#ffa726",
+  "Roz": "#f48fb1",
+  "Roșu": "#ef5350",
+  "Verde": "#66bb6a",
+  "Violet": "#9c27b0",
 };
 
-const TEMA_ICONS = { "Minimalist": "○", "Premium": "◈", "Industrial": "⬡", "Sport": "◎", "Studio": "◉", "Outdoor": "◬" };
-const OCAZIE_ICONS = { "Cadou": "🎁", "Zi de naștere": "🎂", "Crăciun": "🎄", "Valentine's Day": "❤️", "Birou": "💼" };
+const TEME_OPTIONS = [
+  "AI", "Animale", "Automotive", "Basme", "Călătorii",
+  "Creează-ți propriul", "Haios", "Jocuri", "Nuntă",
+  "Ocazii speciale", "Orașe", "Peisaje", "Plante", "Sport", "Vacanță",
+];
+
+const TEMA_ICONS = {};
+const OCAZII_OPTIONS = [
+  "Aniversare", "Calendar", "Comuniune Sfântă", "Nuntă",
+  "Pentru copii", "Pentru ea", "Pentru el",
+  "Ziua Băiatului", "Ziua Copilului", "Ziua de naștere",
+  "Ziua Femeii", "Ziua Îndrăgostiților", "Ziua Mamei", "Ziua Profesorului", "Ziua Tatălui",
+];
+
+const OCAZIE_ICONS = {};
 
 const TYPE_LABELS = { culoare: "După culoare:", tema: "După motiv:", ocazie: "După circumstanțe:" };
 
@@ -114,13 +132,17 @@ function GasesteCard({ title, desc, btn, icon, type, options, accentColor }) {
 }
 
 export default function GasestePerfect() {
-  const culori = getAllCulori();
-  const teme = getAllTeme();
-  const ocazii = getAllOcazii();
+  const culori = CULORI_OPTIONS;
+  const teme = TEME_OPTIONS;
+  const ocazii = OCAZII_OPTIONS;
 
   const colorIcon = (
     <div style={{ width: 110, height: 110, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 5 }}>
-      {culori.map(c => <span key={c} title={c} style={{ width: 24, height: 24, borderRadius: "50%", background: COLOR_MAP[c] || "#ccc", border: c === "Alb" ? "1.5px solid #ddd" : "none", display: "inline-block", boxShadow: "0 1px 4px rgba(0,0,0,0.15)" }} />)}
+      {culori.map(c => {
+        const bg = COLOR_MAP[c] || "#ccc";
+        const isGrad = bg.startsWith("linear-gradient");
+        return <span key={c} title={c} style={{ width: 24, height: 24, borderRadius: "50%", background: isGrad ? bg : undefined, backgroundColor: isGrad ? undefined : bg, border: c === "Alb" ? "1.5px solid #ddd" : "none", display: "inline-block", boxShadow: "0 1px 4px rgba(0,0,0,0.15)" }} />;
+      })}
     </div>
   );
 
