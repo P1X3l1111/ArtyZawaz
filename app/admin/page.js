@@ -835,6 +835,13 @@ export default function AdminPage() {
           ))}
         </nav>
         <div style={{ padding: "10px 8px", borderTop: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }}>
+          <a href="/" target="_blank" style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, textDecoration: "none", marginBottom: 2, background: "transparent", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600 }}
+            onMouseEnter={e => e.currentTarget.style.background = C.sidebarHov}
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+          >
+            <span style={{ fontSize: 18, flexShrink: 0 }}>🌐</span>
+            {!collapsed && "Vezi site"}
+          </a>
           <button onClick={() => setLoggedIn(false)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, border: "none", cursor: "pointer", background: "transparent", color: "rgba(255,255,255,0.45)", fontSize: 13, fontWeight: 600 }}>
             <span style={{ fontSize: 18, flexShrink: 0 }}>🚪</span>
             {!collapsed && "Ieși"}
@@ -848,7 +855,7 @@ export default function AdminPage() {
           <h2 style={{ margin: 0, fontSize: 19, fontWeight: 900 }}>
             {SECTIONS.find(s => s.id === section)?.icon} {SECTIONS.find(s => s.id === section)?.label}
           </h2>
-          <a href="/" target="_blank" style={{ color: C.accent, fontWeight: 700, fontSize: 13, textDecoration: "none" }}>↗ Deschide site-ul</a>
+          <a href="/" target="_blank" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 16px", background: C.accent, color: "#fff", borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: "none" }}>↗ Vezi site</a>
         </div>
         <div style={{ padding: 28 }}>
           {section === "Dashboard" && <SectionDashboard onNav={setSection} />}
