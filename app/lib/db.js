@@ -1,25 +1,37 @@
 import { put, list } from "@vercel/blob";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
 const TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
+function localPath(name) {
+  return join(process.cwd(), "data", `${name}.json`);
+}
+
 function getLocalFallback(name) {
   try {
-    const raw = readFileSync(join(process.cwd(), "data", `${name}.json`), "utf-8");
-    return JSON.parse(raw);
+    return JSON.parse(readFileSync(localPath(name), "utf-8"));
   } catch {
     return [];
   }
 }
 
+function writeLocal(name, data) {
+  try {
+    writeFileSync(localPath(name), JSON.stringify(data, null, 2), "utf-8");
+  } catch {
+    // production / read-only filesystem — ignore
+  }
+}
+
 export async function readDb(name) {
+  if (!TOKEN) return getLocalFallback(name);
   try {
     const { blobs } = await list({ prefix: `db/${name}.json`, token: TOKEN });
     if (blobs.length === 0) {
-      // First time: seed from local JSON and save to Blob
       const localData = getLocalFallback(name);
-      if (localData.length > 0) await writeDb(name, localData);
+      const hasData = Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0;
+      if (hasData) await writeDb(name, localData);
       return localData;
     }
     const url = blobs[blobs.length - 1].url;
@@ -32,8 +44,11 @@ export async function readDb(name) {
 }
 
 export async function writeDb(name, data) {
-  const content = JSON.stringify(data, null, 2);
-  await put(`db/${name}.json`, content, {
+  // Always persist locally so dev restarts don't lose data
+  writeLocal(name, data);
+
+  if (!TOKEN) return;
+  await put(`db/${name}.json`, JSON.stringify(data, null, 2), {
     access: "public",
     allowOverwrite: true,
     contentType: "application/json",
