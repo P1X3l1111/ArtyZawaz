@@ -70,8 +70,8 @@ function Confirm({ message, onYes, onNo }) {
 
 /* ─── PRODUSE ─── */
 const CATEGORII_TIP = [
-  { value: "stative", label: "Stative", icon: "🎯" },
-  { value: "pusculate", label: "Pușculițe", icon: "🐷" },
+  { value: "stative", label: "Stative" },
+  { value: "pusculate", label: "Pușculițe" },
 ];
 const CATEGORII_NAV = [
   { value: "fete", label: "Fete" },
@@ -92,10 +92,10 @@ const emptyProdus = { id: "", name: "", price: "", oldPrice: "", category: "stat
 
 function SectionBlock({ title, children }) {
   return (
-    <div style={{ marginBottom: 20 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-        <div style={{ width: 3, height: 16, borderRadius: 2, background: C.accent, flexShrink: 0 }} />
-        <span style={{ fontSize: 11, fontWeight: 800, color: C.muted, textTransform: "uppercase", letterSpacing: ".08em" }}>{title}</span>
+    <div style={{ marginBottom: 14 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+        <div style={{ width: 3, height: 13, borderRadius: 2, background: C.accent, flexShrink: 0 }} />
+        <span style={{ fontSize: 10, fontWeight: 800, color: C.muted, textTransform: "uppercase", letterSpacing: ".08em" }}>{title}</span>
       </div>
       {children}
     </div>
@@ -105,7 +105,7 @@ function SectionBlock({ title, children }) {
 function Pill({ label, active, onClick }) {
   return (
     <button onClick={onClick} style={{
-      padding: "5px 13px", borderRadius: 999, fontSize: 12, fontWeight: 600, cursor: "pointer",
+      padding: "3px 10px", borderRadius: 999, fontSize: 12, fontWeight: 600, cursor: "pointer",
       border: active ? `1.5px solid ${C.accent}` : `1.5px solid ${C.border}`,
       background: active ? C.accent + "18" : "#fff",
       color: active ? C.accentDark : C.muted,
@@ -119,21 +119,21 @@ function ColorSwatch({ name, active, onToggle }) {
   const isGrad = name === "Negru-Alb";
   return (
     <button title={name} onClick={onToggle} style={{
-      display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-      background: "none", border: "none", cursor: "pointer", padding: "4px 6px",
-      borderRadius: 8, outline: active ? `2px solid ${C.accent}` : "2px solid transparent",
+      display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+      background: "none", border: "none", cursor: "pointer", padding: "3px 4px",
+      borderRadius: 6, outline: active ? `2px solid ${C.accent}` : "2px solid transparent",
       outlineOffset: 1,
     }}>
       <span style={{
-        width: 28, height: 28, borderRadius: "50%", display: "block", flexShrink: 0,
+        width: 24, height: 24, borderRadius: "50%", display: "block", flexShrink: 0,
         background: isGrad ? "linear-gradient(135deg,#222 50%,#f0f0f0 50%)" : hex,
         border: name === "Alb" ? "1px solid #ddd" : "none",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
         position: "relative",
       }}>
-        {active && <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: ["Alb","Galben","Auriu"].includes(name) ? "#555" : "#fff", fontWeight: 900 }}>✓</span>}
+        {active && <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: ["Alb","Galben","Auriu"].includes(name) ? "#555" : "#fff", fontWeight: 900 }}>✓</span>}
       </span>
-      <span style={{ fontSize: 10, color: active ? C.accentDark : C.muted, fontWeight: active ? 700 : 400, lineHeight: 1.2, textAlign: "center", maxWidth: 42 }}>{name}</span>
+      <span style={{ fontSize: 9, color: active ? C.accentDark : C.muted, fontWeight: active ? 700 : 400, lineHeight: 1.2, textAlign: "center", maxWidth: 38 }}>{name}</span>
     </button>
   );
 }
@@ -164,18 +164,16 @@ function ProdusForm({ initial, onSave, onClose }) {
 
       {/* Tip produs */}
       <SectionBlock title="Tip produs">
-        <div style={{ display: "flex", gap: 10 }}>
+        <div style={{ display: "flex", gap: 8 }}>
           {CATEGORII_TIP.map(t => (
             <button key={t.value} onClick={() => set("category")(t.value)} style={{
-              flex: 1, padding: "14px 10px", borderRadius: 12, cursor: "pointer",
+              flex: 1, padding: "8px 12px", borderRadius: 8, cursor: "pointer",
               border: p.category === t.value ? `2px solid ${C.accent}` : `2px solid ${C.border}`,
               background: p.category === t.value ? C.accent + "12" : "#fff",
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+              fontSize: 13, fontWeight: 700,
+              color: p.category === t.value ? C.accentDark : C.text,
               transition: "all .15s",
-            }}>
-              <span style={{ fontSize: 28 }}>{t.icon}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: p.category === t.value ? C.accentDark : C.text }}>{t.label}</span>
-            </button>
+            }}>{t.label}</button>
           ))}
         </div>
       </SectionBlock>
