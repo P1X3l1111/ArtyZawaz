@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 
-const SLIDES = [
+const SLIDES_FALLBACK = [
   {
     src: "/hero-1.png", srcMobile: "/herop.png", alt: "Hero 1",
     titlu: "Oferă un cadou\nde nota 10!\nProdusul anului\npentru toți.",
@@ -26,9 +26,22 @@ const IMG_W = 1924;
 const IMG_H = 725;
 
 export default function HeroSection() {
-  const slides = SLIDES;
+  const [slides, setSlides] = useState(SLIDES_FALLBACK);
   const [current, setCurrent] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/hero").then(r => r.json()).then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        setSlides(data.map(s => ({
+          src: s.img, srcMobile: s.img, alt: s.alt || "",
+          titlu: s.titlu || "", subtitlu: s.subtitlu || "",
+          buton: s.buton || "Explorează", butonHref: s.butonHref || "/produse",
+        })));
+        setCurrent(0);
+      }
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 767);

@@ -758,6 +758,94 @@ function SectionDashboard({ onNav }) {
   );
 }
 
+/* ─── ADMINISTRATORI ─── */
+function AdminForm({ initial, onSave, onClose }) {
+  const [a, setA] = useState({ id: "", nume: "", email: "", parola: "", rol: "Admin", ...initial });
+  const set = k => v => setA(x => ({ ...x, [k]: v }));
+  async function save() {
+    if (!a.id) await fetch("/api/utilizatori", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    else await fetch(`/api/utilizatori/${a.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    onSave();
+  }
+  return (
+    <div>
+      <Input label="Nume" value={a.nume} onChange={set("nume")} />
+      <Input label="Email" value={a.email} onChange={set("email")} type="email" />
+      <Input label="Parolă" value={a.parola} onChange={set("parola")} type="password" />
+      <div style={{ marginBottom: 12 }}>
+        <label style={lbl}>Rol</label>
+        <div style={{ display: "flex", gap: 8 }}>
+          {["Super Admin", "Admin"].map(r => (
+            <button key={r} onClick={() => set("rol")(r)} style={{
+              flex: 1, padding: "9px 12px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontWeight: 700,
+              border: a.rol === r ? `2px solid ${C.accent}` : `2px solid ${C.border}`,
+              background: a.rol === r ? C.accent + "14" : "#fff",
+              color: a.rol === r ? C.accentDark : C.text,
+              transition: "all .12s",
+            }}>{r}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+        <button onClick={onClose} style={btnGhost}>Anulează</button>
+        <button onClick={save} style={btnPrimary}>Salvează</button>
+      </div>
+    </div>
+  );
+}
+
+function SectionAdministratori() {
+  const [admins, setAdmins] = useState([]);
+  const [modal, setModal] = useState(null);
+  const [confirm, setConfirm] = useState(null);
+
+  const load = () => fetch("/api/utilizatori").then(r => r.json()).then(setAdmins);
+  useEffect(() => { load(); }, []);
+
+  async function del(id) { await fetch(`/api/utilizatori/${id}`, { method: "DELETE" }); load(); }
+
+  const rolColor = rol => rol === "Super Admin" ? "#8b5cf6" : C.accent;
+
+  return (
+    <div>
+      <div style={{ marginBottom: 20 }}>
+        <button onClick={() => setModal({})} style={btnPrimary}>+ Administrator nou</button>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+        {admins.map(a => (
+          <div key={a.id} style={card}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+              <div style={{ width: 46, height: 46, borderRadius: "50%", background: C.accent + "1a", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0 }}>
+                👤
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ margin: 0, fontWeight: 700, fontSize: 15, color: C.text }}>{a.nume}</p>
+                <p style={{ margin: "3px 0 0", color: C.muted, fontSize: 13 }}>{a.email}</p>
+              </div>
+              <Badge color={rolColor(a.rol)}>{a.rol || "Admin"}</Badge>
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={() => setModal({ ...a })} style={{ ...btnGhost, padding: "5px 12px", fontSize: 12 }}>✏️ Edit</button>
+              <button onClick={() => setConfirm(a.id)} style={btnDanger}>🗑</button>
+            </div>
+          </div>
+        ))}
+        {admins.length === 0 && (
+          <p style={{ color: C.muted, fontSize: 14 }}>Niciun administrator găsit.</p>
+        )}
+      </div>
+      {modal !== null && (
+        <Modal title={modal.id ? "Editează administrator" : "Administrator nou"} onClose={() => setModal(null)}>
+          <AdminForm initial={modal} onSave={() => { load(); setModal(null); }} onClose={() => setModal(null)} />
+        </Modal>
+      )}
+      {confirm && (
+        <Confirm message="Ștergi acest administrator?" onYes={() => { del(confirm); setConfirm(null); }} onNo={() => setConfirm(null)} />
+      )}
+    </div>
+  );
+}
+
 /* ─── ROOT ─── */
 const SECTIONS = [
   { id: "Dashboard", icon: "🏠", label: "Dashboard" },
@@ -768,6 +856,7 @@ const SECTIONS = [
   { id: "FAQ", icon: "❓", label: "FAQ" },
   { id: "Categorii", icon: "🗂️", label: "Categorii" },
   { id: "Setari", icon: "⚙️", label: "Setări" },
+  { id: "Administratori", icon: "👥", label: "Administratori" },
 ];
 
 export default function AdminPage() {
@@ -835,7 +924,7 @@ export default function AdminPage() {
           ))}
         </nav>
         <div style={{ padding: "10px 8px", borderTop: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }}>
-          <a href="/" target="_blank" style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, textDecoration: "none", marginBottom: 2, background: "transparent", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600 }}
+          <a href="/" style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, textDecoration: "none", marginBottom: 2, background: "transparent", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600 }}
             onMouseEnter={e => e.currentTarget.style.background = C.sidebarHov}
             onMouseLeave={e => e.currentTarget.style.background = "transparent"}
           >
@@ -855,7 +944,7 @@ export default function AdminPage() {
           <h2 style={{ margin: 0, fontSize: 19, fontWeight: 900 }}>
             {SECTIONS.find(s => s.id === section)?.icon} {SECTIONS.find(s => s.id === section)?.label}
           </h2>
-          <a href="/" target="_blank" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 16px", background: C.accent, color: "#fff", borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: "none" }}>↗ Vezi site</a>
+          <a href="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 16px", background: C.accent, color: "#fff", borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: "none" }}>← Vezi site</a>
         </div>
         <div style={{ padding: 28 }}>
           {section === "Dashboard" && <SectionDashboard onNav={setSection} />}
@@ -866,6 +955,7 @@ export default function AdminPage() {
           {section === "FAQ" && <SectionFAQ />}
           {section === "Categorii" && <SectionCategorii />}
           {section === "Setari" && <SectionSetari />}
+          {section === "Administratori" && <SectionAdministratori />}
         </div>
       </main>
     </div>

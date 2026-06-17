@@ -1,7 +1,7 @@
 ﻿"use client";
 import { useState, useEffect, useRef } from "react";
 
-const TESTIMONIALE = [
+const TESTIMONIALE_FALLBACK = [
   {
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=face",
     nume: "Anne Z.",
@@ -47,10 +47,20 @@ function Stars({ active = true }) {
 }
 
 export default function Recenzii() {
+  const [testimoniale, setTestimoniale] = useState(TESTIMONIALE_FALLBACK);
   const [slide, setSlide] = useState(0);
   const [progress, setProgress] = useState(0);
-  const TOTAL = TESTIMONIALE.length;
+  const TOTAL = testimoniale.length;
   const INTERVAL = 4000;
+
+  useEffect(() => {
+    fetch("/api/recenzii").then(r => r.json()).then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        setTestimoniale(data);
+        setSlide(0);
+      }
+    }).catch(() => {});
+  }, []);
   const progressRef = useRef(null);
   const startRef = useRef(null);
 
@@ -226,7 +236,7 @@ export default function Recenzii() {
           {/* Reviews — active + faded next */}
           <div style={{ display: "flex", flexDirection: "column", gap: 30, marginBottom: 36 }}>
             {[activeIdx, nextIdx].map((idx, pos) => {
-              const r = TESTIMONIALE[idx];
+              const r = testimoniale[idx];
               const isActive = pos === 0;
               return (
                 <div key={idx} className="recenzii-review-item" style={{
@@ -277,7 +287,7 @@ export default function Recenzii() {
             >&#8249;</button>
 
             <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-              {TESTIMONIALE.map((_, i) => (
+              {testimoniale.map((_, i) => (
                 <div
                   key={i}
                   onClick={() => { setSlide(i); setProgress(0); }}

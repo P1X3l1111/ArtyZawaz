@@ -25,6 +25,10 @@ function writeLocal(name, data) {
 }
 
 export async function readDb(name) {
+  // In development, local file is always up-to-date (writeDb keeps it fresh)
+  if (process.env.NODE_ENV === "development") {
+    return getLocalFallback(name);
+  }
   if (!TOKEN) return getLocalFallback(name);
   try {
     const { blobs } = await list({ prefix: `db/${name}.json`, token: TOKEN });
