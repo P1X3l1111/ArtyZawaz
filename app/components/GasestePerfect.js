@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { slugify } from "../lib/produse";
+import { slugify } from "../lib/utils";
 
 const CULORI_OPTIONS = [
   "Alb", "Albastru", "Auriu", "Galben", "Gri",

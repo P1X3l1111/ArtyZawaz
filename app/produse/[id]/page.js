@@ -5,7 +5,7 @@ import { use } from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import ProdusCard from "../../components/ProdusCard";
-import { categorii } from "../../lib/produse";
+import categorii from "../../../data/categorii.json";
 import { useCos } from "../../context/CosContext";
 
 export default function ProdusDePage({ params }) {
