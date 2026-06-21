@@ -184,8 +184,10 @@ function ProdusForm({ initial, onSave, onClose }) {
   async function save() {
     const isNew = !p.id;
     const payload = { ...p, price: Number(p.price), oldPrice: p.oldPrice ? Number(p.oldPrice) : undefined, id: p.id || Date.now().toString() };
-    if (isNew) await fetch("/api/produse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-    else await fetch(`/api/produse/${p.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    const res = isNew
+      ? await fetch("/api/produse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      : await fetch(`/api/produse/${p.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
 
@@ -346,8 +348,10 @@ function SlideForm({ initial, onSave, onClose }) {
   const [s, setS] = useState({ id: "", img: "", alt: "", titlu: "", subtitlu: "", ...initial });
   const set = k => v => setS(x => ({ ...x, [k]: v }));
   async function save() {
-    if (!s.id) await fetch("/api/hero", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...s, id: Date.now().toString() }) });
-    else await fetch(`/api/hero/${s.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
+    const res = !s.id
+      ? await fetch("/api/hero", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...s, id: Date.now().toString() }) })
+      : await fetch(`/api/hero/${s.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (
@@ -413,7 +417,8 @@ function ArticolForm({ initial, onSave, onClose }) {
   async function save() {
     const isNew = !initial.slug;
     const url = isNew ? "/api/blog" : `/api/blog/${initial.slug}`;
-    await fetch(url, { method: isNew ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    const res = await fetch(url, { method: isNew ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (
@@ -483,8 +488,10 @@ function RecenzieForm({ initial, onSave, onClose }) {
   const [r, setR] = useState({ id: "", avatar: "", nume: "", text: "", ...initial });
   const set = k => v => setR(x => ({ ...x, [k]: v }));
   async function save() {
-    if (!r.id) await fetch("/api/recenzii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
-    else await fetch(`/api/recenzii/${r.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
+    const res = !r.id
+      ? await fetch("/api/recenzii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) })
+      : await fetch(`/api/recenzii/${r.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (
@@ -548,8 +555,10 @@ function FaqForm({ initial, onSave, onClose }) {
   const [f, setF] = useState({ id: "", intrebare: "", raspuns: "", ...initial });
   const set = k => v => setF(x => ({ ...x, [k]: v }));
   async function save() {
-    if (!f.id) await fetch("/api/faq", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
-    else await fetch(`/api/faq/${f.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
+    const res = !f.id
+      ? await fetch("/api/faq", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) })
+      : await fetch(`/api/faq/${f.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (
@@ -606,11 +615,10 @@ function CategForm({ initial, onSave, onClose }) {
   const [c, setC] = useState({ slug: "", label: "", descriere: "", img: "", ...initial });
   const set = k => v => setC(x => ({ ...x, [k]: v }));
   async function save() {
-    if (initial.slug) {
-      await fetch(`/api/categorii/${initial.slug}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
-    } else {
-      await fetch("/api/categorii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
-    }
+    const res = initial.slug
+      ? await fetch(`/api/categorii/${initial.slug}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) })
+      : await fetch("/api/categorii", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(c) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (
@@ -687,7 +695,8 @@ function SectionSetari() {
   }
 
   async function save() {
-    await fetch("/api/setari", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
+    const res = await fetch("/api/setari", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(s) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
     setSaved(true); setTimeout(() => setSaved(false), 2500);
   }
 
@@ -790,8 +799,11 @@ function AdminForm({ initial, onSave, onClose }) {
   async function save() {
     if (!a.nume?.trim() || !a.email?.trim()) { setErr("Nume și email sunt obligatorii."); return; }
     if (!a.id && !a.parola?.trim()) { setErr("Parola este obligatorie pentru un administrator nou."); return; }
-    if (!a.id) await fetch("/api/utilizatori", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
-    else await fetch(`/api/utilizatori/${a.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    setErr("");
+    const res = !a.id
+      ? await fetch("/api/utilizatori", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) })
+      : await fetch(`/api/utilizatori/${a.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); setErr(d.error || `Eroare ${res.status}`); return; }
     onSave();
   }
   return (

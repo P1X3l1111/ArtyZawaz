@@ -8,7 +8,11 @@ export async function GET() {
 }
 
 export async function PUT(req) {
-  const body = await readSanitizedBody(req);
-  await writeDb("setari", body);
-  return NextResponse.json(body);
+  try {
+    const body = await readSanitizedBody(req);
+    await writeDb("setari", body);
+    return NextResponse.json(body);
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

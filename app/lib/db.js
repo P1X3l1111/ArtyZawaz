@@ -48,10 +48,21 @@ export async function readDb(name) {
 }
 
 export async function writeDb(name, data) {
-  // Always persist locally so dev restarts don't lose data
-  writeLocal(name, data);
+  // Always try local first (dev) — fails silently on Vercel read-only fs.
+  let localOk = false;
+  try {
+    writeFileSync(localPath(name), JSON.stringify(data, null, 2), "utf-8");
+    localOk = true;
+  } catch {
+    /* read-only filesystem in production — expected */
+  }
 
-  if (!TOKEN) return;
+  if (!TOKEN) {
+    // No blob token: only local write is possible.
+    if (!localOk) throw new Error("Salvarea a eșuat: nu există token Blob și fișierul local e read-only.");
+    return;
+  }
+
   await put(`db/${name}.json`, JSON.stringify(data, null, 2), {
     access: "public",
     allowOverwrite: true,

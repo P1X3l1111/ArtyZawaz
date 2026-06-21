@@ -8,10 +8,14 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await readSanitizedBody(req);
-  const data = await readDb("faq");
-  const item = { ...body, id: body.id || `f${Date.now()}` };
-  data.push(item);
-  await writeDb("faq", data);
-  return NextResponse.json(item, { status: 201 });
+  try {
+    const body = await readSanitizedBody(req);
+    const data = await readDb("faq");
+    const item = { ...body, id: body.id || `faq${Date.now()}` };
+    data.push(item);
+    await writeDb("faq", data);
+    return NextResponse.json(item, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

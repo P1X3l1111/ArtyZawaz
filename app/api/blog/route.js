@@ -8,16 +8,20 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await readSanitizedBody(req);
-  const data = await readDb("blog");
-  const slug = body.slug || (body.titlu || "articol-" + Date.now())
-    .toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  const newItem = { ...body, slug };
-  const filtered = data.filter(i => i.slug !== slug);
-  filtered.push(newItem);
-  await writeDb("blog", filtered);
-  return NextResponse.json(newItem);
+  try {
+    const body = await readSanitizedBody(req);
+    const data = await readDb("blog");
+    const slug = body.slug || (body.titlu || "articol-" + Date.now())
+      .toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    const newItem = { ...body, slug };
+    const filtered = data.filter(i => i.slug !== slug);
+    filtered.push(newItem);
+    await writeDb("blog", filtered);
+    return NextResponse.json(newItem);
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

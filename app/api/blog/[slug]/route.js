@@ -11,20 +11,28 @@ export async function GET(req, { params }) {
 }
 
 export async function PUT(req, { params }) {
-  const { slug } = await params;
-  const body = await readSanitizedBody(req);
-  const data = await readDb("blog");
-  const idx = data.findIndex(i => i.slug === slug);
-  if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  data[idx] = { ...data[idx], ...body, slug };
-  await writeDb("blog", data);
-  return NextResponse.json(data[idx]);
+  try {
+    const { slug } = await params;
+    const body = await readSanitizedBody(req);
+    const data = await readDb("blog");
+    const idx = data.findIndex(i => i.slug === slug);
+    if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    data[idx] = { ...data[idx], ...body, slug };
+    await writeDb("blog", data);
+    return NextResponse.json(data[idx]);
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
 
 export async function DELETE(req, { params }) {
-  const { slug } = await params;
-  const data = await readDb("blog");
-  const filtered = data.filter(i => i.slug !== slug);
-  await writeDb("blog", filtered);
-  return NextResponse.json({ ok: true });
+  try {
+    const { slug } = await params;
+    const data = await readDb("blog");
+    const filtered = data.filter(i => i.slug !== slug);
+    await writeDb("blog", filtered);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

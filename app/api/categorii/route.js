@@ -8,9 +8,13 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await readSanitizedBody(req);
-  const categorii = await readDb("categorii");
-  categorii.push(body);
-  await writeDb("categorii", categorii);
-  return NextResponse.json(body, { status: 201 });
+  try {
+    const body = await readSanitizedBody(req);
+    const categorii = await readDb("categorii");
+    categorii.push(body);
+    await writeDb("categorii", categorii);
+    return NextResponse.json(body, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

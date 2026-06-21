@@ -8,10 +8,14 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await readSanitizedBody(req);
-  const produse = await readDb("produse");
-  const nou = { ...body, id: body.id || Date.now().toString() };
-  produse.push(nou);
-  await writeDb("produse", produse);
-  return NextResponse.json(nou, { status: 201 });
+  try {
+    const body = await readSanitizedBody(req);
+    const produse = await readDb("produse");
+    const nou = { ...body, id: body.id || Date.now().toString() };
+    produse.push(nou);
+    await writeDb("produse", produse);
+    return NextResponse.json(nou, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

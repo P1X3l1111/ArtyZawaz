@@ -10,10 +10,15 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await readSanitizedBody(req);
-  const list = await readDb("utilizatori");
-  const nou = { ...body, id: body.id || `u${Date.now()}` };
-  list.push(nou);
-  await writeDb("utilizatori", list);
-  return NextResponse.json(nou, { status: 201 });
+  try {
+    const body = await readSanitizedBody(req);
+    const list = await readDb("utilizatori");
+    const nou = { ...body, id: body.id || `u${Date.now()}` };
+    list.push(nou);
+    await writeDb("utilizatori", list);
+    const { parola: _, ...safe } = nou;
+    return NextResponse.json(safe, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
