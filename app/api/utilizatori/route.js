@@ -4,7 +4,9 @@ import { readSanitizedBody } from "../../lib/security";
 
 export async function GET() {
   const data = await readDb("utilizatori");
-  return NextResponse.json(data);
+  // Never expose stored passwords to the browser.
+  const safe = (data || []).map(({ parola, ...rest }) => rest);
+  return NextResponse.json(safe);
 }
 
 export async function POST(req) {

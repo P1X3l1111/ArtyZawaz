@@ -8,9 +8,14 @@ export async function PUT(req, { params }) {
   const list = await readDb("utilizatori");
   const idx = list.findIndex(u => u.id === id);
   if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  list[idx] = { ...list[idx], ...body, id };
+  // If the password field is left empty, keep the existing one.
+  const { parola, ...rest } = body;
+  const merged = { ...list[idx], ...rest, id };
+  if (parola) merged.parola = parola;
+  list[idx] = merged;
   await writeDb("utilizatori", list);
-  return NextResponse.json(list[idx]);
+  const { parola: _, ...safe } = list[idx];
+  return NextResponse.json(safe);
 }
 
 export async function DELETE(req, { params }) {

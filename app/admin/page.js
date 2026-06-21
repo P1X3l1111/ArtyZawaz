@@ -292,7 +292,11 @@ function SectionProduse() {
 
   const filtered = produse.filter(p => (p.name + p.category).toLowerCase().includes(search.toLowerCase()));
 
-  async function del(id) { await fetch(`/api/produse/${id}`, { method: "DELETE" }); load(); }
+  async function del(id) {
+    const res = await fetch(`/api/produse/${id}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -368,7 +372,11 @@ function SectionHero() {
   const load = () => fetch("/api/hero").then(r => r.json()).then(setSlides);
   useEffect(() => { load(); }, []);
 
-  async function del(id) { await fetch(`/api/hero/${id}`, { method: "DELETE" }); load(); }
+  async function del(id) {
+    const res = await fetch(`/api/hero/${id}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -437,7 +445,11 @@ function SectionBlog() {
   const load = () => fetch("/api/blog").then(r => r.json()).then(setArticole);
   useEffect(() => { load(); }, []);
 
-  async function del(slug) { await fetch(`/api/blog/${slug}`, { method: "DELETE" }); load(); }
+  async function del(slug) {
+    const res = await fetch(`/api/blog/${slug}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -496,7 +508,11 @@ function SectionRecenzii() {
   const load = () => fetch("/api/recenzii").then(r => r.json()).then(setRecenzii);
   useEffect(() => { load(); }, []);
 
-  async function del(id) { await fetch(`/api/recenzii/${id}`, { method: "DELETE" }); load(); }
+  async function del(id) {
+    const res = await fetch(`/api/recenzii/${id}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -556,7 +572,11 @@ function SectionFAQ() {
   const load = () => fetch("/api/faq").then(r => r.json()).then(setItems);
   useEffect(() => { load(); }, []);
 
-  async function del(id) { await fetch(`/api/faq/${id}`, { method: "DELETE" }); load(); }
+  async function del(id) {
+    const res = await fetch(`/api/faq/${id}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -615,7 +635,11 @@ function SectionCategorii() {
   const load = () => fetch("/api/categorii").then(r => r.json()).then(setCategorii);
   useEffect(() => { load(); }, []);
 
-  async function del(slug) { await fetch(`/api/categorii/${slug}`, { method: "DELETE" }); load(); }
+  async function del(slug) {
+    const res = await fetch(`/api/categorii/${slug}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   return (
     <div>
@@ -761,8 +785,11 @@ function SectionDashboard({ onNav }) {
 /* ─── ADMINISTRATORI ─── */
 function AdminForm({ initial, onSave, onClose }) {
   const [a, setA] = useState({ id: "", nume: "", email: "", parola: "", rol: "Admin", ...initial });
+  const [err, setErr] = useState("");
   const set = k => v => setA(x => ({ ...x, [k]: v }));
   async function save() {
+    if (!a.nume?.trim() || !a.email?.trim()) { setErr("Nume și email sunt obligatorii."); return; }
+    if (!a.id && !a.parola?.trim()) { setErr("Parola este obligatorie pentru un administrator nou."); return; }
     if (!a.id) await fetch("/api/utilizatori", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
     else await fetch(`/api/utilizatori/${a.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) });
     onSave();
@@ -771,7 +798,13 @@ function AdminForm({ initial, onSave, onClose }) {
     <div>
       <Input label="Nume" value={a.nume} onChange={set("nume")} />
       <Input label="Email" value={a.email} onChange={set("email")} type="email" />
-      <Input label="Parolă" value={a.parola} onChange={set("parola")} type="password" />
+      <Input
+        label={a.id ? "Parolă nouă (opțional)" : "Parolă"}
+        value={a.parola}
+        onChange={set("parola")}
+        type="password"
+        placeholder={a.id ? "Lasă gol pentru a păstra parola actuală" : "••••••••"}
+      />
       <div style={{ marginBottom: 12 }}>
         <label style={lbl}>Rol</label>
         <div style={{ display: "flex", gap: 8 }}>
@@ -786,6 +819,7 @@ function AdminForm({ initial, onSave, onClose }) {
           ))}
         </div>
       </div>
+      {err && <p style={{ color: C.danger, fontSize: 13, margin: "0 0 12px", fontWeight: 600 }}>{err}</p>}
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
         <button onClick={onClose} style={btnGhost}>Anulează</button>
         <button onClick={save} style={btnPrimary}>Salvează</button>
@@ -802,7 +836,11 @@ function SectionAdministratori() {
   const load = () => fetch("/api/utilizatori").then(r => r.json()).then(setAdmins);
   useEffect(() => { load(); }, []);
 
-  async function del(id) { await fetch(`/api/utilizatori/${id}`, { method: "DELETE" }); load(); }
+  async function del(id) {
+    const res = await fetch(`/api/utilizatori/${id}`, { method: "DELETE" });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || `Eroare ${res.status}`); return; }
+    load();
+  }
 
   const rolColor = rol => rol === "Super Admin" ? "#8b5cf6" : C.accent;
 
@@ -867,9 +905,20 @@ export default function AdminPage() {
   const [section, setSection] = useState("Dashboard");
   const [collapsed, setCollapsed] = useState(false);
 
-  function login() {
-    if (email === "iurietihon11@gmail.com" && parola === "123123") { setLoggedIn(true); setErr(""); }
-    else setErr("Email sau parolă incorectă.");
+  async function login() {
+    setErr("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, parola }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) setLoggedIn(true);
+      else setErr(data.error || "Email sau parolă incorectă.");
+    } catch {
+      setErr("Eroare de conexiune. Încearcă din nou.");
+    }
   }
 
   if (!loggedIn) {
