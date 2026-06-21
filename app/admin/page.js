@@ -926,7 +926,7 @@ export default function AdminPage() {
         body: JSON.stringify({ email, parola }),
       });
       const data = await res.json();
-      if (res.ok && data.ok) setLoggedIn(true);
+      if (res.ok && data.ok) { setLoggedIn(true); localStorage.setItem("adminLoggedIn", "1"); }
       else setErr(data.error || "Email sau parolă incorectă.");
     } catch {
       setErr("Eroare de conexiune. Încearcă din nou.");
@@ -992,7 +992,7 @@ export default function AdminPage() {
             <span style={{ fontSize: 18, flexShrink: 0 }}>🌐</span>
             {!collapsed && "Vezi site"}
           </a>
-          <button onClick={() => setLoggedIn(false)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, border: "none", cursor: "pointer", background: "transparent", color: "rgba(255,255,255,0.45)", fontSize: 13, fontWeight: 600 }}>
+          <button onClick={() => { setLoggedIn(false); localStorage.removeItem("adminLoggedIn"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "10px 10px", borderRadius: 10, border: "none", cursor: "pointer", background: "transparent", color: "rgba(255,255,255,0.45)", fontSize: 13, fontWeight: 600 }}>
             <span style={{ fontSize: 18, flexShrink: 0 }}>🚪</span>
             {!collapsed && "Ieși"}
           </button>

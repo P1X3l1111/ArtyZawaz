@@ -125,8 +125,16 @@ export default function NavBar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [produse, setProduse] = useState([]);
   const [navHeight, setNavHeight] = useState(68);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navRef = useRef(null);
   const { numarArticole } = useCos();
+
+  useEffect(() => {
+    setIsAdmin(!!localStorage.getItem("adminLoggedIn"));
+    const onStorage = () => setIsAdmin(!!localStorage.getItem("adminLoggedIn"));
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
 
   useEffect(() => {
     fetch("/api/produse").then(r => r.json()).then(setProduse).catch(() => {});
@@ -219,6 +227,14 @@ export default function NavBar() {
         </ul>
 
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          {/* Admin Panel button — only visible when logged in as admin */}
+          {isAdmin && (
+            <Link href="/admin" className="nav-links" style={{
+              fontSize: 11, fontWeight: 800, color: "#fff", background: "#111",
+              padding: "5px 13px", borderRadius: 6, textDecoration: "none",
+              letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
+            }}>Admin Panel</Link>
+          )}
           {/* Desktop icons */}
           <Link href="/cautare" className="nav-icon-desktop nav-links" style={{ color, display: "flex", alignItems: "center", transition: "color 0.3s" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="11" cy="11" r="7"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
@@ -315,6 +331,12 @@ export default function NavBar() {
               {link.badge && <span style={{ marginLeft: 8, fontSize: 10, fontWeight: 800, background: link.href === "/reduceri" ? "#e03c2f" : "#111", color: "#fff", padding: "2px 7px", borderRadius: 4, verticalAlign: "middle" }}>{link.badge}</span>}
             </Link>
           ))}
+          {isAdmin && (
+            <Link href="/admin" onClick={() => setMenuOpen(false)}
+              style={{ textDecoration: "none", fontSize: 17, fontWeight: 800, color: "#fff", background: "#111", textTransform: "uppercase", letterSpacing: "0.08em", padding: "12px 16px", borderRadius: 8, display: "block", textAlign: "center", margin: "8px 0 4px" }}>
+              Admin Panel
+            </Link>
+          )}
           <div style={{ display: "flex", gap: 20, paddingTop: 16, paddingBottom: 8 }}>
             <Link href="/cautare" onClick={() => setMenuOpen(false)} style={{ color: "#111", display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="11" cy="11" r="7"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
