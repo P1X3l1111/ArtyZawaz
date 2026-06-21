@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { readDb, writeDb } from "../../../lib/db";
+import { readSanitizedBody } from "../../../lib/security";
 
 export async function PUT(req, { params }) {
   const { slug } = await params;
-  const body = await req.json();
+  const body = await readSanitizedBody(req);
   const categorii = await readDb("categorii");
   const idx = categorii.findIndex(c => c.slug === slug);
   if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });

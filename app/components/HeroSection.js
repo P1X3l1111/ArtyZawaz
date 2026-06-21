@@ -1,6 +1,13 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import { escapeHtml } from "../lib/security";
+
+// Escape any HTML first (prevents stored XSS from admin input), THEN turn the
+// safe **bold** markers into <strong> tags.
+function formatSubtitle(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
 
 const SLIDES_FALLBACK = [
   {
@@ -120,7 +127,7 @@ export default function HeroSection() {
                   textAlign: "left",
                   maxWidth: 280,
                 }} dangerouslySetInnerHTML={{
-                  __html: slide.subtitlu.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                  __html: formatSubtitle(slide.subtitlu)
                 }} />
               )}
               <a href={slide.butonHref || "/produse"} style={{

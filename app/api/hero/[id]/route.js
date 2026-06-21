@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { readDb, writeDb } from "../../../lib/db";
+import { readSanitizedBody } from "../../../lib/security";
 
 export async function PUT(req, { params }) {
   try {
     const { id } = await params;
-    const body = await req.json();
+    const body = await readSanitizedBody(req);
     const data = await readDb("hero");
     const idx = data.findIndex(i => i.id === id);
     if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { readDb, writeDb } from "../../lib/db";
+import { readSanitizedBody } from "../../lib/security";
 
 export async function GET() {
   const data = await readDb("produse");
@@ -7,7 +8,7 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const body = await req.json();
+  const body = await readSanitizedBody(req);
   const produse = await readDb("produse");
   const nou = { ...body, id: body.id || Date.now().toString() };
   produse.push(nou);

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { readDb, writeDb } from "../../lib/db";
+import { readSanitizedBody } from "../../lib/security";
 
 export async function GET() {
   const data = await readDb("setari");
@@ -7,7 +8,7 @@ export async function GET() {
 }
 
 export async function PUT(req) {
-  const body = await req.json();
+  const body = await readSanitizedBody(req);
   await writeDb("setari", body);
   return NextResponse.json(body);
 }
