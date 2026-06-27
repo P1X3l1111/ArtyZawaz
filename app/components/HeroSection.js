@@ -22,12 +22,6 @@ const SLIDES_FALLBACK = [
     subtitlu: "Descoperă colecția noastră **exclusivă**. Produse atent alese pentru un **stil desăvârșit** la prețuri accesibile.",
     buton: "Explorează", butonHref: "/produse",
   },
-  {
-    src: "/hero-3.png", srcMobile: "/herop2.png", alt: "Hero 3",
-    titlu: "Colecție Nouă\nPrimăvara-Vara\n2026 — Acum\nDisponibilă.",
-    subtitlu: "Cele mai noi tendințe au sosit! Reduceri de până la **50%** la **produse selectate** din noua colecție.",
-    buton: "Vezi Reducerile", butonHref: "/reduceri",
-  },
 ];
 const IMG_W = 1924;
 const IMG_H = 725;
