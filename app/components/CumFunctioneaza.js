@@ -2,9 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 const PASI = [
-  { titlu: "Monteaza", video: "/1Zamontuj-ezgif.com-resize-video.mp4" },
-  { titlu: "Introduce monede", video: "/2Wrzucaj-ezgif.com-resize-video.mp4" },
-  { titlu: "Retrage banii", video: "/3Wyciagaj-ezgif.com-resize-video.mp4" },
+  { titlu: "Monteaza", video: "/Video%201.mp4" },
+  { titlu: "Introduce monede", video: "/VIdeo%202.mp4" },
+  { titlu: "Retrage banii", video: "/Video%203.mp4" },
 ];
 
 export default function CumFunctioneaza() {

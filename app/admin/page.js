@@ -345,7 +345,7 @@ function SectionProduse() {
 
 /* ─── HERO ─── */
 function SlideForm({ initial, onSave, onClose }) {
-  const [s, setS] = useState({ id: "", img: "", alt: "", titlu: "", subtitlu: "", ...initial });
+  const [s, setS] = useState({ id: "", img: "", alt: "", ...initial });
   const set = k => v => setS(x => ({ ...x, [k]: v }));
   async function save() {
     const res = !s.id
@@ -358,8 +358,6 @@ function SlideForm({ initial, onSave, onClose }) {
     <div>
       <ImageUpload label="Imagine" value={s.img} onChange={set("img")} height={140} />
       <Input label="Alt text" value={s.alt} onChange={set("alt")} />
-      <Input label="Titlu" value={s.titlu} onChange={set("titlu")} />
-      <Input label="Subtitlu" value={s.subtitlu} onChange={set("subtitlu")} />
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
         <button onClick={onClose} style={btnGhost}>Anulează</button>
         <button onClick={save} style={btnPrimary}>Salvează</button>
@@ -390,8 +388,7 @@ function SectionHero() {
           <div key={s.id} style={{ ...card, padding: 0, overflow: "hidden" }}>
             {s.img && <img src={s.img} alt="" style={{ width: "100%", height: 130, objectFit: "cover" }} />}
             <div style={{ padding: 14 }}>
-              <p style={{ margin: "0 0 2px", fontWeight: 700 }}>{s.titlu}</p>
-              <p style={{ margin: "0 0 12px", color: C.muted, fontSize: 13 }}>{s.subtitlu}</p>
+              <p style={{ margin: "0 0 12px", color: C.muted, fontSize: 13 }}>{s.alt}</p>
               <div style={{ display: "flex", gap: 8 }}>
                 <button onClick={() => setEditing(s)} style={{ ...btnGhost, padding: "5px 12px", fontSize: 12 }}>✏️ Edit</button>
                 <button onClick={() => setConfirm(s.id)} style={btnDanger}>🗑</button>
